@@ -1,0 +1,114 @@
+﻿@model HappyHouse.Models.ToaNha
+
+@{
+    ViewBag.Title = "Tạm ngưng tòa nhà";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Quản lý tòa nhà</h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","AdminToaNha")">Danh sách tòa nhà</a>
+}
+
+<div style="max-width:650px;margin:auto">
+
+    <div class="card shadow-sm mb-3">
+        <div class="card-header font-weight-bold text-primary">
+            <i class="fa fa-building mr-2"></i>Thông tin tòa nhà
+        </div>
+        <div class="card-body">
+            <table class="table table-borderless table-sm mb-0">
+                <tr>
+                    <td style="width:130px" class="font-weight-bold">Tên tòa nhà:</td>
+                    <td><strong>@Model.TenToaNha</strong></td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Địa chỉ:</td>
+                    <td>@Model.DiaChi — @Model.TinhThanh</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Chủ trọ:</td>
+                    <td>
+                        @if (Model.NguoiDung != null)
+                        {
+                            <strong>@Model.NguoiDung.HoTen</strong>
+                            <span class="text-muted ml-2">@Model.NguoiDung.SoDienThoai</span>
+                        }
+                        else
+                        { <span>—</span>}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Số phòng:</td>
+                    <td>
+                        @{
+                            int tongPhong = Model.PhongTroes?.Count(x => x.TrangThai) ?? 0;
+                            int phongDaThue = Model.PhongTroes?.Count(x => x.TrangThai
+                                                && x.TrangThaiPhong == "DaThue") ?? 0;
+                        }
+                        @tongPhong phòng
+                        @if (phongDaThue > 0)
+                        {
+                            <span class="text-danger ml-1">
+                                (@phongDaThue đang có người thuê)
+                            </span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Ngày duyệt:</td>
+                    <td>
+                        @(Model.NgayDuyet.HasValue
+                            ? Model.NgayDuyet.Value.ToString("dd/MM/yyyy HH:mm") : "—")
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    @if (phongDaThue > 0)
+    {
+        <div class="alert alert-danger">
+            <i class="fa fa-exclamation-triangle mr-2"></i>
+            <strong>Lưu ý:</strong> Tòa nhà đang có <strong>@phongDaThue</strong> phòng
+            có người thuê. Tạm ngưng sẽ không ảnh hưởng đến hợp đồng hiện tại,
+            nhưng sẽ ẩn tòa nhà khỏi kết quả tìm kiếm và không cho tạo hợp đồng mới.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            <i class="fa fa-exclamation-triangle mr-2"></i>
+            Tạm ngưng sẽ ẩn tòa nhà khỏi kết quả tìm kiếm.
+            Chủ trọ không thể tạo hợp đồng mới cho đến khi mở lại.
+        </div>
+    }
+
+    @using (Html.BeginForm("TamNgung", "AdminToaNha", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="maToaNha" value="@Model.MaToaNha" />
+
+        <div class="form-group">
+            <label class="font-weight-bold">
+                Lý do tạm ngưng <span class="text-danger">*</span>
+            </label>
+            <textarea name="lyDoTuChoi" class="form-control" rows="4"
+                      placeholder="Nhập lý do tạm ngưng — chủ trọ sẽ nhận được thông báo này..."
+                      required></textarea>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="@Url.Action("ChiTiet", new { maToaNha = Model.MaToaNha })"
+               class="btn btn-secondary px-4">
+                <i class="fa fa-arrow-left mr-1"></i> Quay lại
+            </a>
+            <button type="submit" class="btn btn-warning px-4"
+                    onclick="return confirm('Xác nhận tạm ngưng tòa nhà này?')">
+                <i class="fa fa-pause mr-1"></i> Xác nhận tạm ngưng
+            </button>
+        </div>
+    }
+</div>

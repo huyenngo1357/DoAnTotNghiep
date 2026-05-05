@@ -1,0 +1,232 @@
+﻿@model HappyHouse.Models.NguoiDung
+
+@{
+    ViewBag.Title = "Đăng ký";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Đăng ký - HappyHouse</title>
+    <link href="~/Content/Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <link href="~/Content/Admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="~/Content/images/favicon.svg" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #212529, #4e73df) !important;
+        }
+
+        .btn-primary {
+            background-color: #212529 !important;
+            border-color: #212529 !important;
+        }
+
+            .btn-primary:hover {
+                background-color: #000 !important;
+                border-color: #000 !important;
+            }
+
+        .bg-register-image {
+            background: url('/Content/Home/img/hero/hero-2.jpg') center/cover no-repeat;
+        }
+
+        a {
+            color: #4e73df !important;
+        }
+
+            a:hover {
+                color: #212529 !important;
+            }
+
+        .card {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .brand-logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #212529;
+            letter-spacing: 1px;
+        }
+
+            .brand-logo span {
+                color: #4e73df;
+            }
+
+        .field-error {
+            font-size: 11px;
+            color: #e74a3b;
+            margin-top: 3px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center mb-4">
+                                <div class="brand-logo mb-2">Happy<span>House</span></div>
+                                <h1 class="h4 text-gray-900">Tạo tài khoản mới!</h1>
+                                <p class="text-muted small">
+                                    Đăng ký để tìm phòng trọ hoặc đăng phòng cho thuê
+                                </p>
+                            </div>
+
+                            @using (Html.BeginForm("DangKy", "TaiKhoan",
+                                FormMethod.Post, new { @class = "user" }))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        @Html.TextBoxFor(m => m.HoTen, new
+                                        {
+                                            @class = "form-control form-control-user",
+                                            placeholder = "Họ và tên (*)",
+                                            maxlength = "100"
+                                        })
+                                        @Html.ValidationMessageFor(m => m.HoTen, "",
+                                            new { @class = "field-error" })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        @Html.TextBoxFor(m => m.SoDienThoai, new
+                                        {
+                                            @class = "form-control form-control-user",
+                                            placeholder = "Số điện thoại (*)",
+                                            maxlength = "15"
+                                        })
+                                        @Html.ValidationMessageFor(m => m.SoDienThoai, "",
+                                            new { @class = "field-error" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Email, new
+                                    {
+                                        @class = "form-control form-control-user",
+                                        placeholder = "Địa chỉ Email (*)",
+                                        type = "email"
+                                    })
+                                    @Html.ValidationMessageFor(m => m.Email, "",
+                                        new { @class = "field-error" })
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        @Html.PasswordFor(m => m.MatKhau, new
+                                        {
+                                            @class = "form-control form-control-user",
+                                            placeholder = "Mật khẩu (*)",
+                                            id = "inputMatKhau",
+                                            minlength = "6"
+                                        })
+                                        @Html.ValidationMessageFor(m => m.MatKhau, "",
+                                            new { @class = "field-error" })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="password" name="xacNhanMatKhau"
+                                               id="inputXacNhan"
+                                               class="form-control form-control-user"
+                                               placeholder="Nhập lại mật khẩu (*)" />
+                                        <span id="errXacNhan" class="field-error"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="text-gray-700 small font-weight-bold mb-2">
+                                        Bạn muốn đăng ký với tư cách:
+                                    </label>
+                                    <div class="d-flex">
+                                        <div class="custom-control custom-radio mr-4">
+                                            <input type="radio" id="rdKhachHang"
+                                                   name="MaVaiTro"
+                                                   value="KHACHHANG"
+                                                   class="custom-control-input"
+                                                   checked />
+                                            <label class="custom-control-label"
+                                                   for="rdKhachHang">
+                                                <i class="fa fa-user mr-1"></i>
+                                                Khách hàng
+                                            </label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="rdChuTro"
+                                                   name="MaVaiTro"
+                                                   value="CHUTRO"
+                                                   class="custom-control-input" />
+                                            <label class="custom-control-label"
+                                                   for="rdChuTro">
+                                                <i class="fa fa-home mr-1"></i>
+                                                Chủ trọ
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox small">
+                                        <input type="checkbox" class="custom-control-input"
+                                               id="chkDieuKhoan" required />
+                                        <label class="custom-control-label"
+                                               for="chkDieuKhoan">
+                                            Tôi đồng ý với
+                                            <a href="#">điều khoản sử dụng</a>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <button type="submit" id="btnDangKy"
+                                        class="btn btn-primary btn-user btn-block">
+                                    <i class="fa fa-user-plus mr-2"></i>
+                                    Đăng ký tài khoản
+                                </button>
+                            }
+
+                            <hr>
+                            <div class="text-center">
+                                <a class="small"
+                                   href="@Url.Action("DangNhap","TaiKhoan")">
+                                    Đã có tài khoản? Đăng nhập!
+                                </a>
+                            </div>
+                            <div class="text-center mt-2">
+                                <a class="small"
+                                   href="@Url.Action("Index","TrangChu")">
+                                    <i class="fa fa-home mr-1"></i>
+                                    Về trang chủ
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Content/Admin/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Kiểm tra mật khẩu khớp phía client
+        $('#inputXacNhan').on('input', function () {
+            var mk = $('#inputMatKhau').val();
+            var xn = $(this).val();
+            if (xn && mk !== xn) {
+                $('#errXacNhan').text('⚠ Mật khẩu không khớp!');
+                $('#btnDangKy').prop('disabled', true);
+            } else {
+                $('#errXacNhan').text('');
+                $('#btnDangKy').prop('disabled', false);
+            }
+        });
+    </script>
+</body>
+</html>

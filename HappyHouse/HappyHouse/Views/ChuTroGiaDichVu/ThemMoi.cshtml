@@ -1,0 +1,144 @@
+﻿@model HappyHouse.Models.GiaDichVu
+
+@{
+    ViewBag.Title = "Thêm giá dịch vụ";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Giá dịch vụ</h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","ChuTroGiaDichVu")">Danh sách</a>
+}
+
+@using (Html.BeginForm("ThemMoi", "ChuTroGiaDichVu", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Tòa nhà <span class="text-danger">*</span>
+                </label>
+                @Html.DropDownList("MaToaNha",
+                    (SelectList)ViewBag.DsToaNha,
+                    "--- Chọn tòa nhà ---",
+                    new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.MaToaNha, "",
+                    new { @class = "text-danger small" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Loại dịch vụ <span class="text-danger">*</span>
+                </label>
+                @Html.DropDownList("MaTienIch",
+                    (SelectList)ViewBag.DsTienIch,
+                    "--- Chọn loại dịch vụ ---",
+                    new { @class = "form-control", id = "selTienIch" })
+                @Html.ValidationMessageFor(m => m.MaTienIch, "",
+                    new { @class = "text-danger small" })
+                <small class="text-muted">
+                    Chỉ hiển thị tiện ích có tính phí.
+                    Quản lý tại
+                    <a href="@Url.Action("DanhSach","AdminTienIch")"
+                       target="_blank">Admin → Tiện ích</a>
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="font-weight-bold">Tên hiển thị</label>
+                @Html.TextBoxFor(m => m.TenDichVu, new
+                {
+                    @class = "form-control",
+                    placeholder = "VD: Internet cáp quang VNPT",
+                    maxlength = "100"
+                })
+                <small class="text-muted">
+                    Để trống sẽ dùng tên loại dịch vụ.
+                </small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Đơn giá (đ) <span class="text-danger">*</span>
+                </label>
+                <div class="input-group">
+                    @Html.TextBoxFor(m => m.DonGia, new
+                    {
+                        @class = "form-control",
+                        type = "number",
+                        min = "0",
+                        step = "1000",
+                        placeholder = "VD: 150000"
+                    })
+                    <div class="input-group-append">
+                        <span class="input-group-text">đ</span>
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(m => m.DonGia, "",
+                    new { @class = "text-danger small" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="font-weight-bold">Đơn vị tính</label>
+                @Html.TextBoxFor(m => m.DonVi, new
+                {
+                    @class = "form-control",
+                    placeholder = "tháng, xe/tháng, phòng...",
+                    maxlength = "30"
+                })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Ngày áp dụng <span class="text-danger">*</span>
+                </label>
+                @Html.TextBoxFor(m => m.NgayApDung, "{0:yyyy-MM-dd}", new
+                {
+                    @class = "form-control",
+                    type = "date"
+                })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Ngày kết thúc
+                    <span class="text-muted font-weight-normal">
+                        (không bắt buộc)
+                    </span>
+                </label>
+                @Html.TextBoxFor(m => m.NgayKetThuc, "{0:yyyy-MM-dd}", new
+                {
+                    @class = "form-control",
+                    type = "date"
+                })
+                @Html.ValidationMessageFor(m => m.NgayKetThuc, "",
+                    new { @class = "text-danger small" })
+                <small class="text-muted">Để trống = vô thời hạn.</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-2">
+        @Html.ActionLink("Trở lại", "DanhSach", null,
+            new { @class = "btn btn-secondary px-4" })
+        <button type="submit" class="btn btn-primary px-4">
+            <i class="fa fa-plus mr-1"></i> Thêm dịch vụ
+        </button>
+    </div>
+}

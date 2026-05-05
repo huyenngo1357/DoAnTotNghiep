@@ -1,0 +1,204 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<HappyHouse.Models.TienIch>
+
+@{
+    ViewBag.Title = "Quản lý tiện ích";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Quản lý tiện ích</h2>
+}
+@section breadLink {
+    <a href="#">Danh sách tiện ích</a>
+}
+
+@using (Html.BeginForm("DanhSach", "AdminTienIch", FormMethod.Post))
+{
+    <fieldset class="border p-3 shadow-sm mb-3">
+        <legend class="w-auto px-2" style="font-weight:bold;color:black">
+            Tìm kiếm
+        </legend>
+        <div class="row">
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold;color:black">Từ khóa:</label>
+            <div class="col-md-3">
+                <input type="text" name="tuKhoa" value="@ViewBag.TuKhoa"
+                       class="form-control"
+                       placeholder="Tên tiện ích..." />
+            </div>
+
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold;color:black">Loại:</label>
+            <div class="col-md-2">
+                @Html.DropDownList("coTinhTien",
+                    (SelectList)ViewBag.DsCoTinhTien,
+                    new { @class = "form-control" })
+            </div>
+
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold;color:black">Trạng thái:</label>
+            <div class="col-md-2">
+                @Html.DropDownList("trangThai",
+                    (SelectList)ViewBag.DsTrangThai,
+                    new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-2 d-flex align-items-center">
+                <input type="submit" class="btn btn-primary"
+                       value="Tìm kiếm" style="margin-right:8px" />
+                <a href="@Url.Action("DanhSach","AdminTienIch")"
+                   class="btn btn-secondary">Làm mới</a>
+            </div>
+        </div>
+    </fieldset>
+}
+
+<p style="text-align:right; margin:10px">
+    @Html.ActionLink("+ Thêm tiện ích", "ThemMoi", null,
+        new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-bordered table-hover" width="100%">
+    <thead class="thead-light">
+        <tr style="text-align:center">
+            <th style="width:60px">Icon</th>
+            <th>Tên tiện ích</th>
+            <th>Class icon</th>
+            <th style="width:160px">Loại</th>
+            <th style="width:80px">Số phòng</th>
+            <th style="width:80px">Số DV</th>
+            <th style="width:120px">Trạng thái</th>
+            <th style="width:160px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="8">
+                    <div style="text-align:center;padding:40px 20px;">
+                        <i class="fas fa-cog"
+                           style="font-size:48px;color:#b0b8c9;
+                                  display:block;margin-bottom:12px;"></i>
+                        <p style="color:#9aa0ac;font-size:15px;margin:0;">
+                            Không có tiện ích nào.
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr style="vertical-align:middle">
+                    <td class="text-center" style="font-size:20px;">
+                        <i class="fas @item.BieuTuong
+                           @(item.CoTinhTien ? "text-warning" : "text-primary")">
+                        </i>
+                    </td>
+                    <td>
+                        <strong>@item.TenTienIch</strong>
+                    </td>
+                    <td>
+                        <code class="small">@item.BieuTuong</code>
+                    </td>
+                    <td class="text-center">
+                        @if (item.CoTinhTien)
+                        {
+                            <span class="badge badge-warning px-2 py-1">
+                                <i class="fa fa-dollar-sign mr-1"></i>
+                                Tính tiền
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-info px-2 py-1">
+                                <i class="fa fa-eye mr-1"></i>
+                                Hiển thị
+                            </span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        <span class="badge badge-light border">
+                            @(item.PhongTroes != null ? item.PhongTroes.Count : 0)
+                        </span>
+                    </td>
+
+                    <td class="text-center">
+                        <span class="badge badge-light border">
+                            @(item.GiaDichVus != null
+            ? item.GiaDichVus.Count(x => x.TrangThai == true)
+            : 0)
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        @if (item.TrangThai)
+                        {
+                            <span class="badge badge-success px-2 py-1">
+                                Hoạt động
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-secondary px-2 py-1">
+                                Đã tắt
+                            </span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink("Sửa", "SuaThongTin",
+                            new { maTienIch = item.MaTienIch },
+                            new { @class = "btn btn-success btn-sm mb-1" })
+
+                        @using (Html.BeginForm("DoiTrangThai", "AdminTienIch",
+                            FormMethod.Post, new { style = "display:inline" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="maTienIch"
+                                   value="@item.MaTienIch" />
+                            <button type="submit"
+                                    class="btn btn-@(item.TrangThai ? "warning" : "success") btn-sm mb-1"
+                                    onclick="return confirm('@(item.TrangThai ? "Tắt" : "Bật") tiện ích này?')">
+                                @(item.TrangThai ? "Tắt" : "Bật")
+                            </button>
+                        }
+
+                        @using (Html.BeginForm("Xoa", "AdminTienIch",
+                            FormMethod.Post, new { style = "display:inline" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="maTienIch"
+                                   value="@item.MaTienIch" />
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm mb-1"
+                                    onclick="return confirm('Xóa tiện ích này?')">
+                                Xóa
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@if (Model.PageCount > 1)
+{
+    <div class="d-flex justify-content-center mt-3">
+        @Html.PagedListPager(Model,
+            page => Url.Action("DanhSach", new
+            {
+                page,
+                tuKhoa = ViewBag.TuKhoa,
+                coTinhTien = ViewBag.CoTinhTien,
+                trangThai = ViewBag.TrangThai
+            }),
+            new PagedListRenderOptions
+            {
+                UlElementClasses = new[] { "pagination", "justify-content-center" },
+                LiElementClasses = new[] { "page-item" }
+            })
+    </div>
+}

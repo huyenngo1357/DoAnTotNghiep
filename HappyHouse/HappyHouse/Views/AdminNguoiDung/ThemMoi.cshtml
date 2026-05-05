@@ -1,0 +1,283 @@
+﻿@model HappyHouse.Models.NguoiDung
+
+@{
+    ViewBag.Title = "Thêm người dùng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold; color:black">Quản lý người dùng</h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","AdminNguoiDung")">Danh sách người dùng</a>
+}
+
+@using (Html.BeginForm("ThemMoi", "AdminNguoiDung", FormMethod.Post,
+    new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    @* ── CARD 1: Thông tin cơ bản ── *@
+    <div class="card shadow-sm mb-4">
+        <div class="card-header font-weight-bold text-primary">
+            <i class="fa fa-user mr-2"></i> Thông tin cơ bản
+        </div>
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold">
+                            Họ và tên <span class="text-danger">(*)</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.HoTen, new
+                        {
+                            @class = "form-control",
+                            placeholder = "Nhập họ tên...",
+                            maxlength = "100"
+                        })
+                        @Html.ValidationMessageFor(m => m.HoTen, "",
+                            new { @class = "err-msg" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold">
+                            Vai trò <span class="text-danger">(*)</span>
+                        </label>
+                        @Html.DropDownList("MaVaiTro",
+                            (SelectList)ViewBag.DsVaiTro,
+                            "--- Chọn vai trò ---",
+                            new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.MaVaiTro, "",
+                            new { @class = "err-msg" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold">
+                            Email <span class="text-danger">(*)</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.Email, new
+                        {
+                            @class = "form-control",
+                            placeholder = "example@email.com",
+                            maxlength = "100",
+                            type = "email"
+                        })
+                        @Html.ValidationMessageFor(m => m.Email, "",
+                            new { @class = "err-msg" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold">
+                            Số điện thoại <span class="text-danger">(*)</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.SoDienThoai, new
+                        {
+                            @class = "form-control",
+                            placeholder = "0xxxxxxxxx",
+                            maxlength = "15"
+                        })
+                        @Html.ValidationMessageFor(m => m.SoDienThoai, "",
+                            new { @class = "err-msg" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold">
+                            Mật khẩu <span class="text-danger">(*)</span>
+                        </label>
+                        <input type="password" name="matKhauMoi" id="matKhau"
+                               class="form-control"
+                               placeholder="Tối thiểu 6 ký tự"
+                               minlength="6" />
+                        <span id="errMatKhau" class="err-msg"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold">
+                            Xác nhận mật khẩu <span class="text-danger">(*)</span>
+                        </label>
+                        <input type="password" id="xacNhanMatKhau"
+                               class="form-control"
+                               placeholder="Nhập lại mật khẩu" />
+                        <span id="errXacNhan" class="err-msg"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @* ── CARD 2: Thông tin bổ sung ── *@
+    <div class="card shadow-sm mb-4">
+        <div class="card-header font-weight-bold text-primary">
+            <i class="fa fa-id-card mr-2"></i> Thông tin bổ sung
+        </div>
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Zalo</label>
+                        @Html.TextBoxFor(m => m.ZaloPhone, new
+                        {
+                            @class = "form-control",
+                            placeholder = "Số Zalo...",
+                            maxlength = "15"
+                        })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Số CCCD</label>
+                        @Html.TextBoxFor(m => m.SoCCCD, new
+                        {
+                            @class = "form-control",
+                            placeholder = "Số căn cước công dân...",
+                            maxlength = "20"
+                        })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Ngày sinh</label>
+                        @Html.TextBoxFor(m => m.NgaySinh, new
+                        {
+                            @class = "form-control",
+                            type = "date"
+                        })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Giới tính</label>
+                        <select name="GioiTinh" class="form-control">
+                            <option value="">--- Chọn ---</option>
+                            <option value="1">Nam</option>
+                            <option value="0">Nữ</option>
+                            <option value="2">Khác</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Địa chỉ</label>
+                        @Html.TextBoxFor(m => m.DiaChi, new
+                        {
+                            @class = "form-control",
+                            placeholder = "Địa chỉ...",
+                            maxlength = "255"
+                        })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @* ── CARD 3: Ảnh đại diện ── *@
+    <div class="card shadow-sm mb-4">
+        <div class="card-header font-weight-bold text-primary">
+            <i class="fa fa-image mr-2"></i> Ảnh đại diện
+        </div>
+        <div class="card-body">
+            <div class="d-flex align-items-center">
+                <div id="previewWrapper" style="margin-right:20px; display:none;">
+                    <img id="previewAnh" src="#"
+                         style="width:100px; height:100px; object-fit:cover;
+                                border-radius:50%; border:3px solid #4e73df;" />
+                </div>
+                <div>
+                    <input type="file" name="anhDaiDien" id="inputAnh"
+                           class="form-control-file" accept="image/*" />
+                    <small class="text-muted d-block mt-1">
+                        Định dạng JPG, PNG. Kích thước tối đa 2MB.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        @Html.ActionLink("Trở lại", "DanhSach", null,
+            new { @class = "btn btn-secondary px-4" })
+        <button type="submit" id="btnSubmit" class="btn btn-primary px-4">
+            Thêm mới
+        </button>
+    </div>
+}
+
+<style>
+    .err-msg {
+        display: none;
+        font-size: 12px;
+        font-weight: 500;
+        margin-top: 5px;
+        padding: 4px 10px;
+        background: #fff0f0;
+        border-left: 3px solid #e74a3b;
+        border-radius: 3px;
+        color: #e74a3b;
+    }
+
+    .field-validation-error.err-msg {
+        display: block;
+    }
+
+    .field-validation-valid.err-msg {
+        display: none !important;
+    }
+
+    .input-validation-error {
+        border-color: #e74a3b !important;
+        background-color: #fff5f5 !important;
+    }
+</style>
+
+@section Scripts {
+    <script>
+    // Preview ảnh đại diện
+    document.getElementById('inputAnh').addEventListener('change', function () {
+        var file = this.files[0];
+        if (!file || !file.type.startsWith('image/')) return;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('previewAnh').src = e.target.result;
+            document.getElementById('previewWrapper').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // Kiểm tra mật khẩu khớp
+    document.getElementById('xacNhanMatKhau').addEventListener('input', kiemTraMK);
+    document.getElementById('matKhau').addEventListener('input', kiemTraMK);
+
+    function kiemTraMK() {
+        var mk  = document.getElementById('matKhau').value;
+        var xn  = document.getElementById('xacNhanMatKhau').value;
+        var err = document.getElementById('errXacNhan');
+        var btn = document.getElementById('btnSubmit');
+        if (xn && mk !== xn) {
+            err.style.display = 'block';
+            err.textContent   = 'Mật khẩu không khớp!';
+            btn.disabled = true;
+        } else {
+            err.style.display = 'none';
+            btn.disabled = false;
+        }
+    }
+    </script>
+}

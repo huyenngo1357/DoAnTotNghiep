@@ -1,0 +1,80 @@
+﻿@model HappyHouse.Models.TinTuc
+
+@{
+    ViewBag.Title = "Sửa tin tức";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold; color:black">Quản lý tin tức</h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","AdminTinTuc")">Danh sách tin tức</a>
+}
+
+@using (Html.BeginForm("SuaThongTin", "AdminTinTuc", FormMethod.Post,
+    new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.MaTinTuc)
+
+    <div class="d-flex justify-content-between">
+        @Html.ActionLink("Trở lại", "DanhSach", null,
+            new { @class = "btn btn-secondary px-4" })
+
+        <div>
+            @if (Model.TrangThaiDang == "ChuaDang" ||
+                 Model.TrangThaiDang == "TamAn")
+            {
+                <button type="button"
+                        onclick="submitForm('DangBai')"
+                        class="btn btn-primary px-4 mr-2">
+                    <i class="fa fa-paper-plane mr-2"></i>Đăng bài
+                </button>
+            }
+
+            @if (Model.TrangThaiDang == "DaDang")
+            {
+                <button type="button"
+                        onclick="submitForm('TamAn')"
+                        class="btn btn-warning px-4 mr-2">
+                    <i class="fa fa-eye-slash mr-2"></i>Tạm ẩn
+                </button>
+            }
+
+            <button type="submit" class="btn btn-success px-4">
+                <i class="fa fa-save mr-1"></i> Cập nhật
+            </button>
+        </div>
+    </div>
+}
+
+<!-- ================= FORM ẨN ================= -->
+@using (Html.BeginForm("DangBai", "AdminTinTuc", FormMethod.Post, new { id = "formDangBai" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="maTinTuc" value="@Model.MaTinTuc" />
+}
+
+@using (Html.BeginForm("TamAn", "AdminTinTuc", FormMethod.Post, new { id = "formTamAn" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="maTinTuc" value="@Model.MaTinTuc" />
+}
+
+@section Scripts {
+    <script>
+        function submitForm(type) {
+            if (type === 'DangBai') {
+                if (confirm('Đăng bài này?')) {
+                    document.getElementById('formDangBai').submit();
+                }
+            }
+            if (type === 'TamAn') {
+                if (confirm('Tạm ẩn bài này?')) {
+                    document.getElementById('formTamAn').submit();
+                }
+            }
+        }
+    </script>
+}

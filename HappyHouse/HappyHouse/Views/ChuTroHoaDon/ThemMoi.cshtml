@@ -1,0 +1,387 @@
+﻿@model HappyHouse.Models.HoaDon
+
+@{
+    ViewBag.Title = "Tạo hóa đơn";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Hóa đơn tiền phòng</h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","ChuTroHoaDon")">Danh sách hóa đơn</a>
+}
+
+@using (Html.BeginForm("ThemMoi", "ChuTroHoaDon", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header font-weight-bold text-primary">
+            <i class="fa fa-file-contract mr-2"></i>
+            Bước 1 — Chọn hợp đồng và tháng
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <label class="font-weight-bold">
+                            Hợp đồng <span class="text-danger">*</span>
+                        </label>
+                        @Html.DropDownList("MaHopDong",
+                            (SelectList)ViewBag.DsHopDong,
+                            "--- Chọn hợp đồng ---",
+                            new { @class = "form-control", id = "selHopDong" })
+                        @Html.ValidationMessageFor(m => m.MaHopDong, "",
+                            new { @class = "text-danger small" })
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group mb-0">
+                        <label class="font-weight-bold">
+                            Tháng hóa đơn <span class="text-danger">*</span>
+                        </label>
+                        <input type="month" name="thangHoaDon"
+                               id="thangHoaDon" class="form-control"
+                               value="@ViewBag.ThangHoaDon" />
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="button" id="btnLayThongTin"
+                            class="btn btn-info btn-block">
+                        <i class="fa fa-sync mr-1"></i>
+                        Lấy dữ liệu
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="thongBaoChiSo" style="display:none"
+         class="alert mb-4"></div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header font-weight-bold text-primary">
+            <i class="fa fa-calculator mr-2"></i>
+            Bước 2 — Chi tiết các khoản tiền
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label class="font-weight-bold">Tiền phòng (đ)</label>
+                    @Html.TextBoxFor(m => m.TienPhong, new
+                    {
+                        @class = "form-control tinh-toan",
+                        type = "number",
+                        min = "0",
+                        step = "50000",
+                        id = "tienPhong"
+                    })
+                </div>
+            </div>
+            <div class="card border-warning mb-3">
+                <div class="card-header bg-warning text-white py-2
+                            font-weight-bold">
+                    <i class="fa fa-bolt mr-2"></i> Tiền điện
+                </div>
+                <div class="card-body py-3">
+                    <div class="row align-items-center">
+                        <div class="col-md-3">
+                            <label class="small font-weight-bold">
+                                Tiêu thụ
+                            </label>
+                            <div id="moTaDien"
+                                 class="form-control bg-light small">—</div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="small font-weight-bold">
+                                Tiền điện (đ)
+                            </label>
+                            @Html.TextBoxFor(m => m.TienDien, new
+                            {
+                                @class = "form-control tinh-toan",
+                                type = "number",
+                                min = "0",
+                                step = "1000",
+                                id = "tienDien"
+                            })
+                        </div>
+                        <div class="col-md-6">
+                            <div id="canhBaoDien"
+                                 class="alert alert-warning py-2 mb-0 small"
+                                 style="display:none">
+                                <i class="fa fa-exclamation-triangle mr-1"></i>
+                                Chưa có chỉ số điện tháng này.
+                                Vui lòng ghi chỉ số trước hoặc nhập tay.
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="MaChiSoDien"
+                           id="hiddenMaChiSoDien" />
+                </div>
+            </div>
+
+            <div class="card border-info mb-3">
+                <div class="card-header bg-info text-white py-2
+                            font-weight-bold">
+                    <i class="fa fa-tint mr-2"></i> Tiền nước
+                </div>
+                <div class="card-body py-3">
+                    <div class="row align-items-center">
+                        <div class="col-md-3">
+                            <label class="small font-weight-bold">
+                                Tiêu thụ
+                            </label>
+                            <div id="moTaNuoc"
+                                 class="form-control bg-light small">—</div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="small font-weight-bold">
+                                Tiền nước (đ)
+                            </label>
+                            @Html.TextBoxFor(m => m.TienNuoc, new
+                            {
+                                @class = "form-control tinh-toan",
+                                type = "number",
+                                min = "0",
+                                step = "1000",
+                                id = "tienNuoc"
+                            })
+                        </div>
+                        <div class="col-md-6">
+                            <div id="canhBaoNuoc"
+                                 class="alert alert-warning py-2 mb-0 small"
+                                 style="display:none">
+                                <i class="fa fa-exclamation-triangle mr-1"></i>
+                                Chưa có chỉ số nước tháng này.
+                                Vui lòng ghi chỉ số trước hoặc nhập tay.
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="MaChiSoNuoc"
+                           id="hiddenMaChiSoNuoc" />
+                </div>
+            </div>
+
+            <div id="cardDichVu" style="display:none">
+                <div class="card border-secondary mb-3">
+                    <div class="card-header bg-secondary text-white py-2
+                                font-weight-bold">
+                        <i class="fa fa-cog mr-2"></i> Dịch vụ hàng tháng
+                    </div>
+                    <div class="card-body py-3">
+                        <div class="row" id="rowDichVu"></div>
+                        <div class="row mt-2">
+                            <div class="col-md-4 offset-md-8">
+                                <div class="d-flex justify-content-between
+                                            align-items-center
+                                            border-top pt-2">
+                                    <span class="font-weight-bold small">
+                                        Tổng dịch vụ:
+                                    </span>
+                                    <strong id="lblTongDichVu"
+                                            class="text-warning">0đ</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="font-weight-bold">
+                        Hạn thanh toán <span class="text-danger">*</span>
+                    </label>
+                    @Html.TextBoxFor(m => m.HanThanhToan, "{0:yyyy-MM-dd}", new
+                    {
+                        @class = "form-control",
+                        type = "date",
+                        id = "hanThanhToan"
+                    })
+                </div>
+                <div class="col-md-5 offset-md-4">
+                    <label class="font-weight-bold">Tổng tiền phải thu</label>
+                    <div class="p-3 text-right font-weight-bold border
+                                rounded bg-light"
+                         id="tongTien"
+                         style="font-size:22px;color:#1cc88a;">
+                        0 đ
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mt-3 mb-0">
+                <label class="font-weight-bold">Ghi chú</label>
+                @Html.TextAreaFor(m => m.GhiChu, new
+                {
+                    @class = "form-control",
+                    rows = 2,
+                    placeholder = "Ghi chú thêm nếu có..."
+                })
+            </div>
+
+            <input type="hidden" name="TienDichVu"
+                   id="hiddenTienDichVu" value="0" />
+
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        @Html.ActionLink("Trở lại", "DanhSach", null,
+            new { @class = "btn btn-secondary px-4" })
+        <button type="submit" class="btn btn-primary px-4">
+            <i class="fa fa-plus mr-1"></i> Tạo hóa đơn
+        </button>
+    </div>
+}
+
+@section Scripts {
+    <script>
+var urlThongTin = '@Url.Action("LayThongTinHopDong","ChuTroHoaDon")';
+
+$('#btnLayThongTin').on('click', function () {
+    var maHopDong   = $('#selHopDong').val();
+    var thangHoaDon = $('#thangHoaDon').val();
+
+    if (!maHopDong) {
+        hienThiThongBao('warning', 'Vui lòng chọn hợp đồng!');
+        return;
+    }
+    if (!thangHoaDon) {
+        hienThiThongBao('warning', 'Vui lòng chọn tháng hóa đơn!');
+        return;
+    }
+
+    var btn = $(this);
+    btn.prop('disabled', true)
+       .html('<i class="fa fa-spinner fa-spin mr-1"></i> Đang tải...');
+
+    $.getJSON(urlThongTin,
+        { maHopDong: maHopDong, thangHoaDon: thangHoaDon },
+        function (d) {
+            btn.prop('disabled', false)
+               .html('<i class="fa fa-sync mr-1"></i> Lấy dữ liệu');
+
+            if (!d.success) {
+                hienThiThongBao('danger', 'Không tìm thấy thông tin!');
+                return;
+            }
+
+            // Tiền phòng
+            $('#tienPhong').val(d.tienPhong);
+
+            // Điện
+            if (d.coDien) {
+                $('#tienDien').val(d.tienDien);
+                $('#hiddenMaChiSoDien').val(d.maChiSoDien);
+                $('#moTaDien').text(
+                    formatSo(d.soTieuThuDien) + ' kWh × '
+                    + formatSo(d.donGiaDien) + 'đ = '
+                    + formatSo(d.tienDien) + 'đ');
+                $('#canhBaoDien').hide();
+            } else {
+                $('#tienDien').val(0);
+                $('#hiddenMaChiSoDien').val('');
+                $('#moTaDien').text('Chưa có chỉ số');
+                $('#canhBaoDien').show();
+            }
+
+            // Nước
+            if (d.coNuoc) {
+                $('#tienNuoc').val(d.tienNuoc);
+                $('#hiddenMaChiSoNuoc').val(d.maChiSoNuoc);
+                $('#moTaNuoc').text(
+                    formatSo(d.soTieuThuNuoc) + ' m³ × '
+                    + formatSo(d.donGiaNuoc) + 'đ = '
+                    + formatSo(d.tienNuoc) + 'đ');
+                $('#canhBaoNuoc').hide();
+            } else {
+                $('#tienNuoc').val(0);
+                $('#hiddenMaChiSoNuoc').val('');
+                $('#moTaNuoc').text('Chưa có chỉ số');
+                $('#canhBaoNuoc').show();
+            }
+
+            // Dịch vụ
+            if (d.dsDichVu && d.dsDichVu.length > 0) {
+                var html = '';
+                d.dsDichVu.forEach(function (dv) {
+                    html += '<div class="col-md-4 mb-2">'
+                          + '<div class="d-flex justify-content-between'
+                          + ' align-items-center border rounded p-2 bg-light">'
+                          + '<div>'
+                          + '<i class="fas ' + dv.bieuTuong
+                          + ' mr-1 text-warning"></i>'
+                          + '<strong class="small">'
+                          + dv.tenDichVu + '</strong>'
+                          + (dv.soLuong > 1
+                             ? ' <span class="badge badge-secondary">×'
+                               + dv.soLuong + '</span>'
+                             : '')
+                          + '<br><small class="text-muted">'
+                          + formatSo(dv.donGia) + 'đ/'
+                          + dv.donVi + '</small>'
+                          + '</div>'
+                          + '<strong class="text-warning small">'
+                          + formatSo(dv.thanhTien) + 'đ</strong>'
+                          + '</div></div>';
+                });
+                $('#rowDichVu').html(html);
+                $('#lblTongDichVu').text(formatSo(d.tongDichVu) + 'đ');
+                $('#hiddenTienDichVu').val(d.tongDichVu);
+                $('#cardDichVu').show();
+            } else {
+                $('#rowDichVu').html('');
+                $('#cardDichVu').hide();
+                $('#hiddenTienDichVu').val(0);
+            }
+
+            // Hạn thanh toán
+            $('#hanThanhToan').val(d.hanThanhToan);
+
+            // Thông báo
+            var canhBao = (!d.coDien || !d.coNuoc);
+            hienThiThongBao(
+                canhBao ? 'warning' : 'success',
+                canhBao
+                    ? '<i class="fa fa-exclamation-triangle mr-2"></i>'
+                      + 'Một số chỉ số chưa được ghi. Kiểm tra lại!'
+                    : '<i class="fa fa-check-circle mr-2"></i>'
+                      + 'Đã tải dữ liệu tháng '
+                      + thangHoaDon + ' thành công!'
+            );
+
+            tinhTong();
+        }
+    ).fail(function () {
+        btn.prop('disabled', false)
+           .html('<i class="fa fa-sync mr-1"></i> Lấy dữ liệu');
+        hienThiThongBao('danger', 'Lỗi kết nối, vui lòng thử lại!');
+    });
+});
+
+function tinhTong() {
+    var p  = parseFloat($('#tienPhong').val())      || 0;
+    var d  = parseFloat($('#tienDien').val())        || 0;
+    var n  = parseFloat($('#tienNuoc').val())        || 0;
+    var dv = parseFloat($('#hiddenTienDichVu').val())|| 0;
+    var t  = p + d + n + dv;
+    $('#tongTien').text(formatSo(t) + ' đ');
+}
+
+$('.tinh-toan').on('input', tinhTong);
+
+function formatSo(n) {
+    return parseFloat(n || 0).toLocaleString('vi-VN');
+}
+
+function hienThiThongBao(loai, msg) {
+    $('#thongBaoChiSo')
+        .removeClass('alert-success alert-warning alert-danger alert-info')
+        .addClass('alert-' + loai)
+        .html(msg)
+        .show();
+}
+    </script>
+}

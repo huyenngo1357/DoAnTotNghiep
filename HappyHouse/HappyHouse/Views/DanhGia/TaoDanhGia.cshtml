@@ -1,0 +1,284 @@
+﻿@using HappyHouse.Models
+@model HappyHouse.Models.HopDong
+
+@{
+    ViewBag.Title = "Viết Đánh Giá";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    ViewBag.ActiveMenu = "TaiKhoan";
+
+    var phong = Model.PhongTro;
+    var toaNha = phong?.ToaNha;
+
+    var dsAnh = phong != null
+        ? phong.HinhAnhPhongs.Where(x => x.TrangThai).ToList()
+        : new List<HinhAnhPhong>();
+    var anh = dsAnh.FirstOrDefault(x => x.LaDaiDien)
+              ?? dsAnh.FirstOrDefault();
+    string anhUrl = anh != null
+        ? Url.Content("~/Content/images/phongs/" + anh.TenFile)
+        : "/Content/Home/img/properties/property-1.jpg";
+}
+
+<style>
+    .star-icon {
+        font-size: 38px;
+        color: #ddd;
+        cursor: pointer;
+        transition: color .1s;
+        padding: 0 3px;
+    }
+
+    .goiy-tag {
+        padding: 5px 12px;
+        background: #fff;
+        border: 1px solid #2cbdb8;
+        border-radius: 20px;
+        font-size: 12px;
+        color: #2cbdb8;
+        cursor: pointer;
+        transition: background .15s;
+        display: inline-block;
+        margin: 3px;
+    }
+
+        .goiy-tag:hover {
+            background: #2cbdb8;
+            color: #fff;
+        }
+
+    .dg-textarea {
+        width: 100%;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 14px;
+        font-size: 14px;
+        resize: vertical;
+        outline: none;
+        transition: border .2s;
+    }
+
+        .dg-textarea:focus {
+            border-color: #2cbdb8;
+        }
+</style>
+
+<section class="spad" style="background:#f7f8fa;">
+    <div class="container" style="max-width:760px;">
+
+        <div style="font-size:13px;color:#888;margin-bottom:20px;">
+            <a href="@Url.Action("Index","TrangChu")"
+               style="color:#2cbdb8;">Trang chủ</a>
+            <i class="fa fa-angle-right mx-2"></i>
+            <a href="@Url.Action("DanhSach","DanhGia")"
+               style="color:#2cbdb8;">Đánh giá</a>
+            <i class="fa fa-angle-right mx-2"></i>
+            <span style="color:#555;">Viết đánh giá</span>
+        </div>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show">
+                @TempData["Error"]
+                <button type="button" class="close"
+                        data-dismiss="alert">
+                    <span>&times;</span>
+                </button>
+            </div>
+        }
+
+        <div style="background:#fff;border-radius:10px;
+                    box-shadow:0 2px 15px rgba(0,0,0,.07);
+                    padding:20px 24px;margin-bottom:20px;
+                    display:flex;gap:18px;align-items:center;">
+            <img src="@anhUrl" alt=""
+                 style="width:100px;height:80px;object-fit:cover;
+                        border-radius:8px;flex-shrink:0;" />
+            <div>
+                <h5 style="font-weight:700;margin:0 0 5px;">
+                    @(phong != null ? "Phòng " + phong.SoPhong : "—")
+                    @if (toaNha != null)
+                    {
+                        <span style="font-size:14px;color:#888;
+                                     font-weight:400;">
+                            — @toaNha.TenToaNha
+                        </span>
+                    }
+                </h5>
+                <p style="color:#888;font-size:13px;margin:0 0 3px;">
+                    <i class="fa fa-map-marker mr-1"
+                       style="color:#2cbdb8;"></i>
+                    @(toaNha != null
+                        ? toaNha.DiaChi + ", " + toaNha.TinhThanh : "—")
+                </p>
+                <p style="color:#888;font-size:13px;margin:0;">
+                    <i class="fa fa-calendar mr-1"
+                       style="color:#2cbdb8;"></i>
+                    @Model.NgayBatDau.ToString("dd/MM/yyyy")
+                    → @Model.NgayKetThuc.ToString("dd/MM/yyyy")
+                </p>
+            </div>
+        </div>
+
+        <div style="background:#fff;border-radius:10px;
+                    box-shadow:0 2px 15px rgba(0,0,0,.07);
+                    padding:30px;">
+
+            <h5 style="font-weight:700;color:#222;margin-bottom:24px;
+                       padding-bottom:12px;border-bottom:2px solid #2cbdb8;">
+                <i class="fa fa-star mr-2" style="color:#2cbdb8;"></i>
+                Viết Đánh Giá Của Bạn
+            </h5>
+
+            @using (Html.BeginForm("TaoDanhGia", "DanhGia",
+                FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="maHopDong"
+                       value="@Model.MaHopDong" />
+
+                <div style="margin-bottom:24px;">
+                    <label style="font-weight:700;font-size:14px;
+                                  color:#333;display:block;margin-bottom:10px;">
+                        Điểm Đánh Giá
+                        <span style="color:#e74a3b;">*</span>
+                    </label>
+                    <div style="display:flex;gap:4px;margin-bottom:8px;">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <i class="fa fa-star star-icon"
+                               data-value="@i"
+                               onclick="chonSao(@i)"
+                               onmouseover="hoverSao(@i)"
+                               onmouseout="resetSao()"></i>
+                        }
+                    </div>
+                    <input type="hidden" name="diemDanhGia"
+                           id="diemDanhGia" value="0" />
+                    <div id="tenDiem"
+                         style="font-size:14px;font-weight:700;
+                                color:#2cbdb8;min-height:20px;">
+                    </div>
+                </div>
+
+                <div style="margin-bottom:20px;">
+                    <label style="font-weight:700;font-size:14px;
+                                  color:#333;display:block;margin-bottom:8px;">
+                        Nhận Xét
+                        <span style="color:#e74a3b;">*</span>
+                    </label>
+                    <textarea name="nhanXet" id="txtNhanXet"
+                              class="dg-textarea" rows="5"
+                              placeholder="Chia sẻ trải nghiệm của bạn..."
+                              maxlength="500"></textarea>
+                    <div style="text-align:right;font-size:12px;color:#aaa;
+                                margin-top:4px;">
+                        <span id="demKyTu">0</span>/500
+                    </div>
+                </div>
+
+                <div style="background:#f8fffe;padding:14px;
+                            border-radius:8px;margin-bottom:24px;
+                            border:1px solid #c8eeed;">
+                    <p style="font-weight:700;font-size:12px;
+                              color:#2cbdb8;margin-bottom:8px;
+                              text-transform:uppercase;letter-spacing:.5px;">
+                        <i class="fa fa-lightbulb-o mr-1"></i>
+                        Gợi ý nội dung
+                    </p>
+                    @foreach (var gy in new[]
+                    {
+                        "Phòng sạch sẽ, thoáng mát",
+                        "Chủ trọ nhiệt tình",
+                        "Giá cả hợp lý",
+                        "An ninh tốt",
+                        "Tiện ích đầy đủ",
+                        "Vị trí thuận tiện",
+                        "Điện nước ổn định",
+                        "Yên tĩnh"
+                    })
+                    {
+                        <span class="goiy-tag"
+                              onclick="themGoiY('@gy')">
+                            + @gy
+                        </span>
+                    }
+                </div>
+
+                <div style="display:flex;justify-content:space-between;
+                            align-items:center;flex-wrap:wrap;gap:10px;">
+                    <a href="@Url.Action("DanhSach","DanhGia")"
+                       style="padding:11px 25px;border:1px solid #ddd;
+                              color:#555;border-radius:8px;
+                              text-decoration:none;font-size:14px;
+                              font-weight:600;">
+                        <i class="fa fa-arrow-left mr-1"></i>Quay lại
+                    </a>
+                    <button type="submit" id="btnGui"
+                            style="padding:12px 36px;background:#2cbdb8;
+                                   color:#fff;border:none;border-radius:8px;
+                                   font-weight:700;font-size:14px;
+                                   cursor:pointer;transition:background .2s;"
+                            onmouseover="this.style.background='#24a09b'"
+                            onmouseout="this.style.background='#2cbdb8'">
+                        <i class="fa fa-paper-plane mr-2"></i>
+                        Gửi Đánh Giá
+                    </button>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        var diemDaChon = 0;
+        var tenDiem = ['', 'Rất Tệ', 'Tệ', 'Bình Thường', 'Tốt', 'Xuất Sắc'];
+
+        function chonSao(diem) {
+            diemDaChon = diem;
+            document.getElementById('diemDanhGia').value = diem;
+            document.getElementById('tenDiem').textContent = tenDiem[diem];
+            toSao(diem);
+        }
+
+        function hoverSao(diem) { toSao(diem); }
+
+        function resetSao() { toSao(diemDaChon); }
+
+        function toSao(diem) {
+            document.querySelectorAll('.star-icon').forEach(function (s, i) {
+                s.style.color = i < diem ? '#f5a623' : '#ddd';
+            });
+        }
+
+        document.getElementById('txtNhanXet')
+            .addEventListener('input', function () {
+                document.getElementById('demKyTu').textContent = this.value.length;
+            });
+
+        function themGoiY(text) {
+            var txt = document.getElementById('txtNhanXet');
+            if (txt.value.length > 0 && !txt.value.endsWith(', '))
+                txt.value += ', ';
+            txt.value += text;
+            document.getElementById('demKyTu').textContent = txt.value.length;
+        }
+
+        document.querySelector('form').addEventListener('submit', function (e) {
+            if (diemDaChon === 0) {
+                e.preventDefault();
+                alert('Vui lòng chọn số sao đánh giá!');
+                return;
+            }
+            if (!document.getElementById('txtNhanXet').value.trim()) {
+                e.preventDefault();
+                alert('Vui lòng nhập nhận xét!');
+            }
+        });
+
+        setTimeout(function () {
+            $('.alert').fadeOut('slow', function () { $(this).remove(); });
+        }, 2000);
+    </script>
+}

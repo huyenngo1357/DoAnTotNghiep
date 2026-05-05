@@ -1,0 +1,286 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<HappyHouse.Models.HopDong>
+
+@{
+    ViewBag.Title = "Quản lý hợp đồng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Hợp đồng thuê phòng</h2>
+}
+@section breadLink {
+    <a href="#">Danh sách hợp đồng</a>
+}
+
+@using (Html.BeginForm("DanhSach", "ChuTroHopDong", FormMethod.Post))
+{
+    <fieldset class="border p-3 shadow-sm mb-3">
+        <legend class="w-auto px-2" style="font-weight:bold;color:black">
+            Tìm kiếm
+        </legend>
+        <div class="row">
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold;color:black">Từ khóa:</label>
+            <div class="col-md-3">
+                <input type="text" name="tuKhoa" value="@ViewBag.TuKhoa"
+                       class="form-control"
+                       placeholder="Mã HĐ, tên khách, SĐT, số phòng..." />
+            </div>
+
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold;color:black">Phòng:</label>
+            <div class="col-md-2">
+                @Html.DropDownList("maPhong",
+                    (SelectList)ViewBag.DsPhong,
+                    "--- Tất cả ---",
+                    new { @class = "form-control" })
+            </div>
+
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold;color:black">Trạng thái:</label>
+            <div class="col-md-2">
+                @Html.DropDownList("trangThai",
+                    (SelectList)ViewBag.DsTrangThai,
+                    new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-2 d-flex align-items-center">
+                <input type="submit" class="btn btn-primary"
+                       value="Tìm kiếm" style="margin-right:8px" />
+                <a href="@Url.Action("DanhSach","ChuTroHopDong")"
+                   class="btn btn-secondary">Làm mới</a>
+            </div>
+        </div>
+    </fieldset>
+}
+
+<p style="text-align:right; margin:10px">
+    @Html.ActionLink("+ Tạo hợp đồng", "ThemMoi", null,
+        new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-bordered table-hover" width="100%">
+    <thead class="thead-light">
+        <tr style="text-align:center">
+            <th>Mã HĐ</th>
+            <th>Phòng — Tòa nhà</th>
+            <th>Khách hàng</th>
+            <th>Dịch vụ</th>
+            <th>Ngày BĐ</th>
+            <th>Ngày KT</th>
+            <th>Giá thuê</th>
+            <th>Trạng thái</th>
+            <th style="width:200px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="9">
+                    <div style="text-align:center;padding:40px 20px;">
+                        <i class="fas fa-file-contract"
+                           style="font-size:48px;color:#b0b8c9;
+                                  display:block;margin-bottom:12px;"></i>
+                        <p style="color:#9aa0ac;font-size:15px;margin:0;">
+                            Chưa có hợp đồng nào.
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                string bc, bt;
+                switch (item.TrangThaiHopDong)
+                {
+                    case "ChoKy": bc = "warning"; bt = "Chờ ký"; break;
+                    case "DangThue": bc = "success"; bt = "Đang thuê"; break;
+                    case "HetHan": bc = "secondary"; bt = "Hết hạn"; break;
+                    case "DaHuy": bc = "danger"; bt = "Đã hủy"; break;
+                    default:
+                        bc = "secondary";
+                        bt = item.TrangThaiHopDong ?? "—"; break;
+                }
+
+                bool sapHetHan = item.TrangThaiHopDong == "DangThue"
+                              && item.NgayKetThuc
+                                 <= System.DateTime.Today.AddDays(30);
+
+                @* ── NguoiDung1 = KhachHang (FK MaKhachHang) ── *@
+                var khach = item.NguoiDung1;
+
+                <tr style="vertical-align:middle">
+                    <td><code class="small">@item.MaHopDong</code></td>
+
+                    <td>
+                        @if (item.PhongTro != null)
+                        {
+                            <strong>@item.PhongTro.SoPhong</strong>
+                            <br />
+                            <small class="text-muted">
+                                @item.PhongTro.ToaNha.TenToaNha
+                            </small>
+                        }
+                    </td>
+
+                    <td>
+                        @if (khach != null)
+                        {
+                            <strong>@khach.HoTen</strong>
+                            <br />
+                            <small class="text-muted">@khach.SoDienThoai</small>
+                            <br />
+                            <small class="text-muted">@khach.Email</small>
+                        }
+                        else
+                        {
+                            <span class="text-muted small">—</span>
+                        }
+                    </td>
+
+                    <td>
+                        @if (item.HopDong_DichVu != null
+                          && item.HopDong_DichVu.Any())
+                        {
+                            foreach (var dv in item.HopDong_DichVu)
+                            {
+                                <span class="badge badge-light border
+                                             mb-1 d-block">
+                                    <i class="fas @(dv.GiaDichVu?.TienIch
+                                        ?.BieuTuong ?? "fa-cog")
+                                       mr-1 text-warning"></i>
+                                    @(dv.GiaDichVu?.TienIch?.TenTienIch ?? "—")
+                                    @if (dv.SoLuong > 1)
+                                    {
+                                        <span class="text-muted">
+                                            ×@dv.SoLuong
+                                        </span>
+                                    }
+                                </span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="text-muted small">Không có</span>
+                        }
+                    </td>
+
+                    <td class="text-center">
+                        @item.NgayBatDau.ToString("dd/MM/yyyy")
+                    </td>
+
+                    <td class="text-center
+                         @(sapHetHan ? "text-warning font-weight-bold" : "")">
+                        @item.NgayKetThuc.ToString("dd/MM/yyyy")
+                        @if (sapHetHan)
+                        {
+                            <br />
+                            <small>
+                                <i class="fa fa-clock"></i> Sắp hết
+                            </small>
+                        }
+                    </td>
+
+                    <td class="text-right">
+                        <strong>
+                            @String.Format("{0:N0}", item.GiaThueThang)đ
+                        </strong>
+                    </td>
+
+                    <td class="text-center">
+                        <span class="badge badge-pill badge-@bc px-2 py-1">
+                            @bt
+                        </span>
+                    </td>
+
+                    <td class="text-center">
+                        @Html.ActionLink("Chi tiết", "ChiTiet",
+                            new { maHopDong = item.MaHopDong },
+                            new { @class = "btn btn-info btn-sm mb-1" })
+
+                        @if (item.TrangThaiHopDong == "ChoKy")
+                        {
+                            using (Html.BeginForm("KyHopDong",
+                                "ChuTroHopDong", FormMethod.Post,
+                                new { style = "display:inline" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="maHopDong"
+                                       value="@item.MaHopDong" />
+                                <button type="submit"
+                                        class="btn btn-success btn-sm mb-1"
+                                        onclick="return confirm(
+                                            'Ký hợp đồng này?')">
+                                    Ký HĐ
+                                </button>
+                            }
+                            @Html.ActionLink("Sửa", "SuaThongTin",
+                                new { maHopDong = item.MaHopDong },
+                                new { @class = "btn btn-warning btn-sm mb-1" })
+                        }
+
+                        @if (item.TrangThaiHopDong == "DangThue")
+                        {
+                            using (Html.BeginForm("KetThuc",
+                                "ChuTroHopDong", FormMethod.Post,
+                                new { style = "display:inline" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="maHopDong"
+                                       value="@item.MaHopDong" />
+                                <button type="submit"
+                                        class="btn btn-secondary btn-sm mb-1"
+                                        onclick="return confirm(
+                                            'Kết thúc hợp đồng này?')">
+                                    Kết thúc
+                                </button>
+                            }
+                        }
+
+                        @if (item.TrangThaiHopDong == "ChoKy"
+                          || item.TrangThaiHopDong == "DangThue")
+                        {
+                            @Html.ActionLink("Hủy", "Huy",
+                                new { maHopDong = item.MaHopDong },
+                                new { @class = "btn btn-danger btn-sm mb-1" })
+                        }
+
+                        <a href="@Url.Action("XuatPdf","ChuTroHopDong",
+                                new { maHopDong = item.MaHopDong })"
+                               class="btn btn-danger btn-sm mb-1"
+                               target="_blank"
+                               title="Xuất hợp đồng PDF">
+                                <i class="fas fa-file-pdf"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@if (Model.PageCount > 1)
+{
+    <div class="d-flex justify-content-center mt-3">
+        @Html.PagedListPager(Model,
+            page => Url.Action("DanhSach", new
+            {
+                page,
+                tuKhoa = ViewBag.TuKhoa,
+                maPhong = ViewBag.MaPhong,
+                trangThai = ViewBag.TrangThai
+            }),
+            new PagedListRenderOptions
+            {
+                UlElementClasses = new[]
+                {
+                    "pagination", "justify-content-center"
+                },
+                LiElementClasses = new[] { "page-item" }
+            })
+    </div>
+}

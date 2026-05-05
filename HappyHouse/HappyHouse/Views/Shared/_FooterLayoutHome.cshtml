@@ -1,0 +1,486 @@
+﻿<!-- Partner Carousel Section Begin -->
+<div class="partner-section">
+    <div class="container">
+        <div class="partner-carousel owl-carousel">
+            <a href="#" class="partner-logo">
+                <div class="partner-logo-tablecell">
+                    <img src="/Content/Home/img/partner/partner-1.png" alt="">
+                </div>
+            </a>
+            <a href="#" class="partner-logo">
+                <div class="partner-logo-tablecell">
+                    <img src="/Content/Home/img/partner/partner-2.png" alt="">
+                </div>
+            </a>
+            <a href="#" class="partner-logo">
+                <div class="partner-logo-tablecell">
+                    <img src="/Content/Home/img/partner/partner-3.png" alt="">
+                </div>
+            </a>
+            <a href="#" class="partner-logo">
+                <div class="partner-logo-tablecell">
+                    <img src="/Content/Home/img/partner/partner-4.png" alt="">
+                </div>
+            </a>
+            <a href="#" class="partner-logo">
+                <div class="partner-logo-tablecell">
+                    <img src="/Content/Home/img/partner/partner-5.png" alt="">
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<!-- Partner Carousel Section End -->
+
+<footer class="footer-section set-bg"
+        data-setbg="/Content/Home/img/footer-bg.jpg">
+    <div class="container">
+        <div class="footer-text">
+            <div class="row">
+
+                @* Giới thiệu *@
+                <div class="col-lg-3">
+                    <div class="footer-logo">
+                        <div class="logo mb-3">
+                            <a href="@Url.Action("Index","TrangChu")"
+                               style="font-family:'Poppins',sans-serif;
+                                      font-size:22px; font-weight:900;
+                                      color:#c8a415; letter-spacing:2px;
+                                      text-decoration:none;">
+                                HAPPY<span style="color:#fff;">HOUSE</span>
+                            </a>
+                        </div>
+                        <p>
+                            Hệ thống quản lý nhà trọ uy tín — kết nối
+                            chủ trọ và khách hàng một cách dễ dàng,
+                            minh bạch và tiện lợi.
+                        </p>
+                    </div>
+                </div>
+
+                @* Liên kết nhanh *@
+                <div class="col-lg-3 offset-lg-1">
+                    <div class="footer-widget">
+                        <h4>Liên Kết Nhanh</h4>
+                        <ul>
+                            <li>
+                                <i class="fa fa-caret-right"></i>
+                                <a href="@Url.Action("Index","TrangChu")">
+                                    Trang Chủ
+                                </a>
+                            </li>
+                            <li>
+                                <i class="fa fa-caret-right"></i>
+                                <a href="@Url.Action("DanhSach","PhongTro")">
+                                    Danh Sách Phòng
+                                </a>
+                            </li>
+                            <li>
+                                <i class="fa fa-caret-right"></i>
+                                <a href="@Url.Action("DanhSachTinTuc","TrangChu")">
+                                    Tin Tức
+                                </a>
+                            </li>
+                            <li>
+                                <i class="fa fa-caret-right"></i>
+                                <a href="@Url.Action("DangKy","TaiKhoan")">
+                                    Đăng Ký Tài Khoản
+                                </a>
+                            </li>
+                            <li>
+                                <i class="fa fa-caret-right"></i>
+                                <a href="@Url.Action("DangNhap","TaiKhoan")">
+                                    Đăng Nhập
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                @* Mạng xã hội *@
+                <div class="col-lg-2">
+                    <div class="footer-widget">
+                        <h4>Mạng Xã Hội</h4>
+                        <ul class="social">
+                            <li>
+                                <i class="ti-facebook"></i>
+                                <a href="#">Facebook</a>
+                            </li>
+                            <li>
+                                <i class="ti-instagram"></i>
+                                <a href="#">Instagram</a>
+                            </li>
+                            <li>
+                                <i class="ti-twitter-alt"></i>
+                                <a href="#">Twitter</a>
+                            </li>
+                            <li>
+                                <i class="ti-youtube"></i>
+                                <a href="#">Youtube</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                @* Liên hệ *@
+                <div class="col-lg-3">
+                    <div class="footer-widget">
+                        <h4>Liên Hệ</h4>
+                        <ul class="contact-option">
+                            <li>
+                                <i class="fa fa-map-marker"></i>
+                                123 Cầu Giấy, Hà Nội
+                            </li>
+                            <li>
+                                <i class="fa fa-phone"></i>
+                                (+84) 987 654 321
+                            </li>
+                            <li>
+                                <i class="fa fa-envelope"></i>
+                                happyhouse@gmail.vn
+                            </li>
+                            <li>
+                                <i class="fa fa-clock-o"></i>
+                                Thứ 2 - Thứ 7, 08:00 - 18:00
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="copyright-text">
+            <p>
+                Bản quyền &copy;
+                <script>document.write(new Date().getFullYear());</script>
+                <strong>HappyHouse</strong>.
+                Tất cả quyền được bảo lưu.
+            </p>
+        </div>
+    </div>
+</footer>
+
+@{
+    var userChat = Session["UserOnline"] as HappyHouse.Models.NguoiDung;
+    string tenViet = userChat?.HoTen?.Split(' ')?.LastOrDefault() ?? "bạn";
+}
+
+<style>
+    #hh-chatbot { position:fixed;bottom:24px;right:24px;z-index:9999; }
+
+    #hh-toggle {
+        width:58px;height:58px;border-radius:50%;
+        background:linear-gradient(135deg,#2cbdb8,#1a8a86);
+        border:none;color:#fff;font-size:22px;cursor:pointer;
+        box-shadow:0 4px 20px rgba(44,189,184,.45);
+        transition:transform .2s,box-shadow .2s;position:relative;
+    }
+    #hh-toggle:hover {
+        transform:scale(1.08);
+        box-shadow:0 6px 28px rgba(44,189,184,.55);
+    }
+    #hh-badge {
+        position:absolute;top:-4px;right:-4px;
+        background:#e74a3b;color:#fff;border-radius:50%;
+        width:20px;height:20px;font-size:11px;font-weight:700;
+        display:none;align-items:center;justify-content:center;
+    }
+
+    #hh-window {
+        position:absolute;bottom:70px;right:0;width:340px;
+        background:#fff;border-radius:16px;
+        box-shadow:0 8px 40px rgba(0,0,0,.15);
+        overflow:hidden;display:none;
+        animation:hhSlideUp .25s ease;
+    }
+    @@keyframes hhSlideUp {
+        from { opacity:0;transform:translateY(16px); }
+        to   { opacity:1;transform:translateY(0); }
+    }
+
+    .hh-header {
+        background:linear-gradient(135deg,#2cbdb8,#1a8a86);
+        padding:14px 16px;
+        display:flex;justify-content:space-between;align-items:center;
+        color:#fff;
+    }
+    .hh-avatar {
+        width:36px;height:36px;border-radius:50%;
+        background:rgba(255,255,255,.25);
+        display:flex;align-items:center;justify-content:center;
+        font-size:16px;margin-right:10px;flex-shrink:0;
+    }
+    .hh-online {
+        display:inline-block;width:7px;height:7px;
+        background:#a8ff78;border-radius:50%;margin-right:4px;
+        animation:hhBlink 1.5s infinite;
+    }
+    @@keyframes hhBlink {
+        0%,100%{opacity:1;} 50%{opacity:.3;}
+    }
+    .hh-close {
+        background:rgba(255,255,255,.2);border:none;color:#fff;
+        width:28px;height:28px;border-radius:50%;cursor:pointer;
+        font-size:13px;transition:background .15s;
+    }
+    .hh-close:hover { background:rgba(255,255,255,.35); }
+
+    #hh-messages {
+        height:280px;overflow-y:auto;
+        padding:14px;background:#f8fafc;
+        display:flex;flex-direction:column;gap:10px;
+    }
+    #hh-messages::-webkit-scrollbar { width:4px; }
+    #hh-messages::-webkit-scrollbar-thumb {
+        background:#cbd5e0;border-radius:4px;
+    }
+
+    .hh-bot,.hh-user {
+        display:flex;align-items:flex-end;gap:8px;
+    }
+    .hh-user { flex-direction:row-reverse; }
+
+    .hh-msg-avatar {
+        width:28px;height:28px;border-radius:50%;
+        background:linear-gradient(135deg,#2cbdb8,#1a8a86);
+        color:#fff;display:flex;align-items:center;
+        justify-content:center;font-size:12px;flex-shrink:0;
+    }
+    .hh-bubble {
+        max-width:78%;padding:10px 13px;
+        border-radius:14px;font-size:13px;line-height:1.6;
+    }
+    .hh-bot .hh-bubble {
+        background:#fff;color:#2d3748;
+        border-radius:4px 14px 14px 14px;
+        box-shadow:0 1px 4px rgba(0,0,0,.07);
+    }
+    .hh-user .hh-bubble {
+        background:linear-gradient(135deg,#2cbdb8,#1a8a86);
+        color:#fff;border-radius:14px 4px 14px 14px;
+    }
+
+    .hh-typing {
+        display:flex;gap:4px;padding:10px 14px;
+        background:#fff;border-radius:4px 14px 14px 14px;
+        box-shadow:0 1px 4px rgba(0,0,0,.07);width:fit-content;
+    }
+    .hh-typing span {
+        width:7px;height:7px;background:#2cbdb8;
+        border-radius:50%;animation:hhDot 1.2s infinite;
+    }
+    .hh-typing span:nth-child(2){animation-delay:.2s;}
+    .hh-typing span:nth-child(3){animation-delay:.4s;}
+    @@keyframes hhDot {
+        0%,60%,100%{transform:translateY(0);}
+        30%{transform:translateY(-6px);}
+    }
+
+    #hh-quick {
+        padding:8px 12px;display:flex;gap:6px;
+        flex-wrap:wrap;border-top:1px solid #f0f0f0;background:#fff;
+    }
+    .hh-qbtn {
+        border:1.5px solid #2cbdb8;color:#2cbdb8;background:#fff;
+        border-radius:50px;padding:4px 10px;font-size:11px;
+        font-weight:600;cursor:pointer;transition:.15s;
+    }
+    .hh-qbtn:hover { background:#2cbdb8;color:#fff; }
+
+    .hh-input-wrap {
+        display:flex;padding:10px 12px;gap:8px;
+        border-top:1px solid #edf2f7;background:#fff;
+    }
+    #hh-input {
+        flex:1;border:1.5px solid #e2e8f0;border-radius:50px;
+        padding:8px 14px;font-size:13px;outline:none;
+        transition:border-color .2s;
+    }
+    #hh-input:focus { border-color:#2cbdb8; }
+    #hh-send {
+        width:36px;height:36px;border-radius:50%;
+        background:linear-gradient(135deg,#2cbdb8,#1a8a86);
+        border:none;color:#fff;cursor:pointer;font-size:13px;
+        transition:transform .15s;flex-shrink:0;
+    }
+    #hh-send:hover { transform:scale(1.1); }
+    #hh-send:disabled { opacity:.5; }
+</style>
+
+<div id="hh-chatbot">
+
+    <button id="hh-toggle" onclick="hhToggle()">
+        <i id="hh-icon" class="fa fa-comments"></i>
+        <span id="hh-badge" class="hh-badge">1</span>
+    </button>
+
+    <div id="hh-window">
+
+        <div class="hh-header">
+            <div style="display:flex;align-items:center;">
+                <div class="hh-avatar">
+                    <i class="fa fa-home"></i>
+                </div>
+                <div>
+                    <div style="font-weight:700;font-size:14px;">
+                        HappyHouse AI
+                    </div>
+                    <div style="font-size:11px;opacity:.85;">
+                        <span class="hh-online"></span>
+                        Đang hoạt động
+                    </div>
+                </div>
+            </div>
+            <button class="hh-close" onclick="hhToggle()">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+
+        <div id="hh-messages"></div>
+
+        <div id="hh-quick">
+            <button class="hh-qbtn"
+                    onclick="hhQuick('Phòng trống giá rẻ nhất?')">
+                Phòng giá rẻ
+            </button>
+            <button class="hh-qbtn"
+                    onclick="hhQuick('Thủ tục thuê phòng như thế nào?')">
+                Thủ tục thuê
+            </button>
+            <button class="hh-qbtn"
+                    onclick="hhQuick('Chính sách đặt cọc như thế nào?')">
+                Chính sách cọc
+            </button>
+            <button class="hh-qbtn"
+                    onclick="hhQuick('Liên hệ hỗ trợ')">
+                Liên hệ
+            </button>
+        </div>
+
+        <div class="hh-input-wrap">
+            <input type="text" id="hh-input"
+                   placeholder="Nhập câu hỏi..."
+                   onkeydown="if(event.key==='Enter') hhSend()" />
+            <button id="hh-send" onclick="hhSend()">
+                <i class="fa fa-paper-plane"></i>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+var hhOpen  = false;
+var hhFirst = true;
+var hhUrl   = '@Url.Action("ChatBot","TrangChu")';
+var hhTen   = '@tenViet';
+
+function hhToggle() {
+    hhOpen = !hhOpen;
+    var win = document.getElementById('hh-window');
+    win.style.display = hhOpen ? 'block' : 'none';
+    document.getElementById('hh-icon').className
+        = hhOpen ? 'fa fa-times' : 'fa fa-comments';
+    document.getElementById('hh-badge').style.display = 'none';
+
+    if (hhOpen && hhFirst) {
+        hhFirst = false;
+        setTimeout(function () {
+            hhAddBot(
+                'Xin chào <b>' + hhTen + '</b>! 👋 Tôi là trợ lý '
+                + 'HappyHouse. Tôi có thể giúp bạn tìm phòng trọ, '
+                + 'tư vấn giá cả và giải đáp mọi thắc mắc. '
+                + 'Bạn cần hỗ trợ gì?'
+            );
+        }, 300);
+    }
+    if (hhOpen)
+        document.getElementById('hh-input').focus();
+}
+
+function hhAddBot(html) {
+    var msgs = document.getElementById('hh-messages');
+    var d = document.createElement('div');
+    d.className = 'hh-bot';
+    d.innerHTML =
+        '<div class="hh-msg-avatar">'
+        + '<i class="fa fa-robot"></i></div>'
+        + '<div class="hh-bubble">' + html + '</div>';
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+}
+
+function hhAddUser(text) {
+    var msgs = document.getElementById('hh-messages');
+    var d = document.createElement('div');
+    d.className = 'hh-user';
+    d.innerHTML =
+        '<div class="hh-bubble">' + text + '</div>';
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+}
+
+function hhShowTyping() {
+    var msgs = document.getElementById('hh-messages');
+    var d = document.createElement('div');
+    d.className = 'hh-bot';
+    d.id = 'hh-typing';
+    d.innerHTML =
+        '<div class="hh-msg-avatar">'
+        + '<i class="fa fa-robot"></i></div>'
+        + '<div class="hh-typing">'
+        + '<span></span><span></span><span></span></div>';
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+}
+
+function hhHideTyping() {
+    var el = document.getElementById('hh-typing');
+    if (el) el.remove();
+}
+
+function hhQuick(text) {
+    document.getElementById('hh-quick').style.display = 'none';
+    hhSend(text);
+}
+
+function hhSend(text) {
+    var input = document.getElementById('hh-input');
+    var msg   = text || input.value.trim();
+    if (!msg) return;
+
+    input.value = '';
+    hhAddUser(msg);
+    hhShowTyping();
+    document.getElementById('hh-send').disabled = true;
+
+    $.ajax({
+        url:         hhUrl,
+        type:        'POST',
+        data:        { message: msg },
+        success: function (res) {
+            hhHideTyping();
+            document.getElementById('hh-send').disabled = false;
+            // Chuyển xuống dòng thành <br>
+            var reply = (res.message || '')
+                .replace(/\n/g, '<br>');
+            hhAddBot(reply);
+        },
+        error: function () {
+            hhHideTyping();
+            document.getElementById('hh-send').disabled = false;
+            hhAddBot('Xin lỗi, có lỗi xảy ra. '
+                   + 'Vui lòng thử lại sau!');
+        }
+    });
+}
+
+// Badge sau 3 giây
+setTimeout(function () {
+    if (!hhOpen) {
+        var badge = document.getElementById('hh-badge');
+        badge.style.display = 'flex';
+    }
+}, 3000);
+</script>

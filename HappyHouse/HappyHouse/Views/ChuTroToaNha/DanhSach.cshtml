@@ -1,0 +1,230 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<HappyHouse.Models.ToaNha>
+
+@{
+    ViewBag.Title = "Quản lý tòa nhà của tôi";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Quản lý tòa nhà của tôi</h2>
+}
+@section breadLink {
+    <a href="#">Danh sách thông tin tòa nhà</a>
+}
+
+@using (Html.BeginForm("DanhSach", "ChuTroToaNha", FormMethod.Post))
+{
+    <fieldset class="border p-3 shadow-sm mb-3">
+        <legend class="w-auto px-2" style="font-weight:bold;color:black">
+            Tìm kiếm
+        </legend>
+        <div class="row">
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold;color:black">Từ khóa:</label>
+            <div class="col-md-3">
+                <input type="text" name="tuKhoa" value="@ViewBag.TuKhoa"
+                       class="form-control"
+                       placeholder="Tên tòa nhà, địa chỉ..." />
+            </div>
+
+            <label class="col-md-2 col-form-label"
+                   style="font-weight:bold;color:black; text-align:right">Trạng thái:</label>
+            <div class="col-md-2">
+                @Html.DropDownList("trangThaiDuyet",
+                    (SelectList)ViewBag.DsTrangThai,
+                    new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-3 d-flex align-items-center">
+                <input type="submit" class="btn btn-primary"
+                       value="Tìm kiếm" style="margin-right:8px" />
+                <a href="@Url.Action("DanhSach","ChuTroToaNha")"
+                   class="btn btn-secondary">Làm mới</a>
+            </div>
+        </div>
+    </fieldset>
+}
+
+<p style="text-align:right; margin:10px">
+    @Html.ActionLink("+ Thêm tòa nhà", "ThemMoi", null,
+        new { @class = "btn btn-primary" })
+</p>
+
+@if (!Model.Any())
+{
+    <div class="text-center py-5 text-muted">
+        <i class="fas fa-building fa-3x d-block mb-3"></i>
+        <p>Bạn chưa có tòa nhà nào.</p>
+        @Html.ActionLink("Thêm tòa nhà đầu tiên", "ThemMoi", null,
+            new { @class = "btn btn-primary" })
+    </div>
+}
+else
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            var anh = item.HinhAnhToaNhas
+                          .FirstOrDefault(x => x.LaDaiDien && x.TrangThai)
+                      ?? item.HinhAnhToaNhas.FirstOrDefault(x => x.TrangThai);
+
+            string bc, bt;
+            switch (item.TrangThaiDuyet)
+            {
+                case "ChoDuyet": bc = "warning"; bt = "Chờ duyệt"; break;
+                case "DaDuyet": bc = "success"; bt = "Đã duyệt"; break;
+                case "TuChoi": bc = "danger"; bt = "Từ chối"; break;
+                case "TamNgung": bc = "secondary"; bt = "Tạm ngưng"; break;
+                case "YeuCauXoa": bc = "dark"; bt = "Yêu cầu xóa"; break;
+                default: bc = "secondary"; bt = item.TrangThaiDuyet; break;
+            }
+
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100
+                     @(item.TrangThaiDuyet == "TuChoi" ? "border-danger" : "")
+                     @(item.TrangThaiDuyet == "YeuCauXoa" ? "border-dark" : "")">
+
+                    @if (anh != null)
+                    {
+                        <img src="~/Content/images/toanhas/@anh.TenFile"
+                             class="card-img-top"
+                             style="height:170px;object-fit:cover;" />
+                    }
+                    else
+                    {
+                        <div class="bg-light d-flex align-items-center
+                                    justify-content-center"
+                             style="height:100px;">
+                            <i class="fa fa-building fa-3x text-muted"></i>
+                        </div>
+                    }
+
+                    <div class="card-body pb-2">
+                        <div class="d-flex justify-content-between
+                                    align-items-start mb-1">
+                            <h6 class="card-title mb-0 font-weight-bold">
+                                @item.TenToaNha
+                            </h6>
+                            <span class="badge badge-pill badge-@bc ml-2">@bt</span>
+                        </div>
+
+                        <p class="text-muted small mb-1">
+                            <i class="fa fa-map-marker-alt mr-1"></i>
+                            @item.DiaChi — @item.TinhThanh
+                        </p>
+
+                        @if (item.TrangThaiDuyet == "TuChoi"
+                          && !string.IsNullOrEmpty(item.LyDoTuChoi))
+                        {
+                            <div class="alert alert-danger py-1 px-2 small mt-2 mb-1">
+                                <i class="fa fa-info-circle mr-1"></i>
+                                <strong>Lý do từ chối:</strong> @item.LyDoTuChoi
+                            </div>
+                        }
+
+                        @if (item.TrangThaiDuyet == "YeuCauXoa")
+                        {
+                            <div class="alert alert-warning py-1 px-2 small mt-2 mb-1">
+                                <i class="fa fa-clock mr-1"></i>
+                                Đang chờ admin xác nhận xóa...
+                            </div>
+                        }
+
+                        @if (item.NguoiDung1 != null && item.NgayDuyet.HasValue
+                          && item.TrangThaiDuyet != "YeuCauXoa")
+                        {
+                            <small class="text-muted">
+                                <i class="fa fa-user-check mr-1"></i>
+                                @item.NguoiDung1.HoTen —
+                                @item.NgayDuyet.Value.ToString("dd/MM/yyyy HH:mm")
+                            </small>
+                        }
+                    </div>
+
+                    <div class="card-footer bg-white">
+                        @Html.ActionLink("Chi tiết", "ChiTiet",
+                            new { maToaNha = item.MaToaNha },
+                            new { @class = "btn btn-info btn-sm mr-1" })
+
+                        @if (item.TrangThaiDuyet == "TuChoi" ||
+                             item.TrangThaiDuyet == "ChoDuyet")
+                        {
+                            @Html.ActionLink("Sửa", "SuaThongTin",
+                                new { maToaNha = item.MaToaNha },
+                                new { @class = "btn btn-warning btn-sm mr-1" })
+                        }
+
+                        @if (item.TrangThaiDuyet == "YeuCauXoa")
+                        {
+                            // Đang chờ admin → cho hủy yêu cầu
+                            using (Html.BeginForm("HuyYeuCauXoa", "ChuTroToaNha",
+                                FormMethod.Post, new { style = "display:inline" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="maToaNha"
+                                       value="@item.MaToaNha" />
+                                <button type="submit"
+                                        class="btn btn-secondary btn-sm mr-1"
+                                        onclick="return confirm('Hủy yêu cầu xóa?')">
+                                    <i class="fa fa-undo mr-1"></i> Hủy yêu cầu
+                                </button>
+                            }
+                        }
+                        else if (item.TrangThaiDuyet != "DaDuyet" &&
+                                 item.TrangThaiDuyet != "TamNgung")
+                        {
+                            // ChoDuyet / TuChoi → cho xóa ngay không cần duyệt
+                            using (Html.BeginForm("GuiYeuCauXoa", "ChuTroToaNha",
+                                FormMethod.Post, new { style = "display:inline" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="maToaNha"
+                                       value="@item.MaToaNha" />
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Gửi yêu cầu xóa tòa nhà này đến admin?')">
+                                    <i class="fa fa-trash mr-1"></i> Yêu cầu xóa
+                                </button>
+                            }
+                        }
+                        else
+                        {
+                            // DaDuyet / TamNgung → cần qua admin
+                            using (Html.BeginForm("GuiYeuCauXoa", "ChuTroToaNha",
+                                FormMethod.Post, new { style = "display:inline" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="maToaNha"
+                                       value="@item.MaToaNha" />
+                                <button type="submit"
+                                        class="btn btn-outline-danger btn-sm"
+                                        onclick="return confirm('Gửi yêu cầu xóa đến admin?')">
+                                    <i class="fa fa-trash mr-1"></i> Yêu cầu xóa
+                                </button>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    if (Model.PageCount > 1)
+    {
+        <div class="d-flex justify-content-center mt-2">
+            @Html.PagedListPager(Model,
+                page => Url.Action("DanhSach", new
+                {
+                    page,
+                    tuKhoa = ViewBag.TuKhoa,
+                    trangThaiDuyet = ViewBag.TrangThaiDuyet
+                }),
+                new PagedListRenderOptions
+                {
+                    UlElementClasses = new[] { "pagination", "justify-content-center" },
+                    LiElementClasses = new[] { "page-item" }
+                })
+        </div>
+    }
+}

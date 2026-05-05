@@ -1,0 +1,148 @@
+﻿@{
+    ViewBag.Title = "Quên mật khẩu";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Quên mật khẩu</title>
+
+    <link href="~/Content/Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900"
+          rel="stylesheet">
+    <link href="~/Content/Admin/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <link rel="icon" type="image/svg+xml" href="~/Content/images/favicon.svg" />
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #212529, #4e73df) !important;
+        }
+
+        .btn-primary {
+            background-color: #212529 !important;
+            border-color: #212529 !important;
+        }
+
+            .btn-primary:hover {
+                background-color: #000 !important;
+                border-color: #000 !important;
+            }
+
+        .bg-password-image {
+            background: url('/Content/Home/img/hero/hero-3.jpg') center center / cover no-repeat;
+        }
+
+        a {
+            color: #4e73df !important;
+        }
+
+            a:hover {
+                color: #212529 !important;
+            }
+
+        .card {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .brand-logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #212529;
+            letter-spacing: 1px;
+        }
+
+            .brand-logo span {
+                color: #4e73df;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center mb-4">
+                                        <div class="brand-logo mb-2">
+                                            Happy<span>House</span>
+                                        </div>
+                                        <h1 class="h4 text-gray-900">Quên mật khẩu?</h1>
+                                        <p class="text-muted small mb-4">
+                                            Nhập email của bạn, chúng tôi sẽ hướng dẫn
+                                            đặt lại mật khẩu.
+                                        </p>
+                                    </div>
+
+                                    @if (TempData["Success"] != null)
+                                    {
+                                        <div class="alert alert-success py-2">
+                                            <i class="fa fa-check-circle mr-2"></i>
+                                            @TempData["Success"]
+                                        </div>
+                                    }
+                                    @if (TempData["Error"] != null)
+                                    {
+                                        <div class="alert alert-danger py-2">
+                                            <i class="fa fa-exclamation-circle mr-2"></i>
+                                            @TempData["Error"]
+                                        </div>
+                                    }
+
+                                    <form class="user">
+                                        <div class="form-group">
+                                            <input type="email" name="email"
+                                                   class="form-control form-control-user"
+                                                   placeholder="Nhập địa chỉ Email..."
+                                                   required />
+                                        </div>
+                                        <button type="submit"
+                                                class="btn btn-primary btn-user btn-block">
+                                            <i class="fa fa-paper-plane mr-2"></i>
+                                            Gửi yêu cầu đặt lại mật khẩu
+                                        </button>
+                                    </form>
+
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small"
+                                           href="@Url.Action("DangKy","TaiKhoan")">
+                                            Tạo tài khoản mới!
+                                        </a>
+                                    </div>
+                                    <div class="text-center mt-2">
+                                        <a class="small"
+                                           href="@Url.Action("DangNhap","TaiKhoan")">
+                                            Đã có tài khoản? Đăng nhập!
+                                        </a>
+                                    </div>
+                                    <div class="text-center mt-2">
+                                        <a class="small"
+                                           href="@Url.Action("DanhSach","TrangChu")">
+                                            <i class="fa fa-home mr-1"></i>
+                                            Về trang chủ
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Content/Admin/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/Admin/js/sb-admin-2.min.js"></script>
+</body>
+</html>

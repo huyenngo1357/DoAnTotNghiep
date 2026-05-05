@@ -1,0 +1,265 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<HappyHouse.Models.ChiSoDienNuoc>
+
+@{
+    ViewBag.Title = "Chi so dien nuoc";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">
+        Chỉ số điện nước
+    </h2>
+}
+@section breadLink {
+    <a href="#">Danh sách chỉ số</a>
+}
+
+@using (Html.BeginForm("DanhSach", "ChuTroChiSo",
+    FormMethod.Post))
+{
+    <fieldset class="border p-3 shadow-sm mb-3">
+        <legend class="w-auto px-2"
+                style="font-weight:bold;color:black">
+            Tìm kiếm
+        </legend>
+        <div class="row">
+            <label class="col-md-2 col-form-label"
+                   style="font-weight:bold;color:black">
+                Hợp đồng:
+            </label>
+            <div class="col-md-4">
+                @Html.DropDownList("maHopDong",
+                    (SelectList)ViewBag.DsHopDong,
+                    "--- Tất cả ---",
+                    new { @class = "form-control" })
+            </div>
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold;color:black">
+                Loại:
+            </label>
+            <div class="col-md-2">
+                @Html.DropDownList("loaiDichVu",
+                    (SelectList)ViewBag.DsLoaiDichVu,
+                    new { @class = "form-control" })
+            </div>
+            <div class="col-md-3 d-flex align-items-center">
+                <input type="submit"
+                       class="btn btn-primary"
+                       value="Tìm kiếm"
+                       style="margin-right:8px" />
+                <a href="@Url.Action("DanhSach","ChuTroChiSo")"
+                   class="btn btn-secondary">
+                    Làm mới
+                </a>
+            </div>
+        </div>
+    </fieldset>
+}
+
+<p style="text-align:right;margin:10px">
+    @Html.ActionLink("+ Ghi chỉ số tháng mới",
+        "GhiChiSo", null,
+        new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-bordered table-striped"
+       width="100%">
+    <thead>
+        <tr style="text-align:center;color:black">
+            <th>Tháng ghi</th>
+            <th>Phòng — Tòa nhà</th>
+            <th>Khách hàng</th>
+            <th>Loại</th>
+            <th>Chỉ số đầu</th>
+            <th>Chỉ số cuối</th>
+            <th>Tiêu thụ</th>
+            <th>Đơn giá</th>
+            <th>Thành tiền</th>
+            <th>Ảnh</th>
+            <th style="width:110px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="11">
+                    <div style="text-align:center;
+                                padding:40px 20px;">
+                        <i class="fas fa-tachometer-alt"
+                           style="font-size:48px;color:#b0b8c9;
+                                  display:block;
+                                  margin-bottom:12px;"></i>
+                        <p style="color:#9aa0ac;
+                                  font-size:15px;margin:0;">
+                            Chưa có chỉ số nào.
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                bool laDien = item.LoaiDichVu == "Dien";
+
+                var khach = item.HopDong?.NguoiDung1;
+
+                <tr style="vertical-align:middle">
+                    <td style="text-align:center;
+                               font-weight:bold">
+                        @item.ThangGhi.ToString("MM/yyyy")
+                    </td>
+                    <td>
+                        @if (item.HopDong?.PhongTro != null)
+                        {
+                            <strong>
+                                @item.HopDong.PhongTro.SoPhong
+                            </strong>
+                            <br />
+                            <small class="text-muted">
+                                @item.HopDong.PhongTro.ToaNha.TenToaNha
+                            </small>
+                        }
+                    </td>
+                    <td>
+                        @if (khach != null)
+                        {
+                            <span>@khach.HoTen</span>
+                            <br />
+                            <small class="text-muted">
+                                @khach.SoDienThoai
+                            </small>
+                        }
+                        else
+                        {
+                            <span class="text-muted">—</span>
+                        }
+                    </td>
+                    <td style="text-align:center">
+                        @if (laDien)
+                        {
+                            <span class="badge badge-warning
+                                         px-2 py-1">
+                                <i class="fa fa-bolt mr-1"></i>
+                                Điện
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-info
+                                         px-2 py-1">
+                                <i class="fa fa-tint mr-1"></i>
+                                Nước
+                            </span>
+                        }
+                    </td>
+                    <td style="text-align:right">
+                        @String.Format("{0:N0}",
+                            item.ChiSoDau)
+                    </td>
+                    <td style="text-align:right">
+                        @String.Format("{0:N0}",
+                            item.ChiSoCuoi)
+                    </td>
+                    <td style="text-align:right;
+                               font-weight:bold">
+                        @(item.SoTieuThu.HasValue
+                            ? String.Format("{0:N0}",
+                                item.SoTieuThu.Value)
+                            : "—")
+                        <small class="text-muted">
+                            @(laDien ? "kWh" : "m³")
+                        </small>
+                    </td>
+                    <td style="text-align:right">
+                        @String.Format("{0:N0}",
+                            item.DonGia)đ
+                    </td>
+                    <td style="text-align:right;
+                               color:#1cc88a;
+                               font-weight:bold">
+                        @(item.ThanhTien.HasValue
+                            ? String.Format("{0:N0}",
+                                item.ThanhTien.Value) + "đ"
+                            : "—")
+                    </td>
+                    <td style="text-align:center">
+                        @if (!string.IsNullOrEmpty(
+                            item.AnhDongHo))
+                        {
+                            <a href="~/Content/images/dongho/@item.AnhDongHo"
+                               target="_blank">
+                                <img src="~/Content/images/dongho/@item.AnhDongHo"
+                                     style="width:45px;height:45px;
+                                            object-fit:cover;
+                                            border-radius:4px;" />
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-muted">—</span>
+                        }
+                    </td>
+                    <td style="text-align:center">
+                        @Html.ActionLink("Sửa", "SuaThongTin",
+                            new { maChiSo = item.MaChiSo },
+                            new
+                                 {
+                                     @class =
+                                "btn btn-warning btn-sm mb-1"
+                                 })
+
+                        @using (Html.BeginForm("Xoa",
+                            "ChuTroChiSo", FormMethod.Post,
+                            new { style = "display:inline" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden"
+                                   name="maChiSo"
+                                   value="@item.MaChiSo" />
+                            <button type="submit"
+                                    class="btn btn-danger
+                                           btn-sm mb-1"
+                                    onclick="return confirm(
+                                        'Xóa chỉ số này?')">
+                                Xóa
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@if (Model.PageCount > 1)
+{
+    <div class="d-flex justify-content-center mt-3">
+        @Html.PagedListPager(Model,
+            page => Url.Action("DanhSach", new
+            {
+                page,
+                maHopDong = ViewBag.MaHopDong,
+                loaiDichVu = ViewBag.LoaiDichVu
+            }),
+            new PagedListRenderOptions
+            {
+                UlElementClasses = new[]
+                {
+                    "pagination", "justify-content-center"
+                },
+                LiElementClasses = new[] { "page-item" }
+            })
+    </div>
+}
+
+<script>
+    setTimeout(function () {
+        $('.alert').fadeOut('slow', function () {
+            $(this).remove();
+        });
+    }, 1500);
+</script>

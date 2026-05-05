@@ -1,0 +1,472 @@
+﻿@using System.Collections.Generic
+@using HappyHouse.Models
+@using PagedList.Mvc
+@model PagedList.IPagedList<HappyHouse.Models.TinTuc>
+
+@{
+    ViewBag.Title = "Tin Tức";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    ViewBag.ActiveMenu = "TinTuc";
+
+    var dsChuDe = ViewBag.DsChuDe as List<ChuDeTinTuc>;
+    var tinTucMoiNhat = ViewBag.TinTucMoiNhat as List<TinTuc>;
+    string maChuDeHT = ViewBag.MaChuDe as string ?? "";
+    string tuKhoaHT = ViewBag.TuKhoa as string ?? "";
+}
+
+<style>
+    .tt-card {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 14px rgba(0,0,0,.07);
+        overflow: hidden;
+        margin-bottom: 24px;
+        transition: transform .2s, box-shadow .2s;
+    }
+
+        .tt-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,.11);
+        }
+
+        .tt-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+    .tt-card-body {
+        padding: 16px 18px 18px;
+    }
+
+    .tt-tag {
+        display: inline-block;
+        padding: 2px 10px;
+        background: #2cbdb8;
+        color: #fff;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        text-decoration: none;
+        letter-spacing: .3px;
+    }
+
+    .tt-card-body h4 {
+        font-size: 15px;
+        font-weight: 700;
+        margin: 6px 0 6px;
+    }
+
+        .tt-card-body h4 a {
+            color: #222;
+            text-decoration: none;
+        }
+
+            .tt-card-body h4 a:hover {
+                color: #2cbdb8;
+            }
+
+    .tt-meta {
+        font-size: 12px;
+        color: #aaa;
+        margin-bottom: 8px;
+    }
+
+        .tt-meta i {
+            color: #2cbdb8;
+            margin-right: 3px;
+        }
+
+    .tt-excerpt {
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    .tt-read {
+        font-size: 13px;
+        font-weight: 700;
+        color: #2cbdb8;
+        text-decoration: none;
+    }
+
+        .tt-read:hover {
+            color: #24a09b;
+        }
+
+    /* Sidebar */
+    .sb-box {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 14px rgba(0,0,0,.07);
+        padding: 22px;
+        margin-bottom: 24px;
+    }
+
+    .sb-title {
+        font-weight: 700;
+        font-size: 15px;
+        color: #222;
+        margin-bottom: 16px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #2cbdb8;
+    }
+
+    .sb-topic a {
+        display: block;
+        padding: 7px 0;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 13px;
+        color: #555;
+        text-decoration: none;
+        transition: color .15s;
+    }
+
+        .sb-topic a:hover, .sb-topic a.active {
+            color: #2cbdb8;
+            font-weight: 600;
+        }
+
+    .sb-search-wrap {
+        display: flex;
+    }
+
+        .sb-search-wrap input {
+            flex: 1;
+            padding: 9px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px 0 0 6px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .sb-search-wrap button {
+            padding: 9px 14px;
+            background: #2cbdb8;
+            color: #fff;
+            border: none;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+        }
+
+    /* Pager */
+    .hh-pager {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        margin-top: 24px;
+    }
+
+        .hh-pager a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+            transition: .15s;
+        }
+
+            .hh-pager a:hover, .hh-pager a.active {
+                background: #2cbdb8;
+                border-color: #2cbdb8;
+                color: #fff;
+            }
+
+            .hh-pager a.active {
+                pointer-events: none;
+                font-weight: 700;
+            }
+</style>
+
+<section class="spad" style="background:#f7f8fa;">
+    <div class="container">
+
+        <div style="font-size:13px;color:#888;margin-bottom:22px;">
+            <a href="@Url.Action("Index","TrangChu")"
+               style="color:#2cbdb8;">Trang chủ</a>
+            <i class="fa fa-angle-right mx-2"></i>
+            <span style="color:#555;font-weight:600;">Tin Tức</span>
+            @if (!string.IsNullOrEmpty(maChuDeHT) && dsChuDe != null)
+            {
+                var cd = dsChuDe.FirstOrDefault(x => x.MaChuDe == maChuDeHT);
+                if (cd != null)
+                {
+                    <i class="fa fa-angle-right mx-2"></i>
+                    <span style="color:#555;">@cd.TenChuDe</span>
+                }
+            }
+        </div>
+
+        <div class="row">
+
+            @* ── Danh sách ── *@
+            <div class="col-lg-8">
+
+                @using (Html.BeginForm("DanhSachTinTuc", "TrangChu",
+                    FormMethod.Get))
+                {
+                    <div style="display:flex;gap:8px;margin-bottom:20px;">
+                        <input type="text" name="tuKhoa"
+                               value="@tuKhoaHT"
+                               placeholder="Tìm kiếm tin tức..."
+                               style="flex:1;padding:10px 14px;
+                                      border:1px solid #ddd;border-radius:6px;
+                                      font-size:13px;outline:none;" />
+                        <button type="submit"
+                                style="padding:10px 18px;background:#2cbdb8;
+                                       color:#fff;border:none;border-radius:6px;
+                                       cursor:pointer;font-weight:600;">
+                            <i class="fa fa-search mr-1"></i>Tìm kiếm
+                        </button>
+                        @if (!string.IsNullOrEmpty(tuKhoaHT)
+                          || !string.IsNullOrEmpty(maChuDeHT))
+                        {
+                            <a href="@Url.Action("DanhSachTinTuc","TrangChu")"
+                               style="padding:10px 14px;background:#f0f0f0;
+                                      color:#555;border-radius:6px;
+                                      text-decoration:none;font-size:13px;">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        }
+                    </div>
+                }
+
+                <div style="font-size:13px;color:#888;margin-bottom:18px;">
+                    Tìm thấy
+                    <strong style="color:#2cbdb8;">@ViewBag.TongKetQua</strong>
+                    tin tức
+                    @if (!string.IsNullOrEmpty(maChuDeHT) && dsChuDe != null)
+                    {
+                        var cd = dsChuDe.FirstOrDefault(
+                                     x => x.MaChuDe == maChuDeHT);
+                        if (cd != null)
+                        {
+                            <span>— Chủ đề: <strong>@cd.TenChuDe</strong></span>
+                        }
+                    }
+                </div>
+
+                @if (!Model.Any())
+                {
+                    <div style="text-align:center;padding:60px 0;
+                                background:#fff;border-radius:10px;">
+                        <i class="fa fa-newspaper-o"
+                           style="font-size:60px;color:#ddd;
+                                  display:block;margin-bottom:20px;"></i>
+                        <h5 style="color:#999;">Không tìm thấy tin tức nào.</h5>
+                        <a href="@Url.Action("DanhSachTinTuc","TrangChu")"
+                           style="color:#2cbdb8;font-weight:600;">
+                            Xem tất cả tin tức
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        @foreach (var tt in Model)
+                        {
+                            <div class="col-md-6" style="margin-bottom:4px;">
+                                <div class="tt-card">
+                                    <a href="@Url.Action("ChiTietTinTuc",
+                                               "TrangChu",
+                                               new { maTinTuc = tt.MaTinTuc })">
+                                        <img src="@(!string.IsNullOrEmpty(tt.AnhDaiDien)
+                                                ? Url.Content("~/Content/images/tintuc/"
+                                                              + tt.AnhDaiDien)
+                                                : "/Content/Home/img/blog/latest-1.jpg")"
+                                             alt="@tt.TieuDe" />
+                                    </a>
+                                    <div class="tt-card-body">
+                                        @if (tt.ChuDeTinTuc != null)
+                                        {
+                                            <a class="tt-tag"
+                                               href="@Url.Action("DanhSachTinTuc",
+                                                       "TrangChu",
+                                                       new { maChuDe = tt.MaChuDe })">
+                                                @tt.ChuDeTinTuc.TenChuDe
+                                            </a>
+                                        }
+                                        <h4>
+                                            <a href="@Url.Action("ChiTietTinTuc",
+                                                       "TrangChu",
+                                                       new { maTinTuc = tt.MaTinTuc })">
+                                                @(tt.TieuDe.Length > 65
+                                                    ? tt.TieuDe.Substring(0, 65) + "..."
+                                                    : tt.TieuDe)
+                                            </a>
+                                        </h4>
+                                        <div class="tt-meta">
+                                            <i class="fa fa-user"></i>
+                                            @(tt.NguoiDung?.HoTen ?? "Admin")
+                                            <span style="margin:0 6px;">·</span>
+                                            <i class="fa fa-clock-o"></i>
+                                            @(tt.NgayDang.HasValue
+                                                ? tt.NgayDang.Value
+                                                      .ToString("dd/MM/yyyy")
+                                                : "—")
+                                            <span style="margin:0 6px;">·</span>
+                                            <i class="fa fa-eye"></i>
+                                            @tt.LuotXem
+                                        </div>
+                                        @if (!string.IsNullOrEmpty(tt.TomTat))
+                                        {
+                                            <p class="tt-excerpt">
+                                                @(tt.TomTat.Length > 90
+                                                    ? tt.TomTat.Substring(0, 90) + "..."
+                                                    : tt.TomTat)
+                                            </p>
+                                        }
+                                        <a class="tt-read"
+                                           href="@Url.Action("ChiTietTinTuc",
+                                                   "TrangChu",
+                                                   new { maTinTuc = tt.MaTinTuc })">
+                                            Đọc thêm
+                                            <i class="fa fa-arrow-right ml-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    if (Model.PageCount > 1)
+                    {
+                        <div class="hh-pager">
+                            @if (Model.HasPreviousPage)
+                            {
+                                <a href="@Url.Action("DanhSachTinTuc", new {
+                                    page    = Model.PageNumber - 1,
+                                    tuKhoa  = tuKhoaHT,
+                                    maChuDe = maChuDeHT })">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                            }
+                            @for (int i = 1; i <= Model.PageCount; i++)
+                            {
+                                <a class="@(i == Model.PageNumber ? "active" : "")"
+                                   href="@(i == Model.PageNumber ? "#" :
+                                    Url.Action("DanhSachTinTuc", new {
+                                        page    = i,
+                                        tuKhoa  = tuKhoaHT,
+                                        maChuDe = maChuDeHT }))">
+                                    @i
+                                </a>
+                            }
+                            @if (Model.HasNextPage)
+                            {
+                                <a href="@Url.Action("DanhSachTinTuc", new {
+                                    page    = Model.PageNumber + 1,
+                                    tuKhoa  = tuKhoaHT,
+                                    maChuDe = maChuDeHT })">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+
+            @* ── Sidebar ── *@
+            <div class="col-lg-4">
+
+                <div class="sb-box">
+                    <div class="sb-title">
+                        <i class="fa fa-search mr-2"
+                           style="color:#2cbdb8;"></i>Tìm Kiếm
+                    </div>
+                    @using (Html.BeginForm("DanhSachTinTuc", "TrangChu",
+                        FormMethod.Get))
+                    {
+                        <div class="sb-search-wrap">
+                            <input type="text" name="tuKhoa"
+                                   value="@tuKhoaHT"
+                                   placeholder="Từ khóa..." />
+                            <button type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    }
+                </div>
+
+                @if (dsChuDe != null && dsChuDe.Any())
+                {
+                    <div class="sb-box">
+                        <div class="sb-title">
+                            <i class="fa fa-tags mr-2"
+                               style="color:#2cbdb8;"></i>Chủ Đề
+                        </div>
+                        <div class="sb-topic">
+                            <a href="@Url.Action("DanhSachTinTuc","TrangChu")"
+                               class="@(string.IsNullOrEmpty(maChuDeHT)
+                                   ? "active" : "")">
+                                <i class="fa fa-angle-right mr-2"></i>
+                                Tất Cả
+                            </a>
+                            @foreach (var cd in dsChuDe)
+                            {
+                                <a href="@Url.Action("DanhSachTinTuc","TrangChu",
+                                           new { maChuDe = cd.MaChuDe })"
+                                   class="@(maChuDeHT == cd.MaChuDe
+                                       ? "active" : "")">
+                                    <i class="fa fa-angle-right mr-2"></i>
+                                    @cd.TenChuDe
+                                </a>
+                            }
+                        </div>
+                    </div>
+                }
+
+                @if (tinTucMoiNhat != null && tinTucMoiNhat.Any())
+                {
+                    <div class="sb-box">
+                        <div class="sb-title">
+                            <i class="fa fa-clock-o mr-2"
+                               style="color:#2cbdb8;"></i>Tin Tức Mới Nhất
+                        </div>
+                        @foreach (var tt in tinTucMoiNhat)
+                        {
+                            <a href="@Url.Action("ChiTietTinTuc","TrangChu",
+                                       new { maTinTuc = tt.MaTinTuc })"
+                               style="display:flex;gap:12px;margin-bottom:14px;
+                                      padding-bottom:14px;
+                                      border-bottom:1px solid #f0f0f0;
+                                      text-decoration:none;">
+                                <img src="@(!string.IsNullOrEmpty(tt.AnhDaiDien)
+                                        ? Url.Content("~/Content/images/tintuc/"
+                                                      + tt.AnhDaiDien)
+                                        : "/Content/Home/img/blog/latest-1.jpg")"
+                                     style="width:70px;height:58px;
+                                            object-fit:cover;border-radius:6px;
+                                            flex-shrink:0;" />
+                                <div>
+                                    <p style="font-size:13px;font-weight:600;
+                                              color:#333;margin:0 0 4px;
+                                              line-height:1.4;">
+                                        @(tt.TieuDe.Length > 50
+                                            ? tt.TieuDe.Substring(0, 50) + "..."
+                                            : tt.TieuDe)
+                                    </p>
+                                    <span style="font-size:11px;color:#aaa;">
+                                        <i class="fa fa-clock-o mr-1"></i>
+                                        @(tt.NgayDang.HasValue
+                                            ? tt.NgayDang.Value
+                                                  .ToString("dd/MM/yyyy")
+                                            : "—")
+                                    </span>
+                                </div>
+                            </a>
+                        }
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>

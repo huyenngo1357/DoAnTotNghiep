@@ -1,0 +1,316 @@
+﻿@using HappyHouse.Models
+@model List<HappyHouse.Models.HoaDon>
+
+@{
+    ViewBag.Title = "Hóa Đơn Của Tôi";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    ViewBag.ActiveMenu = "TaiKhoan";
+    var user = Session["UserOnline"] as NguoiDung;
+}
+
+<style>
+    .hd-sidebar-menu a {
+        display: block;
+        padding: 13px 20px;
+        font-size: 14px;
+        color: #555;
+        text-decoration: none;
+        border-bottom: 1px solid #f5f5f5;
+        transition: background .15s;
+    }
+
+        .hd-sidebar-menu a:hover {
+            background: #fafafa;
+        }
+
+        .hd-sidebar-menu a.active {
+            color: #2cbdb8;
+            font-weight: 700;
+            border-left: 3px solid #2cbdb8;
+            background: #f0fafa;
+        }
+
+    .hd-item {
+        border: 1px solid #f0f0f0;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 15px;
+        background: #fff;
+        transition: box-shadow .2s;
+    }
+
+        .hd-item:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,.09);
+        }
+
+    .filter-link {
+        display: block;
+        padding: 8px 12px;
+        margin-bottom: 5px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 13px;
+        color: #555;
+        background: #f9f9f9;
+        transition: background .15s;
+    }
+
+        .filter-link:hover {
+            background: #e0f7f6;
+            color: #2cbdb8;
+        }
+
+        .filter-link.active {
+            background: #2cbdb8;
+            color: #fff;
+            font-weight: 600;
+        }
+</style>
+
+<section class="spad" style="background:#f7f8fa;">
+    <div class="container">
+
+        <div style="font-size:13px;color:#888;margin-bottom:20px;">
+            <a href="@Url.Action("Index","TrangChu")"
+               style="color:#2cbdb8;">Trang chủ</a>
+            <i class="fa fa-angle-right mx-2"></i>
+            <span style="color:#555;font-weight:600;">Hóa Đơn</span>
+        </div>
+
+        <div class="row">
+
+            @* ── Sidebar ── *@
+            <div class="col-lg-3">
+                <div style="background:#fff;border-radius:10px;
+                            box-shadow:0 2px 15px rgba(0,0,0,.07);
+                            overflow:hidden;margin-bottom:20px;">
+                    @if (user != null)
+                    {
+                        <div style="padding:20px;text-align:center;
+                                    background:#f0fafa;
+                                    border-bottom:1px solid #c8eeed;">
+                            @if (!string.IsNullOrEmpty(user.AnhDaiDien))
+                            {
+                                <img src="~/Content/images/avatars/@user.AnhDaiDien"
+                                     style="width:60px;height:60px;border-radius:50%;
+                                            object-fit:cover;
+                                            border:2px solid #2cbdb8;
+                                            margin-bottom:10px;" />
+                            }
+                            else
+                            {
+                                <div style="width:60px;height:60px;border-radius:50%;
+                                            background:#2cbdb8;color:#fff;font-size:24px;
+                                            font-weight:700;line-height:60px;
+                                            margin:0 auto 10px;">
+                                    @user.HoTen.Substring(0, 1).ToUpper()
+                                </div>
+                            }
+                            <h6 style="font-weight:700;margin:0;">@user.HoTen</h6>
+                            <small style="color:#999;">@user.Email</small>
+                        </div>
+                    }
+                    <div class="hd-sidebar-menu">
+                        <a href="@Url.Action("ThongTin","TaiKhoan")">
+                            <i class="fa fa-user mr-2"></i>Thông Tin Cá Nhân
+                        </a>
+                        <a href="@Url.Action("DanhSach","HopDong")">
+                            <i class="fa fa-file-text-o mr-2"></i>Hợp Đồng
+                        </a>
+                        <a href="@Url.Action("DanhSach","HoaDon")"
+                           class="active">
+                            <i class="fa fa-money mr-2"></i>Hóa Đơn
+                            @if ((int)(ViewBag.TongChuaThanhToan ?? 0) > 0)
+                            {
+                                <span style="background:#dc3545;color:#fff;
+                                             border-radius:50%;padding:1px 6px;
+                                             font-size:11px;margin-left:5px;">
+                                    @ViewBag.TongChuaThanhToan
+                                </span>
+                            }
+                        </a>
+                        <a href="@Url.Action("DanhSach","DanhGia")">
+                            <i class="fa fa-star mr-2"></i>Đánh Giá
+                        </a>
+                        <a href="@Url.Action("DangXuat","TaiKhoan")"
+                           style="color:#e74a3b !important;">
+                            <i class="fa fa-sign-out mr-2"></i>Đăng Xuất
+                        </a>
+                    </div>
+                </div>
+
+                <div style="background:#fff;border-radius:10px;
+                            box-shadow:0 2px 15px rgba(0,0,0,.07);
+                            padding:20px;">
+                    <h6 style="font-weight:700;margin-bottom:12px;
+                               padding-bottom:8px;font-size:14px;
+                               border-bottom:2px solid #2cbdb8;">
+                        Lọc Theo Trạng Thái
+                    </h6>
+                    @{
+                        var dsFilter = new[]
+                        {
+                            new { Val="",              Label="Tất Cả"          },
+                            new { Val="ChuaThanhToan", Label="Chưa Thanh Toán" },
+                            new { Val="ChoDuyet",      Label="Chờ Duyệt"       },
+                            new { Val="DaThanhToan",   Label="Đã Thanh Toán"   },
+                            new { Val="QuaHan",        Label="Quá Hạn"         },
+                        };
+                        string ttHienTai = ViewBag.TrangThai as string ?? "";
+                    }
+                    @foreach (var f in dsFilter)
+                    {
+                        <a href="@Url.Action("DanhSach",
+                                   new { trangThai = f.Val })"
+                           class="filter-link @(ttHienTai == f.Val
+                               ? "active" : "")">
+                            @f.Label
+                        </a>
+                    }
+                </div>
+            </div>
+
+            @* ── Danh sách ── *@
+            <div class="col-lg-9">
+                <div style="background:#fff;border-radius:10px;
+                            box-shadow:0 2px 15px rgba(0,0,0,.07);
+                            padding:28px;">
+
+                    <h5 style="font-weight:700;color:#222;margin-bottom:24px;
+                               padding-bottom:12px;
+                               border-bottom:2px solid #2cbdb8;">
+                        <i class="fa fa-money mr-2"
+                           style="color:#2cbdb8;"></i>
+                        Danh Sách Hóa Đơn
+                        <span style="font-size:13px;color:#999;
+                                     font-weight:400;margin-left:8px;">
+                            (@Model.Count hóa đơn)
+                        </span>
+                    </h5>
+
+                    @if (!Model.Any())
+                    {
+                        <div style="text-align:center;padding:60px 0;">
+                            <i class="fa fa-file-o"
+                               style="font-size:60px;color:#ddd;
+                                      display:block;margin-bottom:20px;"></i>
+                            <h5 style="color:#999;">Không có hóa đơn nào.</h5>
+                        </div>
+                    }
+                    else
+                    {
+                        foreach (var hd in Model)
+                        {
+                            string badgeColor, trangThaiText;
+                            switch (hd.TrangThaiHoaDon)
+                            {
+                                case "ChuaThanhToan":
+                                    badgeColor = "#dc3545";
+                                    trangThaiText = "Chưa Thanh Toán"; break;
+                                case "ChoDuyet":
+                                    badgeColor = "#ffc107";
+                                    trangThaiText = "Chờ Duyệt"; break;
+                                case "DaThanhToan":
+                                    badgeColor = "#28a745";
+                                    trangThaiText = "Đã Thanh Toán"; break;
+                                case "QuaHan":
+                                    badgeColor = "#dc3545";
+                                    trangThaiText = "Quá Hạn"; break;
+                                default:
+                                    badgeColor = "#6c757d";
+                                    trangThaiText = hd.TrangThaiHoaDon ?? "—";
+                                    break;
+                            }
+
+                            var phong = hd.HopDong?.PhongTro;
+                            var toaNha = phong?.ToaNha;
+
+                            <div class="hd-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-7">
+                                        <div style="margin-bottom:8px;">
+                                            <span style="background:@badgeColor;
+                                                         color:#fff;padding:3px 10px;
+                                                         border-radius:20px;
+                                                         font-size:11px;
+                                                         font-weight:700;">
+                                                @trangThaiText
+                                            </span>
+                                            <span style="color:#bbb;font-size:12px;
+                                                         margin-left:8px;">
+                                                <code>@hd.MaHoaDon</code>
+                                            </span>
+                                        </div>
+                                        <h6 style="font-weight:700;margin:0 0 5px;">
+                                            @(phong != null
+                                                ? "Phòng " + phong.SoPhong : "—")
+                                            @if (toaNha != null)
+                                            {
+                                                <span style="font-weight:400;
+                                                             color:#888;font-size:13px;">
+                                                    — @toaNha.TenToaNha
+                                                </span>
+                                            }
+                                        </h6>
+                                        <p style="color:#888;font-size:13px;
+                                                  margin:0 0 3px;">
+                                            <i class="fa fa-calendar mr-1"
+                                               style="color:#2cbdb8;"></i>
+                                            Tháng:
+                                            @hd.ThangHoaDon.ToString("MM/yyyy")
+                                        </p>
+                                        <p style="color:#888;font-size:13px;
+                                                  margin:0;">
+                                            <i class="fa fa-clock-o mr-1"
+                                               style="color:#2cbdb8;"></i>
+                                            Hạn TT:
+                                            @hd.HanThanhToan.ToString("dd/MM/yyyy")
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-5 text-right">
+                                        <div style="font-size:20px;font-weight:800;
+                                                    color:#2cbdb8;margin-bottom:4px;">
+                                            @String.Format("{0:N0}", hd.TongTien)đ
+                                        </div>
+                                        <div style="font-size:12px;color:#aaa;
+                                                    margin-bottom:12px;">
+                                            Tổng tiền phải trả
+                                        </div>
+                                        <a href="@Url.Action("ChiTiet","HoaDon",
+                                                   new { maHoaDon = hd.MaHoaDon })"
+                                           style="display:inline-block;
+                                                  padding:8px 16px;
+                                                  background:#2cbdb8;color:#fff;
+                                                  border-radius:6px;
+                                                  text-decoration:none;
+                                                  font-size:13px;font-weight:600;">
+                                            <i class="fa fa-eye mr-1"></i>Chi Tiết
+                                        </a>
+                                        @if (hd.TrangThaiHoaDon == "ChuaThanhToan"
+                                          || hd.TrangThaiHoaDon == "QuaHan")
+                                        {
+                                            <a href="@Url.Action("ChiTiet","HoaDon",
+                                                       new { maHoaDon = hd.MaHoaDon })"
+                                               style="display:inline-block;
+                                                      padding:8px 16px;
+                                                      background:#dc3545;color:#fff;
+                                                      border-radius:6px;
+                                                      text-decoration:none;
+                                                      font-size:13px;font-weight:600;
+                                                      margin-left:6px;">
+                                                <i class="fa fa-upload mr-1"></i>
+                                                Thanh Toán
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

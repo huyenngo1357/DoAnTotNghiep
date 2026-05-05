@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Đăng nhập - HappyHouse</title>
+    <link href="~/Content/Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <link href="~/Content/Admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="~/Content/images/favicon.svg" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #212529, #4e73df) !important;
+        }
+
+        .btn-primary {
+            background-color: #212529 !important;
+            border-color: #212529 !important;
+        }
+
+            .btn-primary:hover {
+                background-color: #000 !important;
+                border-color: #000 !important;
+            }
+
+        .bg-login-image {
+            background: url('/Content/Home/img/hero/hero-1.jpg') center/cover no-repeat;
+        }
+
+        a {
+            color: #4e73df !important;
+        }
+
+            a:hover {
+                color: #212529 !important;
+            }
+
+        .card {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .brand-logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #212529;
+            letter-spacing: 1px;
+        }
+
+            .brand-logo span {
+                color: #4e73df;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center mb-4">
+                                        <div class="brand-logo mb-2">
+                                            Happy<span>House</span>
+                                        </div>
+                                        <h1 class="h4 text-gray-900">Chào mừng trở lại!</h1>
+                                        <p class="text-muted small">
+                                            Đăng nhập để quản lý nhà trọ của bạn
+                                        </p>
+                                    </div>
+
+                                    @* Thông báo lỗi *@
+                                    @if (ViewBag.Error != null)
+                                    {
+                                        <div class="alert alert-danger py-2">
+                                            <i class="fa fa-exclamation-circle mr-2"></i>
+                                            @ViewBag.Error
+                                        </div>
+                                    }
+
+                                    @* Thông báo đăng ký thành công *@
+                                    @if (TempData["Success"] != null)
+                                    {
+                                        <div class="alert alert-success py-2">
+                                            <i class="fa fa-check-circle mr-2"></i>
+                                            @TempData["Success"]
+                                        </div>
+                                    }
+
+                                    @using (Html.BeginForm("DangNhap", "TaiKhoan",
+                                        FormMethod.Post, new { @class = "user" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="returnUrl"
+                                               value="@ViewBag.ReturnUrl" />
+
+                                        <div class="form-group">
+                                            <input type="email" name="email"
+                                                   class="form-control form-control-user"
+                                                   placeholder="Địa chỉ Email..."
+                                                   value="@ViewBag.Email"
+                                                   required autofocus />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="matKhau"
+                                                   class="form-control form-control-user"
+                                                   placeholder="Mật khẩu"
+                                                   required />
+                                        </div>
+
+                                        <button type="submit"
+                                                class="btn btn-primary btn-user btn-block">
+                                            <i class="fa fa-sign-in-alt mr-2"></i>
+                                            Đăng nhập
+                                        </button>
+                                    }
+
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small"
+                                           href="@Url.Action("DangKy","TaiKhoan")">
+                                            Chưa có tài khoản? Đăng ký ngay!
+                                        </a>
+                                    </div>
+                                    <div class="text-center mt-2">
+                                        <a class="small"
+                                           href="@Url.Action("Index","TrangChu")">
+                                            <i class="fa fa-home mr-1"></i>
+                                            Về trang chủ
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/Admin/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+﻿@model HappyHouse.Models.PhongTro
+
+@{
+    ViewBag.Title = "Thêm phòng trọ";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold; color:black">Phòng trọ của tôi</h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","ChuTroPhongTro")">Danh sách phòng</a>
+}
+
+@using (Html.BeginForm("ThemMoi", "ChuTroPhongTro", FormMethod.Post,
+    new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Tòa nhà <span class="text-danger">*</span>
+                </label>
+                @Html.DropDownList("MaToaNha",
+                    (SelectList)ViewBag.DsToaNha,
+                    "--- Chọn tòa nhà ---",
+                    new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.MaToaNha, "",
+                    new { @class = "text-danger small" })
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Số phòng <span class="text-danger">*</span>
+                </label>
+                @Html.TextBoxFor(m => m.SoPhong, new
+                {
+                    @class = "form-control",
+                    placeholder = "VD: A01",
+                    maxlength = "20"
+                })
+                @Html.ValidationMessageFor(m => m.SoPhong, "",
+                    new { @class = "text-danger small" })
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label class="font-weight-bold">Tầng</label>
+                @Html.TextBoxFor(m => m.Tang, new
+                {
+                    @class = "form-control",
+                    type = "number",
+                    min = "1",
+                    value = "1"
+                })
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label class="font-weight-bold">Diện tích (m²)</label>
+                @Html.TextBoxFor(m => m.DienTich, new
+                {
+                    @class = "form-control",
+                    type = "number",
+                    min = "0",
+                    step = "0.5",
+                    placeholder = "VD: 20"
+                })
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label class="font-weight-bold">Số người tối đa</label>
+                @Html.TextBoxFor(m => m.SoNguoiToiDa, new
+                {
+                    @class = "form-control",
+                    type = "number",
+                    min = "1",
+                    value = "2"
+                })
+                @Html.ValidationMessageFor(m => m.SoNguoiToiDa, "",
+                    new { @class = "text-danger small" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Giá thuê (đ/tháng) <span class="text-danger">*</span>
+                </label>
+                @Html.TextBoxFor(m => m.GiaThue, new
+                {
+                    @class = "form-control",
+                    type = "number",
+                    min = "0",
+                    step = "50000",
+                    placeholder = "VD: 2500000"
+                })
+                @Html.ValidationMessageFor(m => m.GiaThue, "",
+                    new { @class = "text-danger small" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="font-weight-bold">Tiền cọc (đ)</label>
+                @Html.TextBoxFor(m => m.TienCoc, new
+                {
+                    @class = "form-control",
+                    type = "number",
+                    min = "0",
+                    step = "50000",
+                    placeholder = "VD: 2500000"
+                })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="font-weight-bold">Mô tả</label>
+        @Html.TextAreaFor(m => m.MoTa, new
+        {
+            @class = "form-control",
+            rows = 3,
+            placeholder = "Mô tả chi tiết về phòng...",
+            maxlength = "1000",
+            id = "txtMoTa"
+        })
+        <small class="text-muted">
+            <span id="demKyTu">0</span>/1000 ký tự
+        </small>
+    </div>
+
+    <div class="form-group">
+        <label class="font-weight-bold d-block">Tiện ích</label>
+        <div class="row">
+            @foreach (var ti in (List<HappyHouse.Models.TienIch>)ViewBag.DsTienIch)
+            {
+                <div class="col-md-3 col-6 mb-2">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input"
+                               name="dsTienIch" value="@ti.MaTienIch"
+                               id="ti_@ti.MaTienIch" />
+                        <label class="form-check-label" for="ti_@ti.MaTienIch">
+                            <i class="fas @ti.BieuTuong mr-1 text-primary"></i>
+                            @ti.TenTienIch
+                        </label>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="font-weight-bold">
+            Hình ảnh
+            <span class="text-muted font-weight-normal">(không bắt buộc)</span>
+        </label>
+        <input type="file" name="dsHinhAnh" id="inputHinhAnh"
+               class="form-control-file" multiple accept="image/*" />
+        <small class="text-muted">Ảnh đầu tiên sẽ là ảnh đại diện.</small>
+    </div>
+    <div id="previewAnh" class="d-flex flex-wrap mb-3"></div>
+
+    <div class="d-flex justify-content-between">
+        @Html.ActionLink("Trở lại", "DanhSach", null,
+            new { @class = "btn btn-secondary px-4" })
+        <button type="submit" class="btn btn-primary px-4">
+            <i class="fa fa-plus mr-1"></i> Thêm phòng
+        </button>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $('#txtMoTa').on('input', function () {
+            $('#demKyTu').text($(this).val().length);
+        });
+
+        var selectedFiles = [];
+        document.getElementById('inputHinhAnh')
+            .addEventListener('change', function () {
+                Array.from(this.files).forEach(function (f) {
+                    selectedFiles.push(f);
+                });
+                renderPreview();
+            });
+
+        function renderPreview() {
+            var preview = document.getElementById('previewAnh');
+            preview.innerHTML = '';
+            selectedFiles.forEach(function (file, idx) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var w = document.createElement('div');
+                    w.style = 'position:relative;margin-right:8px;' +
+                        'margin-bottom:8px;text-align:center;';
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style = 'width:90px;height:90px;object-fit:cover;' +
+                        'border-radius:6px;display:block;border:2px solid ' +
+                        (idx === 0 ? '#4e73df' : '#dee2e6') + ';';
+                    var btn = document.createElement('button');
+                    btn.type = 'button'; btn.innerHTML = '&times;';
+                    btn.style = 'position:absolute;top:-6px;right:-6px;' +
+                        'background:#e74a3b;color:#fff;border:none;' +
+                        'border-radius:50%;width:20px;height:20px;' +
+                        'font-size:13px;cursor:pointer;line-height:1;';
+                    btn.onclick = (function (i) {
+                        return function () { xoaPreview(i); };
+                    })(idx);
+                    var lbl = document.createElement('small');
+                    lbl.innerHTML = idx === 0
+                        ? '<span class="badge badge-primary">Đại diện</span>'
+                        : '<span class="badge badge-secondary">Ảnh ' + (idx + 1) + '</span>';
+                    w.appendChild(btn); w.appendChild(img); w.appendChild(lbl);
+                    preview.appendChild(w);
+                };
+                reader.readAsDataURL(file);
+            });
+            var dt = new DataTransfer();
+            selectedFiles.forEach(function (f) { dt.items.add(f); });
+            document.getElementById('inputHinhAnh').files = dt.files;
+        }
+
+        function xoaPreview(idx) {
+            selectedFiles.splice(idx, 1);
+            renderPreview();
+        }
+    </script>
+}

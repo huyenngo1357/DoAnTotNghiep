@@ -1,0 +1,736 @@
+﻿@{
+    var userLayout = Session["UserOnline"] as HappyHouse.Models.NguoiDung;
+    bool isAdmin = userLayout != null && userLayout.MaVaiTro == "CHUTHAU";
+    bool isChuTro = userLayout != null && userLayout.MaVaiTro == "CHUTRO";
+
+    // Lấy ảnh đại diện
+    string anhDaiDien = userLayout?.AnhDaiDien;
+
+    // Badge chủ trọ: biên lai chờ xác nhận
+    int soChoXN = 0;
+    if (isChuTro && userLayout != null)
+    {
+        try
+        {
+            soChoXN = new HappyHouse.Models.ThanhToanBusiness()
+                          .DemChoXacNhan(userLayout.MaNguoiDung);
+        }
+        catch { }
+    }
+
+    // Badge admin: tòa nhà chờ duyệt + yêu cầu xóa
+    int soToaNhaChoDuyet = 0;
+    int soYeuCauXoa = 0;
+    if (isAdmin)
+    {
+        try
+        {
+            var db = HappyHouse.Models.DataProvider.Entities;
+            soToaNhaChoDuyet = db.ToaNhas
+                .Count(x => x.TrangThaiDuyet == "ChoDuyet"
+                          && x.TrangThai == true);
+            soYeuCauXoa = db.ToaNhas
+                .Count(x => x.TrangThaiDuyet == "YeuCauXoa"
+                          && x.TrangThai == true);
+        }
+        catch { }
+    }
+
+    int tongThongBaoAdmin = soToaNhaChoDuyet + soYeuCauXoa;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewBag.Title - HappyHouse</title>
+
+    <link href="~/Content/Admin/vendor/fontawesome-free/css/all.min.css"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet" />
+    <link href="~/Content/Admin/css/sb-admin-2.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml"
+          href="~/Content/images/favicon.svg" />
+
+    <style>
+        #content .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+            id="accordionSidebar">
+
+            <!-- Brand -->
+            <a class="sidebar-brand d-flex align-items-center
+                  justify-content-center"
+               href="@Url.Action("Index","TrangChu")">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">HAPPYHOUSE</div>
+            </a>
+
+            <hr class="sidebar-divider my-0" />
+
+            <!-- Trang chủ -->
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index","TrangChu")">
+                    <i class="fas fa-fw fa-home"></i>
+                    <span>Trang Chủ</span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider my-0" />
+
+            @if (isAdmin)
+            {
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="@Url.Action("Index","AdminDashboard")">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Thống Kê</span>
+                    </a>
+                </li>
+            }
+            @if (isChuTro)
+            {
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="@Url.Action("Index","ChuTroDashboard")">
+                        <i class="fas fa-fw fa-chart-bar"></i>
+                        <span>Thống Kê</span>
+                    </a>
+                </li>
+            }
+
+            @if (isAdmin)
+            {
+                <hr class="sidebar-divider" />
+                <div class="sidebar-heading">Quản Lý Hệ Thống</div>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#"
+                       data-toggle="collapse"
+                       data-target="#collapseAdminToaNha">
+                        <i class="fas fa-fw fa-building"></i>
+                        <span>
+                            Tòa Nhà
+                            @if (tongThongBaoAdmin > 0)
+                            {
+                                <span class="badge badge-danger badge-counter ml-1"
+                                      style="font-size:10px">
+                                    @tongThongBaoAdmin
+                                </span>
+                            }
+                        </span>
+                    </a>
+                    <div id="collapseAdminToaNha" class="collapse"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item"
+                               href="@Url.Action("DanhSach","AdminToaNha")">
+                                <i class="fas fa-list fa-sm mr-1"></i>
+                                Danh Sách
+                            </a>
+                            @if (soToaNhaChoDuyet > 0)
+                            {
+                                <a class="collapse-item text-warning"
+                                   href="@Url.Action("DanhSach","AdminToaNha",
+                                   new { trangThaiDuyet = "ChoDuyet" })">
+                                    <i class="fas fa-clock fa-sm mr-1"></i>
+                                    Chờ Duyệt
+                                    <span class="badge badge-warning ml-1">
+                                        @soToaNhaChoDuyet
+                                    </span>
+                                </a>
+                            }
+                            @if (soYeuCauXoa > 0)
+                            {
+                                <a class="collapse-item text-danger"
+                                   href="@Url.Action("DanhSach","AdminToaNha",
+                                   new { trangThaiDuyet = "YeuCauXoa" })">
+                                    <i class="fas fa-trash fa-sm mr-1"></i>
+                                    Yêu Cầu Xóa
+                                    <span class="badge badge-danger ml-1">
+                                        @soYeuCauXoa
+                                    </span>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#"
+                       data-toggle="collapse"
+                       data-target="#collapseAdminTienIch">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Tiện Ích</span>
+                    </a>
+                    <div id="collapseAdminTienIch" class="collapse"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item"
+                               href="@Url.Action("DanhSach","AdminTienIch")">
+                                <i class="fas fa-list fa-sm mr-1"></i>
+                                Danh Sách
+                            </a>
+                            <a class="collapse-item"
+                               href="@Url.Action("ThemMoi","AdminTienIch")">
+                                <i class="fas fa-plus fa-sm mr-1"></i>
+                                Thêm Tiện Ích
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#"
+                       data-toggle="collapse"
+                       data-target="#collapseAdminNguoiDung">
+                        <i class="fas fa-fw fa-users"></i>
+                        <span>Người Dùng</span>
+                    </a>
+                    <div id="collapseAdminNguoiDung" class="collapse"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item"
+                               href="@Url.Action("DanhSach","AdminNguoiDung")">
+                                <i class="fas fa-list fa-sm mr-1"></i>
+                                Danh Sách
+                            </a>
+                            <a class="collapse-item"
+                               href="@Url.Action("ThemMoi","AdminNguoiDung")">
+                                <i class="fas fa-plus fa-sm mr-1"></i>
+                                Thêm Mới
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <hr class="sidebar-divider" />
+                <div class="sidebar-heading">Nội Dung</div>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#"
+                       data-toggle="collapse"
+                       data-target="#collapseAdminTinTuc">
+                        <i class="fas fa-fw fa-newspaper"></i>
+                        <span>Tin Tức</span>
+                    </a>
+                    <div id="collapseAdminTinTuc" class="collapse"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item"
+                               href="@Url.Action("DanhSach","AdminChuDeTinTuc")">
+                                <i class="fas fa-tags fa-sm mr-1"></i>
+                                Chủ Đề
+                            </a>
+                            <a class="collapse-item"
+                               href="@Url.Action("DanhSach","AdminTinTuc")">
+                                <i class="fas fa-list fa-sm mr-1"></i>
+                                Bài Viết
+                            </a>
+                            <a class="collapse-item"
+                               href="@Url.Action("ThemMoi","AdminTinTuc")">
+                                <i class="fas fa-plus fa-sm mr-1"></i>
+                                Thêm Bài
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            }
+
+            @* ══════════ CHỦ TRỌ MENU ══════════ *@
+            @if (isChuTro)
+            {
+                <hr class="sidebar-divider" />
+                <div class="sidebar-heading">Quản Lý Của Tôi</div>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#"
+                       data-toggle="collapse"
+                       data-target="#collapseCTToaNha">
+                        <i class="fas fa-fw fa-building"></i>
+                        <span>Tòa Nhà</span>
+                    </a>
+                    <div id="collapseCTToaNha" class="collapse"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item"
+                               href="@Url.Action("DanhSach","ChuTroToaNha")">
+                                <i class="fas fa-list fa-sm mr-1"></i>
+                                Danh Sách
+                            </a>
+                            <a class="collapse-item"
+                               href="@Url.Action("ThemMoi","ChuTroToaNha")">
+                                <i class="fas fa-plus fa-sm mr-1"></i>
+                                Thêm Tòa Nhà
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#"
+                       data-toggle="collapse"
+                       data-target="#collapseCTPhong">
+                        <i class="fas fa-fw fa-door-open"></i>
+                        <span>Phòng Trọ</span>
+                    </a>
+                    <div id="collapseCTPhong" class="collapse"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item"
+                               href="@Url.Action("DanhSach","ChuTroPhongTro")">
+                                <i class="fas fa-list fa-sm mr-1"></i>
+                                Danh Sách
+                            </a>
+                            <a class="collapse-item"
+                               href="@Url.Action("ThemMoi","ChuTroPhongTro")">
+                                <i class="fas fa-plus fa-sm mr-1"></i>
+                                Thêm Phòng
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#"
+                       data-toggle="collapse"
+                       data-target="#collapseCTHopDong">
+                        <i class="fas fa-fw fa-file-contract"></i>
+                        <span>Hợp Đồng</span>
+                    </a>
+                    <div id="collapseCTHopDong" class="collapse"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item"
+                               href="@Url.Action("DanhSach","ChuTroHopDong")">
+                                <i class="fas fa-list fa-sm mr-1"></i>
+                                Danh Sách
+                            </a>
+                            <a class="collapse-item"
+                               href="@Url.Action("ThemMoi","ChuTroHopDong")">
+                                <i class="fas fa-plus fa-sm mr-1"></i>
+                                Tạo Hợp Đồng
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#"
+                       data-toggle="collapse"
+                       data-target="#collapseCTChiSo">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Chỉ Số Điện Nước</span>
+                    </a>
+                    <div id="collapseCTChiSo" class="collapse"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item"
+                               href="@Url.Action("DanhSach","ChuTroChiSo")">
+                                <i class="fas fa-list fa-sm mr-1"></i>
+                                Danh Sách
+                            </a>
+                            <a class="collapse-item"
+                               href="@Url.Action("GhiChiSo","ChuTroChiSo")">
+                                <i class="fas fa-plus fa-sm mr-1"></i>
+                                Ghi Chỉ Số
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#"
+                       data-toggle="collapse"
+                       data-target="#collapseCTGiaDV">
+                        <i class="fas fa-fw fa-tags"></i>
+                        <span>Giá Dịch Vụ</span>
+                    </a>
+                    <div id="collapseCTGiaDV" class="collapse"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item"
+                               href="@Url.Action("DanhSach","ChuTroGiaDichVu")">
+                                <i class="fas fa-list fa-sm mr-1"></i>
+                                Danh Sách
+                            </a>
+                            <a class="collapse-item"
+                               href="@Url.Action("ThemMoi","ChuTroGiaDichVu")">
+                                <i class="fas fa-plus fa-sm mr-1"></i>
+                                Thêm Giá DV
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#"
+                       data-toggle="collapse"
+                       data-target="#collapseCTHoaDon">
+                        <i class="fas fa-fw fa-receipt"></i>
+                        <span>Hóa Đơn</span>
+                    </a>
+                    <div id="collapseCTHoaDon" class="collapse"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item"
+                               href="@Url.Action("DanhSach","ChuTroHoaDon")">
+                                <i class="fas fa-list fa-sm mr-1"></i>
+                                Danh Sách
+                            </a>
+                            <a class="collapse-item"
+                               href="@Url.Action("ThemMoi","ChuTroHoaDon")">
+                                <i class="fas fa-plus fa-sm mr-1"></i>
+                                Tạo Hóa Đơn
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#"
+                       data-toggle="collapse"
+                       data-target="#collapseCTThanhToan">
+                        <i class="fas fa-fw fa-money-bill-wave"></i>
+                        <span>
+                            Thanh Toán
+                            @if (soChoXN > 0)
+                            {
+                                <span class="badge badge-danger badge-counter ml-1"
+                                      style="font-size:10px">
+                                    @soChoXN
+                                </span>
+                            }
+                        </span>
+                    </a>
+                    <div id="collapseCTThanhToan" class="collapse"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item"
+                               href="@Url.Action("DanhSach","ChuTroThanhToan")">
+                                <i class="fas fa-check-circle fa-sm mr-1"></i>
+                                Xác Nhận Biên Lai
+                                @if (soChoXN > 0)
+                                {
+                                    <span class="badge badge-danger ml-1"
+                                          style="font-size:10px">
+                                        @soChoXN
+                                    </span>
+                                }
+                            </a>
+                            <a class="collapse-item"
+                               href="@Url.Action("CaiDatQR","ChuTroThanhToan")">
+                                <i class="fas fa-qrcode fa-sm mr-1"></i>
+                                Cài Đặt QR
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            }
+
+            <hr class="sidebar-divider d-none d-md-block" />
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0"
+                        id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End Sidebar -->
+        <!-- ══════════════════════════════════════════
+             CONTENT WRAPPER
+        ══════════════════════════════════════════ -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar shadow">
+                    <form class="form-inline">
+                        <button id="sidebarToggleTop"
+                                class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </form>
+
+                    <ul class="navbar-nav ml-auto">
+
+                        @if (isAdmin && tongThongBaoAdmin > 0)
+                        {
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle" href="#"
+                                   role="button" data-toggle="dropdown">
+                                    <i class="fas fa-bell fa-fw"></i>
+                                    <span class="badge badge-danger badge-counter">
+                                        @tongThongBaoAdmin
+                                    </span>
+                                </a>
+                                <div class="dropdown-list dropdown-menu
+                                        dropdown-menu-right shadow
+                                        animated--grow-in">
+                                    <h6 class="dropdown-header">Thông Báo Admin</h6>
+
+                                    @if (soToaNhaChoDuyet > 0)
+                                    {
+                                        <a class="dropdown-item d-flex align-items-center"
+                                           href="@Url.Action("DanhSach","AdminToaNha",
+                                           new { trangThaiDuyet = "ChoDuyet" })">
+                                            <div class="mr-3">
+                                                <div class="icon-circle bg-warning">
+                                                    <i class="fas fa-building text-white"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="small text-gray-500">
+                                                    Tòa nhà chờ duyệt
+                                                </div>
+                                                <span class="font-weight-bold">
+                                                    @soToaNhaChoDuyet tòa nhà mới
+                                                </span>
+                                            </div>
+                                        </a>
+                                    }
+
+                                    @if (soYeuCauXoa > 0)
+                                    {
+                                        <a class="dropdown-item d-flex align-items-center"
+                                           href="@Url.Action("DanhSach","AdminToaNha",
+                                           new { trangThaiDuyet = "YeuCauXoa" })">
+                                            <div class="mr-3">
+                                                <div class="icon-circle bg-danger">
+                                                    <i class="fas fa-trash text-white"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="small text-gray-500">
+                                                    Yêu cầu xóa tòa nhà
+                                                </div>
+                                                <span class="font-weight-bold">
+                                                    @soYeuCauXoa yêu cầu chờ xử lý
+                                                </span>
+                                            </div>
+                                        </a>
+                                    }
+                                </div>
+                            </li>
+                        }
+
+                        @if (isChuTro && soChoXN > 0)
+                        {
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle" href="#"
+                                   role="button" data-toggle="dropdown">
+                                    <i class="fas fa-bell fa-fw"></i>
+                                    <span class="badge badge-danger badge-counter">
+                                        @soChoXN
+                                    </span>
+                                </a>
+                                <div class="dropdown-list dropdown-menu
+                                        dropdown-menu-right shadow
+                                        animated--grow-in">
+                                    <h6 class="dropdown-header">Thông Báo</h6>
+                                    <a class="dropdown-item d-flex align-items-center"
+                                       href="@Url.Action("DanhSach","ChuTroThanhToan")">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-warning">
+                                                <i class="fas fa-receipt text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">
+                                                Biên lai thanh toán
+                                            </div>
+                                            <span class="font-weight-bold">
+                                                @soChoXN biên lai chờ xác nhận
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                        }
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#"
+                               id="userDropdown" role="button"
+                               data-toggle="dropdown">
+                                <span class="mr-2 d-none d-lg-inline
+                                         text-gray-600 small">
+                                    <b>@(userLayout?.HoTen ?? "")</b>
+                                    @if (isAdmin)
+                                    {
+                                        <span class="badge badge-danger ml-1">
+                                            Admin
+                                        </span>
+                                    }
+                                    @if (isChuTro)
+                                    {
+                                        <span class="badge badge-primary ml-1">
+                                            Chủ Trọ
+                                        </span>
+                                    }
+                                </span>
+                                @if (!string.IsNullOrEmpty(anhDaiDien))
+                                {
+                                    <img class="img-profile rounded-circle"
+                                         src="~/Content/images/avatars/@anhDaiDien"
+                                         style="width:40px;height:40px;
+                                            object-fit:cover;" />
+                                }
+                                else
+                                {
+                                    <img class="img-profile rounded-circle"
+                                         src="~/Content/Admin/img/undraw_profile.svg" />
+                                }
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow
+                                    animated--grow-in">
+                                <a class="dropdown-item"
+                                   href="@Url.Action("ThongTin","TaiKhoan")">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2
+                                           text-gray-400"></i>
+                                    Thông Tin Tài Khoản
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#"
+                                   data-toggle="modal"
+                                   data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2
+                                           text-gray-400"></i>
+                                    Đăng Xuất
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+                </nav>
+                <!-- End Topbar -->
+                <!-- Page Content -->
+                <div class="container-fluid">
+
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible
+                                fade show mt-3">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            @TempData["Success"]
+                            <button type="button" class="close"
+                                    data-dismiss="alert">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                    }
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible
+                                fade show mt-3">
+                            <i class="fas fa-exclamation-circle mr-2"></i>
+                            @TempData["Error"]
+                            <button type="button" class="close"
+                                    data-dismiss="alert">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                    }
+
+                    <div style="text-align:center;margin:30px">
+                        <h1 class="h3 mb-2 text-gray-800">
+                            @RenderSection("breadTitle", required: false)
+                        </h1>
+                    </div>
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                @RenderSection("breadLink", required: false)
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            @RenderBody()
+                        </div>
+                    </div>
+
+                </div>
+                <!-- End Page Content -->
+
+            </div>
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>
+                            Bản quyền &copy;
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script>
+                            <strong>HappyHouse</strong> — Hệ thống quản lý nhà trọ
+                        </span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- End Content Wrapper -->
+
+    </div>
+    <!-- End Wrapper -->
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Modal Đăng Xuất -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác Nhận Đăng Xuất</h5>
+                    <button class="close" type="button" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn đăng xuất không?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button"
+                            data-dismiss="modal">
+                        Hủy
+                    </button>
+                    <a class="btn btn-primary"
+                       href="@Url.Action("DangXuat","TaiKhoan")">
+                        Đăng Xuất
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/Content/Admin/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/Content/Admin/js/sb-admin-2.min.js"></script>
+    <script src="~/Content/Admin/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/Admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

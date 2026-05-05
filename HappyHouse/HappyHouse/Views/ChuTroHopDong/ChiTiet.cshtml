@@ -1,0 +1,421 @@
+﻿@model HappyHouse.Models.HopDong
+
+@{
+    ViewBag.Title = "Chi tiết hợp đồng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Hợp đồng thuê phòng</h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","ChuTroHopDong")">Danh sách hợp đồng</a>
+}
+
+@{
+    string bc, bt;
+    switch (Model.TrangThaiHopDong)
+    {
+        case "ChoKy": bc = "warning"; bt = "Chờ ký"; break;
+        case "DangThue": bc = "success"; bt = "Đang thuê"; break;
+        case "HetHan": bc = "secondary"; bt = "Hết hạn"; break;
+        case "DaHuy": bc = "danger"; bt = "Đã hủy"; break;
+        default: bc = "secondary"; bt = Model.TrangThaiHopDong; break;
+    }
+
+    decimal tongDichVu = 0;
+    if (Model.HopDong_DichVu != null)
+    {
+        foreach (var dv in Model.HopDong_DichVu)
+        { tongDichVu += (dv.GiaDichVu?.DonGia ?? 0) * dv.SoLuong; }
+    }
+}
+
+<div class="row">
+    <div class="col-md-8">
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header font-weight-bold text-primary
+                        d-flex justify-content-between align-items-center">
+                <span>
+                    <i class="fa fa-file-contract mr-2"></i>
+                    Thông tin hợp đồng
+                </span>
+                <span class="badge badge-pill badge-@bc px-3 py-2"
+                      style="font-size:13px">@bt</span>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-borderless table-sm mb-0">
+                                <tr>
+                                    <td style="width:160px" class="font-weight-bold">
+                                        Mã hợp đồng:
+                                    </td>
+                                    <td><code>@Model.MaHopDong</code></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Phòng:</td>
+                                    <td>
+                                        <strong>
+                                            @(Model.PhongTro?.SoPhong ?? "—")
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Tòa nhà:</td>
+                                    <td>
+                                        @(Model.PhongTro?.ToaNha?.TenToaNha ?? "—")
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Ngày bắt đầu:</td>
+                                    <td>@Model.NgayBatDau.ToString("dd/MM/yyyy")</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Ngày kết thúc:</td>
+                                    <td>@Model.NgayKetThuc.ToString("dd/MM/yyyy")</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Ngày TT:</td>
+                                    <td>
+                                        Ngày @Model.NgayThanhToanHangThang hàng tháng
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table table-borderless table-sm mb-0">
+                                <tr>
+                                    <td style="width:120px" class="font-weight-bold">
+                                        Giá thuê:
+                                    </td>
+                                    <td>
+                                        <strong class="text-primary">
+                                            @String.Format("{0:N0}", Model.GiaThueThang) đ/tháng
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Tiền cọc:</td>
+                                    <td>
+                                        @(Model.TienCoc.HasValue
+                                        ? String.Format("{0:N0}", Model.TienCoc.Value) + " đ"
+                                        : "—")
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">DV hàng tháng:</td>
+                                    <td>
+                                        <strong class="text-warning">
+                                            @String.Format("{0:N0}", tongDichVu) đ
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Tổng/tháng:</td>
+                                    <td>
+                                        <strong class="text-success">
+                                            @String.Format("{0:N0}",
+                                                Model.GiaThueThang + tongDichVu) đ
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Ngày tạo:</td>
+                                    <td>
+                                        <small>
+                                            @(Model.NgayTao.HasValue
+                                            ? Model.NgayTao.Value
+                                                .ToString("dd/MM/yyyy HH:mm")
+                                            : "—")
+                                        </small>
+                                    </td>
+                                </tr>
+                                @if (Model.TrangThaiHopDong == "DaHuy")
+                                {
+                                    <tr>
+                                        <td class="font-weight-bold text-danger">
+                                            Lý do hủy:
+                                        </td>
+                                        <td class="text-danger small">
+                                            @Model.LyDoHuy
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Ngày hủy:</td>
+                                        <td>
+                                            <small>
+                                                @(Model.NgayHuy.HasValue
+                                                ? Model.NgayHuy.Value
+                                                    .ToString("dd/MM/yyyy HH:mm")
+                                                : "—")
+                                            </small>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.DieuKhoan))
+                    {
+                        <hr />
+                        <label class="font-weight-bold">Điều khoản:</label>
+                        <p class="mb-0" style="white-space:pre-line">
+                            @Model.DieuKhoan
+                        </p>
+                    }
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header font-weight-bold text-primary">
+                    <i class="fa fa-cog mr-2"></i> Dịch vụ kèm theo
+                </div>
+                <div class="card-body">
+                    @if (Model.HopDong_DichVu != null && Model.HopDong_DichVu.Any())
+                    {
+                        <table class="table table-bordered table-sm mb-0">
+                            <thead class="thead-light">
+                                <tr style="text-align:center">
+                                    <th>Dịch vụ</th>
+                                    <th style="width:100px">Đơn giá</th>
+                                    <th style="width:80px">SL</th>
+                                    <th style="width:110px">Thành tiền</th>
+                                    <th>Ghi chú</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var dv in Model.HopDong_DichVu)
+                                {
+                                    decimal tt = (dv.GiaDichVu?.DonGia ?? 0)
+                                                 * dv.SoLuong;
+                                    <tr style="vertical-align:middle">
+                                        <td>
+                                            @if (dv.GiaDichVu?.TienIch != null)
+                                            {
+                                                <i class="fas @dv.GiaDichVu.TienIch.BieuTuong
+                                                       mr-2 text-warning"></i>
+                                                @dv.GiaDichVu.TienIch.TenTienIch
+                                            }
+                                            else
+                                            {
+                                                @(dv.GiaDichVu?.TenDichVu ?? "—")
+                                            }
+                                            @if (!string.IsNullOrEmpty(
+                                                dv.GiaDichVu?.DonVi))
+                                            {
+                                                <small class="text-muted">
+                                                    /@dv.GiaDichVu.DonVi
+                                                </small>
+                                            }
+                                        </td>
+                                        <td class="text-right">
+                                            @String.Format("{0:N0}",
+                                                dv.GiaDichVu?.DonGia ?? 0)đ
+                                        </td>
+                                        <td class="text-center">
+                                            @dv.SoLuong
+                                        </td>
+                                        <td class="text-right font-weight-bold
+                                               text-warning">
+                                            @String.Format("{0:N0}", tt)đ
+                                        </td>
+                                        <td>
+                                            <small class="text-muted">
+                                                @dv.GhiChu
+                                            </small>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr class="table-warning">
+                                    <td colspan="3" class="font-weight-bold
+                                                        text-right">
+                                        Tổng dịch vụ/tháng:
+                                    </td>
+                                    <td class="text-right font-weight-bold">
+                                        @String.Format("{0:N0}", tongDichVu)đ
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">
+                            <i class="fa fa-info-circle mr-1"></i>
+                            Không có dịch vụ kèm theo.
+                        </p>
+                    }
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header font-weight-bold text-primary">
+                    <i class="fa fa-user mr-2"></i> Thông tin khách hàng
+                </div>
+                <div class="card-body">
+                    @{
+                        var khach = Model.NguoiDung1;
+                    }
+                    @if (khach != null)
+                    {
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table class="table table-borderless
+                                  table-sm mb-0">
+                                    <tr>
+                                        <td style="width:120px"
+                                            class="font-weight-bold">
+                                            Họ tên:
+                                        </td>
+                                        <td>
+                                            <strong>@khach.HoTen</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">
+                                            Điện thoại:
+                                        </td>
+                                        <td>@khach.SoDienThoai</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">
+                                            Email:
+                                        </td>
+                                        <td>@khach.Email</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-borderless
+                                  table-sm mb-0">
+                                    <tr>
+                                        <td style="width:80px"
+                                            class="font-weight-bold">
+                                            Zalo:
+                                        </td>
+                                        <td>
+                                            @(string.IsNullOrEmpty(
+                                    khach.ZaloPhone)
+                                    ? "—" : khach.ZaloPhone)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">
+                                            CCCD:
+                                        </td>
+                                        <td>
+                                            @(string.IsNullOrEmpty(
+                                    khach.SoCCCD)
+                                    ? "—" : khach.SoCCCD)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">
+                                            Ngày sinh:
+                                        </td>
+                                        <td>
+                                            @(khach.NgaySinh.HasValue
+                                    ? khach.NgaySinh.Value
+                                           .ToString("dd/MM/yyyy")
+                                    : "—")
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">
+                                            Địa chỉ:
+                                        </td>
+                                        <td>
+                                            @(string.IsNullOrEmpty(khach.DiaChi)
+                                    ? "—" : khach.DiaChi)
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">
+                            <i class="fa fa-info-circle mr-1"></i>
+                            Chưa có thông tin khách hàng.
+                        </p>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header font-weight-bold text-primary">
+                    <i class="fa fa-cogs mr-2"></i> Thao tác
+                </div>
+                <div class="card-body">
+                    @if (Model.TrangThaiHopDong == "ChoKy")
+                    {
+                        using (Html.BeginForm("KyHopDong",
+                            "ChuTroHopDong", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="maHopDong"
+                                   value="@Model.MaHopDong" />
+                            <button type="submit"
+                                    class="btn btn-success btn-block mb-2"
+                                    onclick="return confirm('Ký hợp đồng? Phòng sẽ chuyển sang Đang thuê.')">
+                                <i class="fa fa-pen mr-1"></i> Ký hợp đồng
+                            </button>
+                        }
+
+                        @Html.ActionLink("Sửa thông tin", "SuaThongTin",
+                            new { maHopDong = Model.MaHopDong },
+                            new { @class = "btn btn-warning btn-block mb-2" })
+                    }
+
+                    @if (Model.TrangThaiHopDong == "DangThue")
+                    {
+                        using (Html.BeginForm("KetThuc",
+                            "ChuTroHopDong", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="maHopDong"
+                                   value="@Model.MaHopDong" />
+                            <button type="submit"
+                                    class="btn btn-secondary btn-block mb-2"
+                                    onclick="return confirm('Kết thúc hợp đồng? Phòng sẽ về Còn trống.')">
+                                <i class="fa fa-stop mr-1"></i> Kết thúc hợp đồng
+                            </button>
+                        }
+                    }
+
+                    @if (Model.TrangThaiHopDong == "ChoKy"
+                      || Model.TrangThaiHopDong == "DangThue")
+                    {
+                        <a href="@Url.Action("Huy",
+                        new { maHopDong = Model.MaHopDong })"
+                           class="btn btn-danger btn-block mb-2">
+                            <i class="fa fa-ban mr-1"></i> Hủy hợp đồng
+                        </a>
+                    }
+
+                    <a href="@Url.Action("XuatPdf","ChuTroHopDong",
+                       new { maHopDong = Model.MaHopDong })"
+                       class="btn btn-primary btn-block"
+                       target="_blank">
+                        <i class="fas fa-file-pdf mr-1"></i>
+                        Xuất PDF
+                    </a>
+
+                    <a href="@Url.Action("DanhSach")"
+                       class="btn btn-secondary btn-block">
+                        <i class="fa fa-arrow-left mr-1"></i> Trở lại
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,535 @@
+﻿@using System.Collections.Generic
+@using HappyHouse.Models
+
+@{
+    ViewBag.Title = "Trang Chủ";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    ViewBag.ActiveMenu = "TrangChu";
+
+    var dsPhong = ViewBag.DsPhongNoiBat as List<PhongTro>;
+    var dsTinTuc = ViewBag.DsTinTucMoiNhat as List<TinTuc>;
+    var dsTinhThanh = ViewBag.DsTinhThanh as List<string>;
+}
+
+@* ── Hero Section ── *@
+<section class="hero-section">
+    <div class="hero-items owl-carousel">
+        <div class="single-hero-item set-bg"
+             data-setbg="/Content/Home/img/hero/hero-1.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="hero-text">
+                            <p class="room-location">
+                                <i class="icon_pin"></i> Hà Nội, Việt Nam
+                            </p>
+                            <h2>Tìm Phòng Trọ Ưng Ý</h2>
+                            <div class="room-price">
+                                <span>Giá Từ:</span>
+                                <p>1.500.000 đ/tháng</p>
+                            </div>
+                            <ul class="room-features">
+                                <li><i class="fa fa-arrows"></i><p>Nhiều Diện Tích</p></li>
+                                <li><i class="fa fa-bed"></i><p>Đầy Đủ Tiện Nghi</p></li>
+                                <li><i class="fa fa-shield"></i><p>An Toàn, Uy Tín</p></li>
+                                <li><i class="fa fa-map-marker"></i><p>Nhiều Khu Vực</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="single-hero-item set-bg"
+             data-setbg="/Content/Home/img/hero/hero-2.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="hero-text">
+                            <p class="room-location">
+                                <i class="icon_pin"></i> TP. Hồ Chí Minh
+                            </p>
+                            <h2>Phòng Trọ Giá Tốt</h2>
+                            <div class="room-price">
+                                <span>Giá Từ:</span>
+                                <p>2.000.000 đ/tháng</p>
+                            </div>
+                            <ul class="room-features">
+                                <li><i class="fa fa-wifi"></i><p>Wifi Miễn Phí</p></li>
+                                <li><i class="fa fa-car"></i><p>Có Chỗ Để Xe</p></li>
+                                <li><i class="fa fa-camera"></i><p>Camera An Ninh</p></li>
+                                <li><i class="fa fa-bath"></i><p>WC Riêng</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="single-hero-item set-bg"
+             data-setbg="/Content/Home/img/hero/hero-3.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="hero-text">
+                            <p class="room-location">
+                                <i class="icon_pin"></i> Đà Nẵng, Việt Nam
+                            </p>
+                            <h2>Sống Thoải Mái Mỗi Ngày</h2>
+                            <div class="room-price">
+                                <span>Giá Từ:</span>
+                                <p>1.800.000 đ/tháng</p>
+                            </div>
+                            <ul class="room-features">
+                                <li><i class="fa fa-home"></i><p>Phòng Rộng Rãi</p></li>
+                                <li><i class="fa fa-bolt"></i><p>Điện Nước Đầy Đủ</p></li>
+                                <li><i class="fa fa-smile-o"></i><p>Chủ Trọ Thân Thiện</p></li>
+                                <li><i class="fa fa-check"></i><p>Đã Xác Minh</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="thumbnail-pic">
+        <div class="thumbs owl-carousel">
+            <div class="item">
+                <img src="~/Content/Home/img/hero/dot-1.jpg" alt="" />
+            </div>
+            <div class="item">
+                <img src="~/Content/Home/img/hero/dot-2.jpg" alt="" />
+            </div>
+            <div class="item">
+                <img src="~/Content/Home/img/hero/dot-3.jpg" alt="" />
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ── Search Banner ── *@
+<div style="background:linear-gradient(135deg,#1c1c2e 0%,#2a2a3e 100%);
+            padding:28px 0;">
+    <div class="container">
+        <div style="background:rgba(255,255,255,0.06);
+                    border:1px solid rgba(255,255,255,0.1);
+                    border-radius:12px;
+                    padding:24px 32px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:space-between;
+                    flex-wrap:wrap;
+                    gap:16px;">
+
+            <div>
+                <h4 style="color:#fff;font-weight:500;margin:0 0 6px;
+                            font-size:18px;letter-spacing:0.3px;">
+                    Tìm phòng trọ phù hợp
+                </h4>
+                <p style="color:rgba(255,255,255,0.55);margin:0;font-size:14px;">
+                    Hệ thống quản lý nhà trọ Happy House — minh bạch, tiện lợi
+                </p>
+            </div>
+
+            <a href="@Url.Action("DanhSach","PhongTro")"
+               style="display:inline-flex;align-items:center;gap:8px;
+                      padding:12px 28px;background:#2cbdb8;color:#fff;
+                      border-radius:8px;font-weight:400;font-size:14px;
+                      text-decoration:none;letter-spacing:0.3px;
+                      white-space:nowrap;
+                      box-shadow:0 4px 16px rgba(44,189,184,0.35);
+                      transition:background 0.2s;"
+               onmouseover="this.style.background='#25a8a3'"
+               onmouseout="this.style.background='#2cbdb8'">
+                <i class="fa fa-search"></i>
+                Xem phòng trống
+            </a>
+
+        </div>
+    </div>
+</div>
+
+@* ── Cách thức hoạt động ── *@
+<section class="howit-works spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <span>Tìm Ngôi Nhà Mơ Ước</span>
+                    <h2>Cách Thức Hoạt Động</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="single-howit-works">
+                    <img src="~/Content/Home/img/howit-works/howit-works-1.png" alt="" />
+                    <h4>Tìm Kiếm Phòng Trọ</h4>
+                    <p>
+                        Tìm kiếm phòng trọ theo khu vực, giá cả và tiện ích
+                        phù hợp với nhu cầu một cách dễ dàng.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="single-howit-works">
+                    <img src="~/Content/Home/img/howit-works/howit-works-2.png" alt="" />
+                    <h4>Xem & Liên Hệ Chủ Trọ</h4>
+                    <p>
+                        Xem thông tin chi tiết phòng, hình ảnh thực tế và
+                        liên hệ trực tiếp để đặt lịch xem phòng.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="single-howit-works">
+                    <img src="~/Content/Home/img/howit-works/howit-works-3.png" alt="" />
+                    <h4>Ký Hợp Đồng & Dọn Vào</h4>
+                    <p>
+                        Ký hợp đồng, thanh toán tiện lợi và dọn vào ở ngay.
+                        Mọi thứ đều được quản lý dễ dàng.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ── Phòng nổi bật ── *@
+<section class="feature-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <span>Danh Sách Phòng Trọ</span>
+                    <h2>Phòng Nổi Bật</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="feature-carousel owl-carousel">
+                @if (dsPhong != null && dsPhong.Any())
+                {
+                    foreach (var phong in dsPhong)
+                    {
+                        var dsAnh = phong.HinhAnhPhongs.ToList();
+                        var anh = dsAnh.FirstOrDefault(
+                                             x => x.LaDaiDien && x.TrangThai)
+                                         ?? dsAnh.FirstOrDefault(x => x.TrangThai);
+                        string anhUrl = anh != null
+                            ? Url.Content("~/Content/images/phongs/" + anh.TenFile)
+                            : "/Content/Home/img/feature/feature-1.jpg";
+
+                        <div class="col-lg-4">
+                            <div class="feature-item">
+                                <div class="fi-pic set-bg" data-setbg="@anhUrl">
+                                    <div class="pic-tag">
+                                        <div class="f-text">Phòng Trọ</div>
+                                        <div class="s-text">Còn Trống</div>
+                                    </div>
+                                    <div class="feature-author">
+                                        <div class="fa-text">
+                                            <span>@(phong.ToaNha?.TenToaNha ?? "")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fi-text">
+                                    <div class="inside-text">
+                                        <h4>Phòng @phong.SoPhong</h4>
+                                        <ul>
+                                            <li>
+                                                <i class="fa fa-map-marker"></i>
+                                                @(phong.ToaNha != null
+                                                    ? phong.ToaNha.DiaChi + ", "
+                                                      + phong.ToaNha.TinhThanh
+                                                    : "—")
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-building"></i>
+                                                Tầng @phong.Tang
+                                            </li>
+                                        </ul>
+                                        <h5 class="price">
+                                            @String.Format("{0:N0}", phong.GiaThue)
+                                            <span>đ/tháng</span>
+                                        </h5>
+                                    </div>
+                                    <ul class="room-features">
+                                        <li>
+                                            <i class="fa fa-arrows"></i>
+                                            <p>
+                                                @(phong.DienTich.HasValue
+                                                ? phong.DienTich.Value + " m²" : "—")
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-users"></i>
+                                            <p>@phong.SoNguoiToiDa người</p>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-list"></i>
+                                            <p>@phong.TienIches.Count tiện ích</p>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-eye"></i>
+                                            <p>
+                                                <a href="@Url.Action("ChiTiet",
+                                                    "PhongTro",
+                                                    new { maPhong = phong.MaPhong })"
+                                                   style="color:#c8a415;">
+                                                    Xem thêm
+                                                </a>
+                                            </p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-lg-12 text-center" style="padding:40px 0;">
+                        <p style="color:#777;">Chưa có phòng nào.</p>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+            <div class="col-lg-12 text-center">
+                <a href="@Url.Action("DanhSach","PhongTro")"
+                   style="display:inline-block;padding:12px 40px;
+                          background:#c8a415;color:#fff;border-radius:4px;
+                          font-weight:600;text-decoration:none;">
+                    Xem Tất Cả Phòng Trọ
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ── Video Section ── *@
+<div class="video-section set-bg"
+     data-setbg="/Content/Home/img/video-bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="video-text">
+                    <h4>Tìm Kiếm Nơi Ở Lý Tưởng</h4>
+                    <h2>Phòng Trọ Uy Tín Gần Bạn</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* ── Top Properties ── *@
+<div class="top-properties-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="properties-title">
+                    <div class="section-title">
+                        <span>Phòng Trọ Dành Cho Bạn</span>
+                        <h2>Phòng Được Quan Tâm</h2>
+                    </div>
+                    <a href="@Url.Action("DanhSach","PhongTro")"
+                       class="top-property-all">Xem Tất Cả</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="top-properties-carousel owl-carousel">
+            @if (dsPhong != null && dsPhong.Any())
+            {
+                foreach (var phong in dsPhong.Take(4))
+                {
+                    var dsAnh2 = phong.HinhAnhPhongs.ToList();
+                    var anh2 = dsAnh2.FirstOrDefault(x => x.LaDaiDien && x.TrangThai)
+                                 ?? dsAnh2.FirstOrDefault(x => x.TrangThai);
+
+                    <div class="single-top-properties">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="stp-pic">
+                                    @if (anh2 != null)
+                                    {
+                                        <img src="~/Content/images/phongs/@anh2.TenFile"
+                                             alt="Phòng @phong.SoPhong"
+                                             style="width:100%;height:260px;
+                                                    object-fit:cover;" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Content/Home/img/properties/properties-1.jpg"
+                                             alt=""
+                                             style="width:100%;height:260px;
+                                                    object-fit:cover;" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="stp-text">
+                                    <div class="s-text">Còn Trống</div>
+                                    <h2>Phòng @phong.SoPhong</h2>
+                                    <div class="room-price">
+                                        <span>Giá Thuê:</span>
+                                        <h4>@String.Format("{0:N0}", phong.GiaThue)đ</h4>
+                                    </div>
+                                    <div class="properties-location">
+                                        <i class="icon_pin"></i>
+                                        @(phong.ToaNha != null
+                                            ? phong.ToaNha.DiaChi + ", "
+                                              + phong.ToaNha.TinhThanh : "—")
+                                    </div>
+                                    <p>
+                                        @{
+                                            string moTa = string.IsNullOrEmpty(phong.MoTa)
+                                                ? "Phòng trọ sạch sẽ, thoáng mát."
+                                                : (phong.MoTa.Length > 100
+                                                    ? phong.MoTa.Substring(0, 100) + "..."
+                                                    : phong.MoTa);
+                                        }
+                                        @moTa
+                                    </p>
+                                    <ul class="room-features">
+                                        <li>
+                                            <i class="fa fa-arrows"></i>
+                                            <p>
+                                                @(phong.DienTich.HasValue
+                                                ? phong.DienTich.Value + " m²" : "—")
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-users"></i>
+                                            <p>@phong.SoNguoiToiDa người</p>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-building-o"></i>
+                                            <p>Tầng @phong.Tang</p>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-money"></i>
+                                            <p>
+                                                @(phong.TienCoc.HasValue
+                                                ? "Cọc: " + String.Format("{0:N0}",
+                                                    phong.TienCoc) + "đ"
+                                                : "Không cọc")
+                                            </p>
+                                        </li>
+                                    </ul>
+                                    <a href="@Url.Action("ChiTiet","PhongTro",
+                                               new { maPhong = phong.MaPhong })"
+                                       style="display:inline-block;margin-top:15px;
+                                              padding:10px 25px;background:#c8a415;
+                                              color:#fff;border-radius:4px;
+                                              font-weight:600;text-decoration:none;">
+                                        Xem Chi Tiết
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@* ── Tin tức mới nhất ── *@
+<section class="blog-section latest-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <span>Blog & Sự Kiện</span>
+                    <h2>Tin Tức Mới Nhất</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @if (dsTinTuc != null && dsTinTuc.Any())
+            {
+                foreach (var tt in dsTinTuc)
+                {
+                    <div class="col-lg-4">
+                        <div class="single-blog-item">
+                            <div class="sb-pic">
+                                @if (!string.IsNullOrEmpty(tt.AnhDaiDien))
+                                {
+                                    <img src="~/Content/images/tintuc/@tt.AnhDaiDien"
+                                         alt="@tt.TieuDe"
+                                         style="width:100%;height:220px;
+                                                object-fit:cover;" />
+                                }
+                                else
+                                {
+                                    <img src="~/Content/Home/img/blog/latest-1.jpg"
+                                         alt=""
+                                         style="width:100%;height:220px;
+                                                object-fit:cover;" />
+                                }
+                            </div>
+                            <div class="sb-text">
+                                <ul>
+                                    <li>
+                                        <i class="fa fa-user"></i>
+                                        @(tt.NguoiDung?.HoTen ?? "Admin")
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-clock-o"></i>
+                                        @(tt.NgayDang.HasValue
+                                            ? tt.NgayDang.Value.ToString("dd/MM/yyyy")
+                                            : "—")
+                                    </li>
+                                </ul>
+                                <h4>
+                                    <a href="@Url.Action("ChiTietTinTuc","TrangChu",
+                                               new { maTinTuc = tt.MaTinTuc })">
+                                        @(tt.TieuDe.Length > 60
+                                            ? tt.TieuDe.Substring(0, 60) + "..."
+                                            : tt.TieuDe)
+                                    </a>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                foreach (var img in new[]
+                    { "latest-1.jpg", "latest-2.jpg", "latest-3.jpg" })
+                {
+                    <div class="col-lg-4">
+                        <div class="single-blog-item">
+                            <div class="sb-pic">
+                                <img src="~/Content/Home/img/blog/@img" alt="" />
+                            </div>
+                            <div class="sb-text">
+                                <ul>
+                                    <li><i class="fa fa-user"></i> Admin</li>
+                                    <li><i class="fa fa-clock-o"></i> HappyHouse</li>
+                                </ul>
+                                <h4>
+                                    <a href="@Url.Action("DanhSachTinTuc","TrangChu")">
+                                        Xem tin tức mới nhất
+                                    </a>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="row" style="margin-top:20px;">
+            <div class="col-lg-12 text-center">
+                <a href="@Url.Action("DanhSachTinTuc","TrangChu")"
+                   style="display:inline-block;padding:12px 40px;
+                          background:#c8a415;color:#fff;border-radius:4px;
+                          font-weight:600;text-decoration:none;">
+                    Xem Tất Cả Tin Tức
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,168 @@
+﻿@model HappyHouse.Models.ToaNha
+
+@{
+    ViewBag.Title = "Thêm tòa nhà";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Tòa nhà của tôi</h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","ChuTroToaNha")">Danh sách tòa nhà</a>
+}
+
+@using (Html.BeginForm("ThemMoi", "ChuTroToaNha", FormMethod.Post,
+    new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Tên tòa nhà <span class="text-danger">*</span>
+                </label>
+                @Html.TextBoxFor(m => m.TenToaNha, new
+                {
+                    @class = "form-control",
+                    placeholder = "VD: Nhà trọ Bình Minh",
+                    maxlength = "150"
+                })
+                @Html.ValidationMessageFor(m => m.TenToaNha, "",
+                    new { @class = "text-danger small" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Tỉnh/Thành <span class="text-danger">*</span>
+                </label>
+                @Html.TextBoxFor(m => m.TinhThanh, new
+                {
+                    @class = "form-control",
+                    placeholder = "VD: Hà Nội",
+                    maxlength = "100"
+                })
+                @Html.ValidationMessageFor(m => m.TinhThanh, "",
+                    new { @class = "text-danger small" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Địa chỉ <span class="text-danger">*</span>
+                </label>
+                @Html.TextBoxFor(m => m.DiaChi, new
+                {
+                    @class = "form-control",
+                    placeholder = "Số nhà, tên đường...",
+                    maxlength = "255"
+                })
+                @Html.ValidationMessageFor(m => m.DiaChi, "",
+                    new { @class = "text-danger small" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="font-weight-bold">Phường/Xã</label>
+                @Html.TextBoxFor(m => m.PhuongXa, new
+                {
+                    @class = "form-control",
+                    placeholder = "VD: Phường Khương Đình",
+                    maxlength = "100"
+                })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="font-weight-bold">Mô tả</label>
+        @Html.TextAreaFor(m => m.MoTa, new
+        {
+            @class = "form-control",
+            rows = 4,
+            placeholder = "Mô tả vị trí, tiện ích xung quanh...",
+            maxlength = "1000",
+            id = "txtMoTa"
+        })
+        <small class="text-muted">
+            <span id="demKyTu">0</span>/1000 ký tự
+        </small>
+    </div>
+
+    <div class="form-group">
+        <label class="font-weight-bold">
+            Hình ảnh
+            <span class="text-muted font-weight-normal">(không bắt buộc, chọn nhiều)</span>
+        </label>
+        <input type="file" name="dsHinhAnh" id="inputHinhAnh"
+               class="form-control-file" multiple accept="image/*" />
+        <small class="text-muted">Ảnh đầu tiên sẽ là ảnh đại diện.</small>
+    </div>
+    <div id="previewAnh" class="d-flex flex-wrap mb-3"></div>
+
+    <div class="d-flex justify-content-between">
+        @Html.ActionLink("Trở lại", "DanhSach", null,
+            new { @class = "btn btn-secondary px-4" })
+        <button type="submit" class="btn btn-primary px-4">
+            <i class="fa fa-plus mr-1"></i> Thêm mới
+        </button>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $('#txtMoTa').on('input', function () {
+            $('#demKyTu').text($(this).val().length);
+        });
+
+        var selectedFiles = [];
+
+        document.getElementById('inputHinhAnh').addEventListener('change', function () {
+            Array.from(this.files).forEach(function (f) { selectedFiles.push(f); });
+            renderPreview();
+        });
+
+        function renderPreview() {
+            var preview = document.getElementById('previewAnh');
+            preview.innerHTML = '';
+            selectedFiles.forEach(function (file, idx) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var w = document.createElement('div');
+                    w.style = 'position:relative;margin-right:8px;margin-bottom:8px;text-align:center;';
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style = 'width:90px;height:90px;object-fit:cover;border-radius:6px;' +
+                        'border:2px solid ' + (idx === 0 ? '#4e73df' : '#dee2e6') + ';display:block;';
+                    var btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.innerHTML = '&times;';
+                    btn.style = 'position:absolute;top:-6px;right:-6px;background:#e74a3b;' +
+                        'color:#fff;border:none;border-radius:50%;width:20px;height:20px;' +
+                        'font-size:13px;cursor:pointer;line-height:1;';
+                    btn.onclick = (function (i) { return function () { xoaPreview(i); }; })(idx);
+                    var lbl = document.createElement('small');
+                    lbl.innerHTML = idx === 0
+                        ? '<span class="badge badge-primary">Đại diện</span>'
+                        : '<span class="badge badge-secondary">Ảnh ' + (idx + 1) + '</span>';
+                    w.appendChild(btn); w.appendChild(img); w.appendChild(lbl);
+                    preview.appendChild(w);
+                };
+                reader.readAsDataURL(file);
+            });
+            var dt = new DataTransfer();
+            selectedFiles.forEach(function (f) { dt.items.add(f); });
+            document.getElementById('inputHinhAnh').files = dt.files;
+        }
+
+        function xoaPreview(idx) {
+            selectedFiles.splice(idx, 1);
+            renderPreview();
+        }
+    </script>
+}

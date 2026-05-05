@@ -1,0 +1,504 @@
+﻿@model HappyHouse.Models.HopDong
+
+@{
+    ViewBag.Title = "Tạo hợp đồng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Hợp đồng thuê phòng</h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","ChuTroHopDong")">Danh sách hợp đồng</a>
+}
+
+@using (Html.BeginForm("ThemMoi", "ChuTroHopDong", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header font-weight-bold text-primary">
+            <i class="fa fa-building mr-2"></i>
+            Bước 1 — Chọn tòa nhà & phòng
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <label class="font-weight-bold">
+                            Tòa nhà <span class="text-danger">*</span>
+                        </label>
+                        @Html.DropDownList("maToaNha",
+                            (SelectList)ViewBag.DsToaNha,
+                            "--- Chọn tòa nhà ---",
+                            new { @class = "form-control", id = "selToaNha" })
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <label class="font-weight-bold">
+                            Phòng trống <span class="text-danger">*</span>
+                        </label>
+                        <select name="MaPhong" id="selPhong"
+                                class="form-control" disabled>
+                            <option value="">--- Chọn tòa nhà trước ---</option>
+                        </select>
+                        @Html.ValidationMessageFor(m => m.MaPhong, "",
+                            new { @class = "text-danger small" })
+                    </div>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <div id="thongTinPhong" class="text-muted small"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header font-weight-bold text-primary">
+            <i class="fa fa-user mr-2"></i>
+            Bước 2 — Chọn khách hàng
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold">
+                            Tìm kiếm khách hàng
+                        </label>
+                        <div class="input-group">
+                            <input type="text" id="inputTimKhach"
+                                   class="form-control"
+                                   placeholder="Nhập họ tên, SĐT hoặc email..." />
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div id="ketQuaTimKhach"
+                             class="list-group mt-1 shadow"
+                             style="display:none;position:absolute;
+                                    z-index:999;width:100%;max-height:250px;
+                                    overflow-y:auto;"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="khachDaChon"
+                         class="alert alert-light border"
+                         style="display:none;">
+                        <i class="fa fa-user-check mr-2 text-success"></i>
+                        <strong id="tenKhachHienThi"></strong>
+                        <br />
+                        <small id="infoKhachHienThi" class="text-muted"></small>
+                        <button type="button" id="btnXoaKhach"
+                                class="btn btn-link btn-sm text-danger p-0 ml-2">
+                            <i class="fa fa-times"></i> Chọn lại
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="MaKhachHang" id="hiddenMaKhach" />
+            @Html.ValidationMessageFor(m => m.MaKhachHang, "",
+                new { @class = "text-danger small" })
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4" id="cardDichVu" style="display:none">
+        <div class="card-header font-weight-bold text-primary">
+            <i class="fa fa-cog mr-2"></i>
+            Bước 3 — Chọn dịch vụ kèm theo
+            <small class="font-weight-normal text-muted ml-2">
+                (không bắt buộc)
+            </small>
+        </div>
+        <div class="card-body">
+            <div id="dsDichVu" class="row"></div>
+            <div id="tongDichVu"
+                 class="alert alert-light border mt-2"
+                 style="display:none">
+                <strong>Tổng dịch vụ hàng tháng:</strong>
+                <span id="tongTienDichVu"
+                      class="text-warning font-weight-bold ml-2">
+                    0đ
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header font-weight-bold text-primary">
+            <i class="fa fa-file-contract mr-2"></i>
+            Bước 4 — Thông tin hợp đồng
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="font-weight-bold">
+                            Ngày bắt đầu <span class="text-danger">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.NgayBatDau, "{0:yyyy-MM-dd}", new
+                        {
+                            @class = "form-control",
+                            type = "date"
+                        })
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="font-weight-bold">
+                            Ngày kết thúc <span class="text-danger">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.NgayKetThuc, "{0:yyyy-MM-dd}", new
+                        {
+                            @class = "form-control",
+                            type = "date"
+                        })
+                        @Html.ValidationMessageFor(m => m.NgayKetThuc, "",
+                            new { @class = "text-danger small" })
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="font-weight-bold">
+                            Giá thuê (đ/tháng) <span class="text-danger">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.GiaThueThang, new
+                        {
+                            @class = "form-control",
+                            type = "number",
+                            min = "0",
+                            step = "50000",
+                            id = "inputGiaThue"
+                        })
+                        @Html.ValidationMessageFor(m => m.GiaThueThang, "",
+                            new { @class = "text-danger small" })
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Tiền cọc (đ)</label>
+                        @Html.TextBoxFor(m => m.TienCoc, new
+                        {
+                            @class = "form-control",
+                            type = "number",
+                            min = "0",
+                            step = "50000"
+                        })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="font-weight-bold">
+                            Ngày thanh toán hàng tháng
+                        </label>
+                        @Html.TextBoxFor(m => m.NgayThanhToanHangThang, new
+                        {
+                            @class = "form-control",
+                            type = "number",
+                            min = "1",
+                            max = "28"
+                        })
+                        <small class="text-muted">Ngày 1 đến 28</small>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Điều khoản</label>
+                        @Html.TextAreaFor(m => m.DieuKhoan, new
+                        {
+                            @class = "form-control",
+                            rows = 3,
+                            placeholder = "Nhập điều khoản hợp đồng..."
+                        })
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-light border">
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <small class="text-muted d-block">Tiền phòng</small>
+                        <strong id="sumPhong" class="text-primary">—</strong>
+                    </div>
+                    <div class="col-md-4">
+                        <small class="text-muted d-block">Dịch vụ/tháng</small>
+                        <strong id="sumDichVu" class="text-warning">—</strong>
+                    </div>
+                    <div class="col-md-4">
+                        <small class="text-muted d-block">Tổng hàng tháng</small>
+                        <strong id="sumTong" style="font-size:18px;color:#1cc88a">—</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        @Html.ActionLink("Trở lại", "DanhSach", null,
+            new { @class = "btn btn-secondary px-4" })
+        <button type="submit" class="btn btn-primary px-4">
+            <i class="fa fa-plus mr-1"></i> Tạo hợp đồng
+        </button>
+    </div>
+}
+
+@section Scripts {
+    <script>
+var urlPhong    = '@Url.Action("LayPhongTrong",  "ChuTroHopDong")';
+var urlKhach    = '@Url.Action("TimKiemKhachHang","ChuTroHopDong")';
+var urlDichVu   = '@Url.Action("LayDichVuToaNha", "ChuTroHopDong")';
+
+var dsDichVuDaChon = {}; // { maGiaDichVu: { ten, donGia, soLuong } }
+
+// ── B1: Chọn tòa nhà → load phòng trống + dịch vụ ────────────
+$('#selToaNha').on('change', function () {
+    var maToaNha = $(this).val();
+    var selPhong = $('#selPhong');
+
+    selPhong.prop('disabled', true)
+            .html('<option value="">Đang tải...</option>');
+    $('#cardDichVu').hide();
+    $('#dsDichVu').empty();
+    dsDichVuDaChon = {};
+
+    if (!maToaNha) {
+        selPhong.html('<option value="">--- Chọn tòa nhà trước ---</option>');
+        return;
+    }
+
+    // Load phòng trống
+    $.getJSON(urlPhong, { maToaNha: maToaNha }, function (ds) {
+        selPhong.prop('disabled', false);
+        if (ds.length === 0) {
+            selPhong.html('<option value="">Không có phòng trống</option>');
+        } else {
+            var opts = '<option value="">--- Chọn phòng ---</option>';
+            ds.forEach(function (p) {
+                opts += '<option value="' + p.maPhong
+                      + '" data-gia="' + p.giaThue + '">'
+                      + p.tenHienThi + '</option>';
+            });
+            selPhong.html(opts);
+        }
+    });
+
+    // Load dịch vụ tòa nhà
+    $.getJSON(urlDichVu, { maToaNha: maToaNha }, function (ds) {
+        if (ds.length === 0) return;
+
+        var html = '';
+        ds.forEach(function (dv) {
+            html += '<div class="col-md-4 mb-3">'
+                  + '<div class="card border h-100">'
+                  + '<div class="card-body p-3">'
+                  + '<div class="d-flex justify-content-between align-items-start">'
+                  + '<div>'
+                  + '<i class="fas ' + dv.bieuTuong
+                  + ' mr-2 text-warning"></i>'
+                  + '<strong>' + dv.tenDichVu + '</strong>'
+                  + '<br><small class="text-muted">'
+                  + formatSo(dv.donGia) + 'đ/' + dv.donVi + '</small>'
+                  + '</div>'
+                  + '<input type="checkbox" class="chkDichVu mt-1"'
+                  + ' data-ma="' + dv.maGiaDichVu + '"'
+                  + ' data-ten="' + dv.tenDichVu + '"'
+                  + ' data-gia="' + dv.donGia + '"'
+                  + ' style="width:18px;height:18px;cursor:pointer;">'
+                  + '</div>'
+                  + '<div class="mt-2 soLuongWrap" style="display:none">'
+                  + '<label class="small font-weight-bold mb-1">Số lượng:</label>'
+                  + '<div class="input-group input-group-sm">'
+                  + '<div class="input-group-prepend">'
+                  + '<button type="button" class="btn btn-outline-secondary btnMinus">'
+                  + '<i class="fa fa-minus"></i></button></div>'
+                  + '<input type="number" class="form-control text-center inputSoLuong"'
+                  + ' value="1" min="1" max="99"'
+                  + ' data-ma="' + dv.maGiaDichVu + '">'
+                  + '<div class="input-group-append">'
+                  + '<button type="button" class="btn btn-outline-secondary btnPlus">'
+                  + '<i class="fa fa-plus"></i></button></div>'
+                  + '</div></div>'
+                  + '<div class="mt-1 thanhTienDV small font-weight-bold'
+                  + ' text-warning" style="display:none"></div>'
+                  + '</div></div></div>';
+        });
+
+        $('#dsDichVu').html(html);
+        $('#cardDichVu').show();
+        bindDichVuEvents();
+    });
+});
+
+// ── B1: Chọn phòng → điền giá thuê ──────────────────────────
+$('#selPhong').on('change', function () {
+    var gia = $(this).find(':selected').data('gia');
+    if (gia) {
+        $('#inputGiaThue').val(gia);
+        $('#thongTinPhong').html(
+            '<span class="text-success font-weight-bold">'
+            + formatSo(gia) + 'đ/tháng</span>');
+        tinhTong();
+    }
+});
+
+// ── B2: Tìm kiếm khách hàng ──────────────────────────────────
+var timKhachTimer;
+$('#inputTimKhach').on('input', function () {
+    clearTimeout(timKhachTimer);
+    var q = $(this).val().trim();
+    if (q.length < 2) {
+        $('#ketQuaTimKhach').hide();
+        return;
+    }
+    timKhachTimer = setTimeout(function () {
+        $.getJSON(urlKhach, { tuKhoa: q }, function (ds) {
+            if (ds.length === 0) {
+                $('#ketQuaTimKhach').html(
+                    '<div class="list-group-item text-muted small">'
+                    + 'Không tìm thấy khách hàng</div>').show();
+                return;
+            }
+            var html = '';
+            ds.forEach(function (k) {
+                html += '<a href="#" class="list-group-item'
+                      + ' list-group-item-action itemKhach"'
+                      + ' data-ma="' + k.maNguoiDung + '"'
+                      + ' data-ten="' + k.hoTen + '"'
+                      + ' data-sdt="' + k.soDienThoai + '"'
+                      + ' data-email="' + k.email + '">'
+                      + '<i class="fa fa-user mr-2 text-primary"></i>'
+                      + '<strong>' + k.hoTen + '</strong>'
+                      + ' <span class="text-muted">— ' + k.soDienThoai + '</span>'
+                      + '<br><small class="text-muted">' + k.email + '</small>'
+                      + '</a>';
+            });
+            $('#ketQuaTimKhach').html(html).show();
+        });
+    }, 300);
+});
+
+// Chọn khách
+$(document).on('click', '.itemKhach', function (e) {
+    e.preventDefault();
+    var ma    = $(this).data('ma');
+    var ten   = $(this).data('ten');
+    var sdt   = $(this).data('sdt');
+    var email = $(this).data('email');
+
+    $('#hiddenMaKhach').val(ma);
+    $('#tenKhachHienThi').text(ten);
+    $('#infoKhachHienThi').text(sdt + ' — ' + email);
+    $('#khachDaChon').show();
+    $('#ketQuaTimKhach').hide();
+    $('#inputTimKhach').val('');
+});
+
+$('#btnXoaKhach').on('click', function () {
+    $('#hiddenMaKhach').val('');
+    $('#khachDaChon').hide();
+    $('#inputTimKhach').val('').focus();
+});
+
+// Đóng dropdown khi click ngoài
+$(document).on('click', function (e) {
+    if (!$(e.target).closest('#inputTimKhach, #ketQuaTimKhach').length)
+        $('#ketQuaTimKhach').hide();
+});
+
+// ── B3: Dịch vụ events ───────────────────────────────────────
+function bindDichVuEvents() {
+    $('.chkDichVu').on('change', function () {
+        var card = $(this).closest('.card-body');
+        var wrap = card.find('.soLuongWrap');
+        var tt   = card.find('.thanhTienDV');
+        var ma   = $(this).data('ma');
+        var gia  = parseFloat($(this).data('gia'));
+
+        if ($(this).is(':checked')) {
+            wrap.show(); tt.show();
+            // Thêm hidden inputs
+            $('<input>').attr({
+                type: 'hidden',
+                name: 'dsMaGiaDichVu',
+                id: 'hidden_ma_' + ma,
+                value: ma
+            }).appendTo('form');
+            $('<input>').attr({
+                type: 'hidden',
+                name: 'dsSoLuong',
+                id: 'hidden_sl_' + ma,
+                value: 1
+            }).appendTo('form');
+            dsDichVuDaChon[ma] = { gia: gia, soLuong: 1 };
+            capNhatThanhTien(card, gia, 1);
+        } else {
+            wrap.hide(); tt.hide();
+            $('#hidden_ma_' + ma).remove();
+            $('#hidden_sl_' + ma).remove();
+            delete dsDichVuDaChon[ma];
+        }
+        tinhTong();
+    });
+
+    $(document).on('click', '.btnMinus', function () {
+        var input = $(this).closest('.input-group').find('.inputSoLuong');
+        var v = parseInt(input.val()) - 1;
+        if (v < 1) v = 1;
+        input.val(v).trigger('change');
+    });
+
+    $(document).on('click', '.btnPlus', function () {
+        var input = $(this).closest('.input-group').find('.inputSoLuong');
+        var v = parseInt(input.val()) + 1;
+        input.val(v).trigger('change');
+    });
+
+    $(document).on('change', '.inputSoLuong', function () {
+        var ma  = $(this).data('ma');
+        var sl  = parseInt($(this).val()) || 1;
+        var chk = $('.chkDichVu[data-ma="' + ma + '"]');
+        if (!chk.is(':checked')) return;
+
+        var gia = parseFloat(chk.data('gia'));
+        $('#hidden_sl_' + ma).val(sl);
+        if (dsDichVuDaChon[ma]) dsDichVuDaChon[ma].soLuong = sl;
+
+        var card = $(this).closest('.card-body');
+        capNhatThanhTien(card, gia, sl);
+        tinhTong();
+    });
+}
+
+function capNhatThanhTien(card, gia, sl) {
+    var tt = gia * sl;
+    card.find('.thanhTienDV')
+        .text(formatSo(tt) + 'đ');
+}
+
+function tinhTong() {
+    var tongDV  = 0;
+    $.each(dsDichVuDaChon, function (k, v) {
+        tongDV += v.gia * v.soLuong;
+    });
+
+    var giaPhong = parseFloat($('#inputGiaThue').val()) || 0;
+
+    $('#tongDichVu').toggle(tongDV > 0);
+    $('#tongTienDichVu').text(formatSo(tongDV) + 'đ');
+    $('#sumPhong').text(formatSo(giaPhong) + 'đ');
+    $('#sumDichVu').text(formatSo(tongDV) + 'đ/tháng');
+    $('#sumTong').text(formatSo(giaPhong + tongDV) + 'đ/tháng');
+}
+
+$('#inputGiaThue').on('input', tinhTong);
+
+function formatSo(n) {
+    return parseFloat(n).toLocaleString('vi-VN');
+}
+    </script>
+}

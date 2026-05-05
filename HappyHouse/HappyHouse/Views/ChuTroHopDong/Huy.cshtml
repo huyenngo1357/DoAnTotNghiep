@@ -1,0 +1,90 @@
+﻿@model HappyHouse.Models.HopDong
+
+@{
+    ViewBag.Title = "Hủy hợp đồng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Hợp đồng thuê phòng</h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","ChuTroHopDong")">Danh sách hợp đồng</a>
+}
+
+<div style="max-width:600px;margin:auto">
+    <div class="alert alert-warning">
+        <i class="fa fa-exclamation-triangle mr-2"></i>
+        @if (Model.TrangThaiHopDong == "DangThue")
+        {
+            <span>
+                Hủy hợp đồng đang thuê sẽ giải phóng phòng về
+                <strong>Còn trống</strong>.
+            </span>
+        }
+        else
+        {
+            <span>Hủy hợp đồng đang chờ ký.</span>
+        }
+    </div>
+
+    <div class="alert alert-light border mb-4">
+        <table class="table table-borderless table-sm mb-0">
+            <tr>
+                <td style="width:140px" class="font-weight-bold">
+                    Mã hợp đồng:
+                </td>
+                <td><code>@Model.MaHopDong</code></td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Phòng:</td>
+                <td>
+                    @(Model.PhongTro != null
+                        ? "Phòng " + Model.PhongTro.SoPhong
+                          + " — " + Model.PhongTro.ToaNha?.TenToaNha
+                        : "—")
+                </td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Khách hàng:</td>
+                <td>
+                    @(Model.NguoiDung != null
+                        ? Model.NguoiDung.HoTen
+                          + " — " + Model.NguoiDung.SoDienThoai
+                        : "—")
+                </td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Thời hạn:</td>
+                <td>
+                    @Model.NgayBatDau.ToString("dd/MM/yyyy")
+                    — @Model.NgayKetThuc.ToString("dd/MM/yyyy")
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    @using (Html.BeginForm("Huy", "ChuTroHopDong", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="maHopDong" value="@Model.MaHopDong" />
+
+        <div class="form-group">
+            <label class="font-weight-bold">
+                Lý do hủy <span class="text-danger">*</span>
+            </label>
+            <textarea name="lyDoHuy" class="form-control" rows="4"
+                      placeholder="Nhập lý do hủy hợp đồng..."
+                      required></textarea>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            @Html.ActionLink("Trở lại", "DanhSach", null,
+                new { @class = "btn btn-secondary px-4" })
+            <button type="submit" class="btn btn-danger px-4"
+                    onclick="return confirm('Xác nhận hủy hợp đồng này?')">
+                <i class="fa fa-ban mr-1"></i> Xác nhận hủy
+            </button>
+        </div>
+    }
+</div>

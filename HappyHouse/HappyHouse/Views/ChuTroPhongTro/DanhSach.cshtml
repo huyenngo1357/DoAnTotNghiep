@@ -1,0 +1,217 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<HappyHouse.Models.PhongTro>
+
+@{
+    ViewBag.Title = "Quản lý phòng trọ";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold; color:black">Phòng trọ của tôi</h2>
+}
+@section breadLink {
+    <a href="#">Danh sách phòng</a>
+}
+
+@using (Html.BeginForm("DanhSach", "ChuTroPhongTro", FormMethod.Post))
+{
+    <fieldset class="border p-3 shadow-sm mb-3">
+        <legend class="w-auto px-2" style="font-weight:bold; color:black">
+            Tìm kiếm
+        </legend>
+        <div class="row">
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold; color:black">Từ khóa:</label>
+            <div class="col-md-1.5">
+                <input type="text" name="tuKhoa" value="@ViewBag.TuKhoa"
+                       class="form-control" placeholder="Số phòng..." />
+            </div>
+
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold; color:black; text-align:right">Tòa nhà:</label>
+            <div class="col-md-2">
+                @Html.DropDownList("maToaNha",
+                    (SelectList)ViewBag.DsToaNha,
+                    "--- Tất cả ---",
+                    new { @class = "form-control" })
+            </div>
+
+            <label class="col-md-1.5 col-form-label"
+                   style="font-weight:bold; color:black">Trạng thái:</label>
+            <div class="col-md-2">
+                @Html.DropDownList("trangThaiPhong",
+                    (SelectList)ViewBag.DsTrangThai,
+                    new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-3 d-flex align-items-center">
+                <input type="submit" class="btn btn-primary"
+                       value="Tìm kiếm" style="margin-right:8px" />
+                <a href="@Url.Action("DanhSach","ChuTroPhongTro")"
+                   class="btn btn-secondary">Làm mới</a>
+            </div>
+        </div>
+    </fieldset>
+}
+
+<p style="text-align:right; margin:10px">
+    @Html.ActionLink("+ Thêm phòng", "ThemMoi", null,
+        new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-bordered table-striped" width="100%">
+    <thead>
+        <tr style="text-align:center; color:black">
+            <th>Ảnh</th>
+            <th>Số phòng</th>
+            <th>Tòa nhà</th>
+            <th>Tầng</th>
+            <th>Diện tích</th>
+            <th>Giá thuê</th>
+            <th>Tiền cọc</th>
+            <th>Tiện ích</th>
+            <th>Trạng thái</th>
+            <th style="width:150px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="10">
+                    <div style="text-align:center; padding:40px 20px;">
+                        <i class="fas fa-door-open"
+                           style="font-size:48px; color:#b0b8c9;
+                                  display:block; margin-bottom:12px;"></i>
+                        <p style="color:#9aa0ac; font-size:15px; margin:0;">
+                            Chưa có phòng nào. Hãy thêm phòng đầu tiên!
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                var anh = item.HinhAnhPhongs
+                              .FirstOrDefault(x => x.LaDaiDien == true
+                                                && x.TrangThai == true)
+                          ?? item.HinhAnhPhongs
+                                 .FirstOrDefault(x => x.TrangThai == true);
+
+                string bc, bt;
+                switch (item.TrangThaiPhong)
+                {
+                    case "Trong": bc = "success"; bt = "Còn trống"; break;
+                    case "DaThue": bc = "danger"; bt = "Đã thuê"; break;
+                    case "BaoTri": bc = "warning"; bt = "Bảo trì"; break;
+                    case "ChoDuyet": bc = "secondary"; bt = "Chờ duyệt"; break;
+                    default: bc = "secondary"; bt = item.TrangThaiPhong; break;
+                }
+
+                <tr style="vertical-align:middle">
+                    <td style="text-align:center; width:75px">
+                        @if (anh != null)
+                        {
+                            <img src="~/Content/images/phongs/@anh.TenFile"
+                                 style="width:60px;height:60px;
+                                        object-fit:cover;border-radius:4px;" />
+                        }
+                        else
+                        { <span class="text-muted">—</span>}
+                    </td>
+                    <td style="text-align:center">
+                        <strong>@item.SoPhong</strong>
+                    </td>
+                    <td>@(item.ToaNha != null ? item.ToaNha.TenToaNha : "—")</td>
+                    <td style="text-align:center">Tầng @item.Tang</td>
+                    <td style="text-align:center">
+                        @(item.DienTich.HasValue
+                            ? item.DienTich.Value + " m²" : "—")
+                    </td>
+                    <td style="text-align:right">
+                        <strong>@String.Format("{0:N0}", item.GiaThue) đ</strong>
+                    </td>
+                    <td style="text-align:right">
+                        @(item.TienCoc.HasValue
+                            ? String.Format("{0:N0}", item.TienCoc.Value) + " đ"
+                            : "—")
+                    </td>
+                    <td style="text-align:center">
+                        @if (item.TienIches != null && item.TienIches.Any())
+                        {
+                            foreach (var ti in item.TienIches)
+                            {
+                                <span title="@ti.TenTienIch"
+                                      class="mr-1 text-primary">
+                                    <i class="fas @ti.BieuTuong"></i>
+                                </span>
+                            }
+                        }
+                        else
+                        { <span class="text-muted">—</span>}
+                    </td>
+                    <td style="text-align:center">
+                        <span class="badge badge-pill badge-@bc px-2 py-1">
+                            @bt
+                        </span>
+                    </td>
+                    <td style="text-align:center">
+                        @Html.ActionLink("Chi tiết", "ChiTiet",
+                            new { maPhong = item.MaPhong },
+                            new { @class = "btn btn-info btn-sm mb-1" })
+
+                        @if (item.TrangThaiPhong != "DaThue")
+                        {
+                            @Html.ActionLink("Sửa", "SuaThongTin",
+                                new { maPhong = item.MaPhong },
+                                new { @class = "btn btn-success btn-sm mb-1" })
+                        }
+
+                        @if (item.TrangThaiPhong != "DaThue")
+                        {
+                            using (Html.BeginForm("Xoa", "ChuTroPhongTro",
+                                FormMethod.Post, new { style = "display:inline" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="maPhong"
+                                       value="@item.MaPhong" />
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm mb-1"
+                                        onclick="return confirm('Xóa phòng này?')">
+                                    Xóa
+                                </button>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@if (Model.PageCount > 1)
+{
+    <div class="d-flex justify-content-center mt-3">
+        @Html.PagedListPager(Model,
+            page => Url.Action("DanhSach", new
+            {
+                page,
+                tuKhoa = ViewBag.TuKhoa,
+                maToaNha = ViewBag.MaToaNha,
+                trangThaiPhong = ViewBag.TrangThaiPhong
+            }),
+            new PagedListRenderOptions
+            {
+                UlElementClasses = new[] { "pagination", "justify-content-center" },
+                LiElementClasses = new[] { "page-item" }
+            })
+    </div>
+}
+
+<script>
+    setTimeout(function () {
+        $('.alert').fadeOut('slow', function () { $(this).remove(); });
+    }, 1500);
+</script>

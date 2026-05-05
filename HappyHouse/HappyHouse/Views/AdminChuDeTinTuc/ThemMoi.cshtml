@@ -1,0 +1,68 @@
+﻿@model HappyHouse.Models.ChuDeTinTuc
+
+@{
+    ViewBag.Title = "Thêm chủ đề tin tức";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">
+        Quản lý chủ đề tin tức
+    </h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","AdminChuDeTinTuc")">
+        Danh sách chủ đề
+    </a>
+}
+
+@using (Html.BeginForm("ThemMoi", "AdminChuDeTinTuc",
+    FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header font-weight-bold
+                    text-primary">
+            <i class="fa fa-tag mr-2"></i>
+            Thông tin chủ đề
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Tên chủ đề
+                    <span class="text-danger">*</span>
+                </label>
+                @Html.TextBoxFor(m => m.TenChuDe, new
+                {
+                    @class = "form-control",
+                    placeholder = "Nhập tên chủ đề...",
+                    maxlength = "100"
+                })
+                @Html.ValidationMessageFor(
+                    m => m.TenChuDe, "",
+                    new { @class = "text-danger small" })
+            </div>
+            <div class="form-group mb-0">
+                <label class="font-weight-bold">
+                    Mô tả
+                </label>
+                @Html.TextAreaFor(m => m.MoTa, new
+                {
+                    @class = "form-control",
+                    rows = 3,
+                    placeholder = "Mô tả về chủ đề...",
+                    maxlength = "255"
+                })
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        @Html.ActionLink("Trở lại", "DanhSach", null,
+            new { @class = "btn btn-secondary px-4" })
+        <button type="submit" class="btn btn-primary px-4">
+            <i class="fa fa-plus mr-1"></i> Thêm mới
+        </button>
+    </div>
+}

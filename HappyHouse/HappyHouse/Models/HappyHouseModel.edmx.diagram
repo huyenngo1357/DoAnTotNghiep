@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e9101b93902b42d599bdb8add60554ec" Name="Diagram1">
+        <EntityTypeShape EntityType="HappyHouseModel.ChiSoDienNuoc" Width="1.5" PointX="5.25" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.ChuDeTinTuc" Width="1.5" PointX="6" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.DanhGiaPhong" Width="1.5" PointX="9.75" PointY="33.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.GiaDichVu" Width="1.5" PointX="12" PointY="45.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.HinhAnhPhong" Width="1.5" PointX="9.75" PointY="46.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.HinhAnhToaNha" Width="1.5" PointX="7.5" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.HoaDon" Width="1.5" PointX="15" PointY="26.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.HopDong" Width="1.5" PointX="12.75" PointY="32.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.HopDong_DichVu" Width="1.5" PointX="15" PointY="39.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.NguoiDung" Width="1.5" PointX="3" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.PhongTro" Width="1.5" PointX="7.5" PointY="47.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.ThanhToan" Width="1.5" PointX="17.25" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.ThongBao" Width="1.5" PointX="5.25" PointY="31.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.TienIch" Width="1.5" PointX="9.75" PointY="50" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.TinTuc" Width="1.5" PointX="8.25" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.ToaNha" Width="1.5" PointX="5.25" PointY="41.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyHouseModel.VaiTro" Width="1.5" PointX="0.75" PointY="20.75" IsExpanded="true" />
+        <AssociationConnector Association="HappyHouseModel.FK__ChiSoDien__MaHop__0A9D95DB" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__ChiSoDien__Nguoi__0B91BA14" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__HoaDon__MaChiSoD__1AD3FDA4" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__HoaDon__MaChiSoN__1BC821DD" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__TinTuc__MaChuDe__3864608B" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__DanhGiaPh__MaHop__2EDAF651" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__DanhGiaPh__MaKha__2FCF1A8A" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__DanhGiaPh__MaPho__30C33EC3" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__GiaDichVu__MaTie__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__GiaDichVu__MaToa__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__HopDong_D__MaGia__02084FDA" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__HinhAnhPh__MaPho__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__HinhAnhTo__MaToa__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__HoaDon__MaHopDon__19DFD96B" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__ThanhToan__MaHoa__2645B050" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__HopDong__MaChuTr__7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__HopDong__MaKhach__7B5B524B" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__HopDong__MaPhong__7A672E12" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__HopDong_D__MaHop__01142BA1" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__NguoiDung__MaVai__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__ThanhToan__MaKha__2739D489" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__ThanhToan__Nguoi__282DF8C2" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__ThongBao__MaNguo__3F115E1A" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__TinTuc__MaNguoiD__395884C4" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__ToaNha__MaChuTro__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__ToaNha__MaNguoiD__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.FK__PhongTro__MaToaN__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyHouseModel.PhongTro_TienIch" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

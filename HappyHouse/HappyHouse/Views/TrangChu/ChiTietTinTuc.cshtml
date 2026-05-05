@@ -1,0 +1,519 @@
+﻿@using System.Collections.Generic
+@using HappyHouse.Models
+@model HappyHouse.Models.TinTuc
+
+@{
+    ViewBag.Title = Model.TieuDe;
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    ViewBag.ActiveMenu = "TinTuc";
+
+    var tinLienQuan = ViewBag.TinLienQuan as List<TinTuc>;
+    var tinTucMoiNhat = ViewBag.TinTucMoiNhat as List<TinTuc>;
+    var dsChuDe = ViewBag.DsChuDe as List<ChuDeTinTuc>;
+}
+
+<style>
+    .ct-wrap {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 16px rgba(0,0,0,.07);
+        padding: 36px 40px;
+        margin-bottom: 24px;
+    }
+
+    .ct-tag {
+        display: inline-block;
+        padding: 3px 12px;
+        background: #2cbdb8;
+        color: #fff;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        text-decoration: none;
+        margin-bottom: 14px;
+        letter-spacing: .4px;
+    }
+
+    .ct-title {
+        font-size: 26px;
+        font-weight: 800;
+        color: #1a1a2e;
+        line-height: 1.4;
+        margin-bottom: 14px;
+    }
+
+    .ct-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 13px;
+        color: #aaa;
+        margin-bottom: 20px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+        .ct-meta i {
+            color: #2cbdb8;
+            margin-right: 4px;
+        }
+
+    .ct-hero {
+        width: 100%;
+        max-height: 420px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 24px;
+        display: block;
+    }
+
+    .ct-tomtat {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        line-height: 1.7;
+        padding: 16px 20px;
+        background: #f0fafa;
+        border-left: 4px solid #2cbdb8;
+        border-radius: 0 8px 8px 0;
+        margin-bottom: 24px;
+    }
+
+    .ct-noidung {
+        font-size: 15px;
+        color: #444;
+        line-height: 1.95;
+    }
+
+        .ct-noidung p {
+            margin-bottom: 16px;
+        }
+
+        .ct-noidung img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+    .ct-share {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        padding: 18px 0;
+        border-top: 1px solid #f0f0f0;
+        margin-top: 24px;
+    }
+
+        .ct-share span {
+            font-weight: 700;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .ct-share a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 15px;
+            text-decoration: none;
+            transition: opacity .2s;
+        }
+
+            .ct-share a:hover {
+                opacity: .85;
+            }
+
+        .ct-share .fb {
+            background: #1877f2;
+        }
+
+        .ct-share .tw {
+            background: #1da1f2;
+        }
+
+        .ct-share .prt {
+            background: #555;
+        }
+
+    /* Sidebar */
+    .sb-box {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 14px rgba(0,0,0,.07);
+        padding: 22px;
+        margin-bottom: 24px;
+    }
+
+    .sb-title {
+        font-weight: 700;
+        font-size: 15px;
+        color: #222;
+        margin-bottom: 16px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #2cbdb8;
+    }
+
+    .sb-topic a {
+        display: block;
+        padding: 7px 0;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 13px;
+        color: #555;
+        text-decoration: none;
+    }
+
+        .sb-topic a:hover {
+            color: #2cbdb8;
+        }
+
+    /* Card tin liên quan */
+    .rel-card {
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(0,0,0,.07);
+        margin-bottom: 20px;
+        transition: transform .2s;
+    }
+
+        .rel-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .rel-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+    .rel-card-body {
+        padding: 14px 16px;
+    }
+
+        .rel-card-body h5 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #222;
+            margin: 0 0 6px;
+        }
+
+            .rel-card-body h5 a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+                .rel-card-body h5 a:hover {
+                    color: #2cbdb8;
+                }
+</style>
+
+<section class="spad" style="background:#f7f8fa;">
+    <div class="container">
+
+        <div style="font-size:13px;color:#888;margin-bottom:22px;">
+            <a href="@Url.Action("Index","TrangChu")"
+               style="color:#2cbdb8;">Trang chủ</a>
+            <i class="fa fa-angle-right mx-2"></i>
+            <a href="@Url.Action("DanhSachTinTuc","TrangChu")"
+               style="color:#2cbdb8;">Tin tức</a>
+            @if (Model.ChuDeTinTuc != null)
+            {
+                <i class="fa fa-angle-right mx-2"></i>
+                <a href="@Url.Action("DanhSachTinTuc","TrangChu",
+                           new { maChuDe = Model.MaChuDe })"
+                   style="color:#2cbdb8;">
+                    @Model.ChuDeTinTuc.TenChuDe
+                </a>
+            }
+            <i class="fa fa-angle-right mx-2"></i>
+            <span style="color:#555;">
+                @(Model.TieuDe.Length > 40
+                    ? Model.TieuDe.Substring(0, 40) + "..."
+                    : Model.TieuDe)
+            </span>
+        </div>
+
+        <div class="row">
+
+            @* ── Nội dung chính ── *@
+            <div class="col-lg-8">
+                <div class="ct-wrap">
+
+                    @if (Model.ChuDeTinTuc != null)
+                    {
+                        <a class="ct-tag"
+                           href="@Url.Action("DanhSachTinTuc","TrangChu",
+                                   new { maChuDe = Model.MaChuDe })">
+                            @Model.ChuDeTinTuc.TenChuDe
+                        </a>
+                    }
+
+                    <h1 class="ct-title">@Model.TieuDe</h1>
+
+                    <div class="ct-meta">
+                        <span>
+                            <i class="fa fa-user"></i>
+                            @(Model.NguoiDung?.HoTen ?? "Admin")
+                        </span>
+                        <span>
+                            <i class="fa fa-calendar"></i>
+                            @(Model.NgayDang.HasValue
+                                ? Model.NgayDang.Value.ToString("dd/MM/yyyy")
+                                : "—")
+                        </span>
+                        <span>
+                            <i class="fa fa-eye"></i>
+                            @Model.LuotXem lượt xem
+                        </span>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.AnhDaiDien))
+                    {
+                        <img class="ct-hero"
+                             src="~/Content/images/tintuc/@Model.AnhDaiDien"
+                             alt="@Model.TieuDe" />
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.TomTat))
+                    {
+                        <div class="ct-tomtat">@Model.TomTat</div>
+                    }
+
+                    <div class="ct-noidung">
+                        @Html.Raw(Model.NoiDung)
+                    </div>
+
+                    <div class="ct-share">
+                        <span>Chia sẻ:</span>
+                        <a class="fb"
+                           href="https://www.facebook.com/sharer/sharer.php?u=@Request.Url.AbsoluteUri"
+                           target="_blank">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a class="tw"
+                           href="https://twitter.com/intent/tweet?url=@Request.Url.AbsoluteUri"
+                           target="_blank">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a class="prt" href="#"
+                           onclick="window.print();return false;">
+                            <i class="fa fa-print"></i>
+                        </a>
+
+                        <div style="margin-left:auto;display:flex;
+                                    gap:6px;flex-wrap:wrap;">
+                            @if (Model.ChuDeTinTuc != null)
+                            {
+                                <a href="@Url.Action("DanhSachTinTuc","TrangChu",
+                                           new { maChuDe = Model.MaChuDe })"
+                                   style="padding:4px 12px;background:#f0fafa;
+                                          color:#2cbdb8;border:1px solid #c8eeed;
+                                          border-radius:20px;font-size:12px;
+                                          font-weight:600;text-decoration:none;">
+                                    #@Model.ChuDeTinTuc.TenChuDe
+                                </a>
+                            }
+                            <a href="@Url.Action("DanhSachTinTuc","TrangChu")"
+                               style="padding:4px 12px;background:#f0fafa;
+                                      color:#2cbdb8;border:1px solid #c8eeed;
+                                      border-radius:20px;font-size:12px;
+                                      font-weight:600;text-decoration:none;">
+                                #Tin Tức
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                @if (tinLienQuan != null && tinLienQuan.Any())
+                {
+                    <div style="margin-bottom:30px;">
+                        <h4 style="font-weight:700;color:#222;
+                                   margin-bottom:18px;padding-bottom:10px;
+                                   border-bottom:2px solid #2cbdb8;">
+                            <i class="fa fa-link mr-2"
+                               style="color:#2cbdb8;"></i>Tin Tức Liên Quan
+                        </h4>
+                        <div class="row">
+                            @foreach (var tt in tinLienQuan)
+                            {
+                                <div class="col-md-4">
+                                    <div class="rel-card">
+                                        <a href="@Url.Action("ChiTietTinTuc",
+                                                   "TrangChu",
+                                                   new { maTinTuc = tt.MaTinTuc })">
+                                            <img src="@(!string.IsNullOrEmpty(
+                                                        tt.AnhDaiDien)
+                                                ? Url.Content(
+                                                    "~/Content/images/tintuc/"
+                                                    + tt.AnhDaiDien)
+                                                : "/Content/Home/img/blog/latest-1.jpg")"
+                                                 alt="@tt.TieuDe" />
+                                        </a>
+                                        <div class="rel-card-body">
+                                            <h5>
+                                                <a href="@Url.Action(
+                                                    "ChiTietTinTuc","TrangChu",
+                                                    new { maTinTuc = tt.MaTinTuc })">
+                                                    @(tt.TieuDe.Length > 60
+                                                        ? tt.TieuDe.Substring(0, 60)
+                                                          + "..."
+                                                        : tt.TieuDe)
+                                                </a>
+                                            </h5>
+                                            <span style="font-size:11px;color:#aaa;">
+                                                <i class="fa fa-clock-o mr-1"></i>
+                                                @(tt.NgayDang.HasValue
+                                                    ? tt.NgayDang.Value
+                                                          .ToString("dd/MM/yyyy")
+                                                    : "—")
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+                else if (tinTucMoiNhat != null && tinTucMoiNhat.Any())
+                {
+                    <div style="margin-bottom:30px;">
+                        <h4 style="font-weight:700;color:#222;
+                                   margin-bottom:18px;padding-bottom:10px;
+                                   border-bottom:2px solid #2cbdb8;">
+                            <i class="fa fa-star mr-2"
+                               style="color:#2cbdb8;"></i>Có Thể Bạn Quan Tâm
+                        </h4>
+                        <div class="row">
+                            @foreach (var tt in tinTucMoiNhat.Take(3))
+                            {
+                                <div class="col-md-4">
+                                    <div class="rel-card">
+                                        <a href="@Url.Action("ChiTietTinTuc",
+                                                   "TrangChu",
+                                                   new { maTinTuc = tt.MaTinTuc })">
+                                            <img src="@(!string.IsNullOrEmpty(
+                                                        tt.AnhDaiDien)
+                                                ? Url.Content(
+                                                    "~/Content/images/tintuc/"
+                                                    + tt.AnhDaiDien)
+                                                : "/Content/Home/img/blog/latest-1.jpg")"
+                                                 alt="@tt.TieuDe" />
+                                        </a>
+                                        <div class="rel-card-body">
+                                            <h5>
+                                                <a href="@Url.Action(
+                                                    "ChiTietTinTuc","TrangChu",
+                                                    new { maTinTuc = tt.MaTinTuc })">
+                                                    @(tt.TieuDe.Length > 60
+                                                        ? tt.TieuDe.Substring(0, 60)
+                                                          + "..."
+                                                        : tt.TieuDe)
+                                                </a>
+                                            </h5>
+                                            <span style="font-size:11px;color:#aaa;">
+                                                <i class="fa fa-clock-o mr-1"></i>
+                                                @(tt.NgayDang.HasValue
+                                                    ? tt.NgayDang.Value
+                                                          .ToString("dd/MM/yyyy")
+                                                    : "—")
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                <a href="@Url.Action("DanhSachTinTuc","TrangChu")"
+                   style="display:inline-flex;align-items:center;gap:6px;
+                          padding:11px 24px;background:#f0fafa;color:#2cbdb8;
+                          border:1px solid #c8eeed;border-radius:8px;
+                          font-weight:700;font-size:14px;text-decoration:none;">
+                    <i class="fa fa-arrow-left"></i>
+                    Xem Tất Cả Tin Tức
+                </a>
+
+            </div>
+
+            @* ── Sidebar ── *@
+            <div class="col-lg-4">
+
+                @if (dsChuDe != null && dsChuDe.Any())
+                {
+                    <div class="sb-box">
+                        <div class="sb-title">
+                            <i class="fa fa-tags mr-2"
+                               style="color:#2cbdb8;"></i>Chủ Đề
+                        </div>
+                        <div class="sb-topic">
+                            @foreach (var cd in dsChuDe)
+                            {
+                                bool active = cd.MaChuDe == Model.MaChuDe;
+                                <a href="@Url.Action("DanhSachTinTuc","TrangChu",
+                                           new { maChuDe = cd.MaChuDe })"
+                                   style="color:@(active ? "#2cbdb8" : "#555");
+                                          font-weight:@(active ? "700" : "400");">
+                                    <i class="fa fa-angle-right mr-2"></i>
+                                    @cd.TenChuDe
+                                </a>
+                            }
+                        </div>
+                    </div>
+                }
+
+
+                @if (tinTucMoiNhat != null && tinTucMoiNhat.Any())
+                {
+                    <div class="sb-box">
+                        <div class="sb-title">
+                            <i class="fa fa-clock-o mr-2"
+                               style="color:#2cbdb8;"></i>Tin Tức Mới Nhất
+                        </div>
+                        @foreach (var tt in tinTucMoiNhat)
+                        {
+                            <a href="@Url.Action("ChiTietTinTuc","TrangChu",
+                                       new { maTinTuc = tt.MaTinTuc })"
+                               style="display:flex;gap:12px;
+                                      margin-bottom:14px;padding-bottom:14px;
+                                      border-bottom:1px solid #f0f0f0;
+                                      text-decoration:none;">
+                                <img src="@(!string.IsNullOrEmpty(tt.AnhDaiDien)
+                                        ? Url.Content("~/Content/images/tintuc/"
+                                                      + tt.AnhDaiDien)
+                                        : "/Content/Home/img/blog/latest-1.jpg")"
+                                     style="width:68px;height:56px;
+                                            object-fit:cover;border-radius:6px;
+                                            flex-shrink:0;" />
+                                <div>
+                                    <p style="font-size:13px;font-weight:600;
+                                              color:#333;margin:0 0 4px;
+                                              line-height:1.4;">
+                                        @(tt.TieuDe.Length > 50
+                                            ? tt.TieuDe.Substring(0, 50) + "..."
+                                            : tt.TieuDe)
+                                    </p>
+                                    <span style="font-size:11px;color:#aaa;">
+                                        <i class="fa fa-clock-o mr-1"></i>
+                                        @(tt.NgayDang.HasValue
+                                            ? tt.NgayDang.Value
+                                                  .ToString("dd/MM/yyyy")
+                                            : "—")
+                                    </span>
+                                </div>
+                            </a>
+                        }
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>

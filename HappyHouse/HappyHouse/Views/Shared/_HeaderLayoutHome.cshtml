@@ -1,0 +1,350 @@
+﻿@{
+    var userHeader = Session["UserOnline"] as HappyHouse.Models.NguoiDung;
+    bool isAdmin = userHeader != null && userHeader.MaVaiTro == "CHUTHAU";
+    bool isChuTro = userHeader != null && userHeader.MaVaiTro == "CHUTRO";
+    bool isKhach = userHeader != null && userHeader.MaVaiTro == "KHACHHANG";
+
+    string ctrl = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    string action = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+}
+
+<style>
+    .logo a {
+        font-family: 'Poppins', sans-serif;
+        font-size: 28px;
+        font-weight: 900;
+        color: #222;
+        text-decoration: none;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+        .logo a:hover {
+            color: #2CBDB8;
+            transition: color 0.2s ease;
+        }
+
+    .main-menu ul li.active > a {
+        color: #2cbdb8 !important;
+        border-bottom: 2px solid #2cbdb8;
+        padding-bottom: 2px;
+    }
+
+    .badge-quanly {
+        background: #2cbdb8;
+        color: #fff;
+        font-size: 10px;
+        padding: 2px 8px;
+        border-radius: 10px;
+        vertical-align: middle;
+        margin-left: 4px;
+    }
+
+    /* ── User Dropdown ── */
+    .user-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .user-dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        color: #fff;
+        text-decoration: none !important;
+        font-size: 13px;
+        padding: 6px 0;
+    }
+
+        .user-dropdown-toggle:hover {
+            color: #2cbdb8;
+        }
+
+    .user-avatar {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #2cbdb8;
+    }
+
+    .user-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: #2cbdb8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        color: #fff;
+        flex-shrink: 0;
+    }
+
+    .user-dropdown-menu {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        background: #fff;
+        min-width: 210px;
+        border-radius: 8px;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+        z-index: 9999;
+        overflow: hidden;
+    }
+
+        .user-dropdown-menu.show {
+            display: block;
+        }
+
+        .user-dropdown-menu .user-info {
+            padding: 12px 16px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+        }
+
+            .user-dropdown-menu .user-info strong {
+                display: block;
+                font-size: 13px;
+                color: #333;
+            }
+
+            .user-dropdown-menu .user-info small {
+                color: #999;
+                font-size: 11px;
+            }
+
+        .user-dropdown-menu a {
+            display: block;
+            padding: 10px 16px;
+            font-size: 13px;
+            color: #444 !important;
+            text-decoration: none !important;
+            transition: background 0.15s;
+        }
+
+            .user-dropdown-menu a:hover {
+                background: #f5f5f5;
+                color: #2CBDB8 !important;
+            }
+
+            .user-dropdown-menu a.logout {
+                color: #e74a3b !important;
+            }
+
+                .user-dropdown-menu a.logout:hover {
+                    background: #fff5f5;
+                }
+
+        .user-dropdown-menu .divider {
+            height: 1px;
+            background: #eee;
+            margin: 4px 0;
+        }
+
+    .arrow-icon {
+        transition: transform 0.2s ease;
+        display: inline-block;
+    }
+
+        .arrow-icon.open {
+            transform: rotate(180deg);
+        }
+</style>
+
+<header class="header-section">
+    <div class="top-nav">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <div class="col-lg-8">
+                    <nav class="main-menu">
+                        <ul>
+                            <li class="@(ctrl == "TrangChu" && action == "Index" ? "active" : "")">
+                                <a href="@Url.Action("Index","TrangChu")">Trang Chủ</a>
+                            </li>
+                            <li class="@(ctrl == "PhongTro" ? "active" : "")">
+                                <a href="@Url.Action("DanhSach","PhongTro")">Phòng Trọ</a>
+                            </li>
+                            @if (isKhach)
+                            {
+                                <li class="@(ctrl == "HopDong" ? "active" : "")">
+                                    <a href="@Url.Action("DanhSach","HopDong")">Hợp Đồng</a>
+                                </li>
+                                <li class="@(ctrl == "ThanhToan" ? "active" : "")">
+                                    <a href="@Url.Action("DanhSach","ThanhToan")">Hóa Đơn</a>
+                                </li>
+                            }
+                            <li class="@((ctrl == "TrangChu" && (action == "DanhSachTinTuc" || action == "ChiTietTinTuc")) ? "active" : "")">
+                                <a href="@Url.Action("DanhSachTinTuc","TrangChu")">Tin Tức</a>
+                            </li>
+                            @if (isAdmin || isChuTro)
+                            {
+                                <li class="@(ctrl.StartsWith("Admin") || ctrl.StartsWith("ChuTro") ? "active" : "")">
+                                    <a href="@(isAdmin
+                                        ? Url.Action("DanhSach","AdminToaNha")
+                                        : Url.Action("DanhSach","ChuTroToaNha"))">
+                                        Quản Lý
+                                        <span class="badge-quanly">
+                                            @(isAdmin ? "Admin" : "Chủ Trọ")
+                                        </span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="col-lg-4 d-flex justify-content-end align-items-center">
+                    @if (userHeader != null)
+                    {
+                        <div class="user-dropdown" id="userDropdownWrap">
+                            <a class="user-dropdown-toggle" href="#"
+                               onclick="toggleDropdown(event,'userDropdownMenu','arrowIcon')">
+                                @if (!string.IsNullOrEmpty(userHeader.AnhDaiDien))
+                                {
+                                    <img class="user-avatar"
+                                         src="~/Content/images/avatars/@userHeader.AnhDaiDien"
+                                         alt="@userHeader.HoTen" />
+                                }
+                                else
+                                {
+                                    <div class="user-icon">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                }
+                                <span>@userHeader.HoTen</span>
+                                <i class="fa fa-angle-down arrow-icon"
+                                   id="arrowIcon"></i>
+                            </a>
+                            <div class="user-dropdown-menu" id="userDropdownMenu">
+                                <div class="user-info">
+                                    <strong>@userHeader.HoTen</strong>
+                                    <small>@userHeader.Email</small>
+                                </div>
+                                <a href="@Url.Action("ThongTin","TaiKhoan")">
+                                    <i class="fa fa-user mr-2"></i>Tài Khoản
+                                </a>
+                                @if (isKhach)
+                                {
+                                    <a href="@Url.Action("DanhSach","ThanhToan")">
+                                        <i class="fas fa-receipt mr-2"></i> Hóa Đơn
+
+                                    </a>
+                                }
+                                @if (isAdmin || isChuTro)
+                                {
+                                    <a href="@(isAdmin
+                                        ? Url.Action("DanhSach","AdminToaNha")
+                                        : Url.Action("DanhSach","ChuTroToaNha"))">
+                                        <i class="fa fa-cog mr-2"></i>Quản Lý
+                                    </a>
+                                }
+                                <div class="divider"></div>
+                                <a href="@Url.Action("DangXuat","TaiKhoan")"
+                                   class="logout">
+                                    <i class="fas fa-sign-out-alt mr-2"></i> Đăng Xuất
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="user-dropdown" id="userDropdownWrap">
+                            <a class="user-dropdown-toggle" href="#"
+                               onclick="toggleDropdown(event,'userDropdownMenu','arrowIcon')">
+                                <div class="user-icon">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <span>Tài Khoản</span>
+                                <i class="fa fa-angle-down arrow-icon"
+                                   id="arrowIcon"></i>
+                            </a>
+                            <div class="user-dropdown-menu" id="userDropdownMenu">
+                                <a href="@Url.Action("DangNhap","TaiKhoan")">
+                                    <i class="fa fa-sign-in mr-2"></i> Đăng Nhập
+                                </a>
+                                <a href="@Url.Action("DangKy","TaiKhoan")">
+                                    <i class="fa fa-user-plus mr-2"></i>Đăng Ký
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-logo">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="logo">
+                        <a href="@Url.Action("Index","TrangChu")">HAPPY HOUSE</a>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="nav-logo-right">
+                        <ul>
+                            <li>
+                                <i class="icon_phone"></i>
+                                <div class="info-text">
+                                    <span>Điện Thoại:</span>
+                                    <p>(+84) 987 654 321</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="icon_map"></i>
+                                <div class="info-text">
+                                    <span>Địa Chỉ:</span>
+                                    <p>123 Cầu Giấy, <span>Hà Nội</span></p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="icon_mail"></i>
+                                <div class="info-text">
+                                    <span>Email:</span>
+                                    <p>happyhouse@gmail.vn</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script>
+    function toggleDropdown(e, menuId, arrowId) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var menu = document.getElementById(menuId);
+        var arrow = document.getElementById(arrowId);
+        if (!menu) return;
+
+        var isOpen = menu.classList.contains('show');
+        if (isOpen) {
+            menu.classList.remove('show');
+            if (arrow) arrow.classList.remove('open');
+        } else {
+            menu.classList.add('show');
+            if (arrow) arrow.classList.add('open');
+        }
+    }
+
+    document.addEventListener('click', function (e) {
+        var wrap = document.getElementById('userDropdownWrap');
+        var menu = document.getElementById('userDropdownMenu');
+        var arrow = document.getElementById('arrowIcon');
+
+        if (wrap && !wrap.contains(e.target)) {
+            if (menu) menu.classList.remove('show');
+            if (arrow) arrow.classList.remove('open');
+        }
+    });
+</script>

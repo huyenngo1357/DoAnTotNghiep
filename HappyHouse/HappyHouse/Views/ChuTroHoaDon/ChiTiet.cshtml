@@ -1,0 +1,556 @@
+﻿@model HappyHouse.Models.HoaDon
+
+@{
+    ViewBag.Title = "Chi tiết hóa đơn";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    var khach = Model.HopDong?.NguoiDung1;
+    var phong = Model.HopDong?.PhongTro;
+    var toaNha = phong?.ToaNha;
+
+    string bc, bt;
+    switch (Model.TrangThaiHoaDon)
+    {
+        case "ChuaThanhToan":
+            bc = "warning"; bt = "Chưa thanh toán"; break;
+        case "ChoDuyet":
+            bc = "info"; bt = "Chờ duyệt biên lai"; break;
+        case "DaThanhToan":
+            bc = "success"; bt = "Đã thanh toán"; break;
+        case "QuaHan":
+            bc = "danger"; bt = "Quá hạn"; break;
+        default:
+            bc = "secondary";
+            bt = Model.TrangThaiHoaDon ?? "—"; break;
+    }
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">
+        Hóa đơn tiền phòng
+    </h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","ChuTroHoaDon")">
+        Danh sách hóa đơn
+    </a>
+}
+
+<div class="row">
+
+    <div class="col-md-8">
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header font-weight-bold text-primary">
+                <i class="fa fa-receipt mr-2"></i>
+                Thông tin hóa đơn
+                <span class="badge badge-pill badge-@bc
+                             px-2 py-1 float-right">
+                    @bt
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <table class="table table-borderless mb-0">
+                            <tr>
+                                <td style="width:140px"
+                                    class="font-weight-bold">
+                                    Mã hóa đơn:
+                                </td>
+                                <td>
+                                    <code>@Model.MaHoaDon</code>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">
+                                    Tháng hóa đơn:
+                                </td>
+                                <td>
+                                    <strong>
+                                        Tháng
+                                        @Model.ThangHoaDon.Month
+                                        /@Model.ThangHoaDon.Year
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">
+                                    Phòng:
+                                </td>
+                                <td>
+                                    @(phong != null
+                                        ? "Phòng " + phong.SoPhong
+                                          + " — " + toaNha?.TenToaNha
+                                        : "—")
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">
+                                    Khách hàng:
+                                </td>
+                                <td>
+                                    @if (khach != null)
+                                    {
+                                        <strong>@khach.HoTen</strong>
+                                        <br />
+                                        <small class="text-muted">
+                                            @khach.SoDienThoai
+                                        </small>
+                                        <br />
+                                        <small class="text-muted">
+                                            @khach.Email
+                                        </small>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">—</span>
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">
+                                    Hạn thanh toán:
+                                </td>
+                                <td>
+                                    <span class="@(Model.HanThanhToan < DateTime.Today
+                                        && Model.TrangThaiHoaDon != "DaThanhToan"
+                                        ? "text-danger font-weight-bold"
+                                        : "")">
+                                        @Model.HanThanhToan.ToString("dd/MM/yyyy")
+                                    </span>
+                                </td>
+                            </tr>
+                            @if (Model.NgayThanhToan.HasValue)
+                            {
+                                <tr>
+                                    <td class="font-weight-bold">
+                                        Ngày TT thực tế:
+                                    </td>
+                                    <td class="text-success">
+                                        @Model.NgayThanhToan.Value
+                                        .ToString("dd/MM/yyyy HH:mm")
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+
+                    <div class="col-md-6">
+                        <table class="table table-bordered
+                                      table-sm mb-0">
+                            <tbody>
+                                <tr>
+                                    <td>Tiền phòng</td>
+                                    <td class="text-right">
+                                        @String.Format("{0:N0}",
+                                            Model.TienPhong)đ
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="fa fa-bolt
+                                           text-warning mr-1"></i>
+                                        Tiền điện
+                                        @if (Model.ChiSoDienNuoc != null)
+                                        {
+                                            <br />
+                                            <small class="text-muted">
+                                                (@(Model.ChiSoDienNuoc
+                                                       .SoTieuThu) kWh
+                                                &times;
+                                                @(String.Format("{0:N0}",
+                                                    Model.ChiSoDienNuoc
+                                                         .DonGia))đ)
+                                            </small>
+                                        }
+                                    </td>
+                                    <td class="text-right">
+                                        @String.Format("{0:N0}",
+                                            Model.TienDien)đ
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="fa fa-tint
+                                           text-info mr-1"></i>
+                                        Tiền nước
+                                        @if (Model.ChiSoDienNuoc1 != null)
+                                        {
+                                            <br />
+                                            <small class="text-muted">
+                                                (@(Model.ChiSoDienNuoc1
+                                                       .SoTieuThu) m&#179;
+                                                &times;
+                                                @(String.Format("{0:N0}",
+                                                    Model.ChiSoDienNuoc1
+                                                         .DonGia))đ)
+                                            </small>
+                                        }
+                                    </td>
+                                    <td class="text-right">
+                                        @String.Format("{0:N0}",
+                                            Model.TienNuoc)đ
+                                    </td>
+                                </tr>
+                                @if (Model.TienDichVu > 0)
+                                {
+                                    <tr>
+                                        <td>
+                                            <i class="fa fa-cog mr-1">
+                                            </i>Dịch vụ
+                                        </td>
+                                        <td class="text-right">
+                                            @String.Format("{0:N0}",
+                                                Model.TienDichVu)đ
+                                        </td>
+                                    </tr>
+                                }
+                                <tr class="table-success">
+                                    <td class="font-weight-bold">
+                                        TỔNG TIỀN
+                                    </td>
+                                    <td class="text-right
+                                               font-weight-bold"
+                                        style="font-size:16px;
+                                               color:#1cc88a">
+                                        @String.Format("{0:N0}",
+                                            Model.TongTien)đ
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.GhiChu))
+                {
+                    <hr />
+                    <label class="font-weight-bold">Ghi chú:</label>
+                    <p class="mb-0">@Model.GhiChu</p>
+                }
+            </div>
+        </div>
+
+        @if (Model.ThanhToans != null
+          && Model.ThanhToans.Any(x => x.TrangThai))
+        {
+            <div class="card shadow-sm mb-4">
+                <div class="card-header font-weight-bold text-primary">
+                    <i class="fa fa-money-bill-wave mr-2"></i>
+                    Lịch sử biên lai thanh toán
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-bordered mb-0">
+                        <thead class="thead-light">
+                            <tr style="text-align:center">
+                                <th>Ngày gửi</th>
+                                <th>Số tiền</th>
+                                <th>Hình thức</th>
+                                <th>Mã GD</th>
+                                <th>Trạng thái</th>
+                                <th>Biên lai</th>
+                                <th style="width:200px">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var tt in Model.ThanhToans
+                                .Where(x => x.TrangThai)
+                                .OrderByDescending(x => x.NgayTao))
+                            {
+                                string ttBc, ttBt;
+                                switch (tt.TrangThaiXacNhan)
+                                {
+                                    case "ChoXacNhan":
+                                        ttBc = "warning";
+                                        ttBt = "Chờ xác nhận"; break;
+                                    case "DaXacNhan":
+                                        ttBc = "success";
+                                        ttBt = "Đã xác nhận"; break;
+                                    case "TuChoi":
+                                        ttBc = "danger";
+                                        ttBt = "Từ chối"; break;
+                                    default:
+                                        ttBc = "secondary";
+                                        ttBt = tt.TrangThaiXacNhan ?? "—";
+                                        break;
+                                }
+
+                                <tr style="vertical-align:middle;
+                                           text-align:center">
+                                    <td>
+                                        @tt.NgayThanhToan
+                                        .ToString("dd/MM/yyyy HH:mm")
+                                    </td>
+                                    <td class="font-weight-bold
+                                               text-success">
+                                        @String.Format("{0:N0}",
+                                            tt.SoTien)đ
+                                    </td>
+                                    <td>
+                                        @(tt.HinhThuc ?? "—")
+                                    </td>
+                                    <td>
+                                        <small>
+                                            @(string.IsNullOrEmpty(
+                                                tt.MaGiaoDich)
+                                                ? "—" : tt.MaGiaoDich)
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-@ttBc
+                                                     px-2 py-1">
+                                            @ttBt
+                                        </span>
+                                        @if (tt.TrangThaiXacNhan
+                                             == "TuChoi"
+                                          && !string.IsNullOrEmpty(
+                                                 tt.LyDoTuChoi))
+                                        {
+                                            <br />
+                                            <small class="text-danger">
+                                                @tt.LyDoTuChoi
+                                            </small>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(
+                                            tt.AnhBienLai))
+                                        {
+                                            bool isPdf = tt.AnhBienLai
+                                                .ToLower()
+                                                .EndsWith(".pdf");
+                                            if (isPdf)
+                                            {
+                                                <a href="~/Content/images/bienlai/@tt.AnhBienLai"
+                                                   target="_blank"
+                                                   class="btn btn-link
+                                                          btn-sm p-0">
+                                                    <i class="fa fa-file-pdf-o
+                                                       fa-2x text-danger"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="~/Content/images/bienlai/@tt.AnhBienLai"
+                                                   target="_blank">
+                                                    <img src="~/Content/images/bienlai/@tt.AnhBienLai"
+                                                         style="width:50px;
+                                                                height:50px;
+                                                                object-fit:cover;
+                                                                border-radius:4px;
+                                                                border:1px solid #dee2e6;" />
+                                                </a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (tt.TrangThaiXacNhan
+                                             == "ChoXacNhan")
+                                        {
+                                            using (Html.BeginForm(
+                                                "XacNhanThanhToan",
+                                                "ChuTroHoaDon",
+                                                FormMethod.Post,
+                                                new
+                                                {
+                                                    style =
+                                                    "display:inline"
+                                                }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden"
+                                                       name="maHoaDon"
+                                                       value="@Model.MaHoaDon" />
+                                                <button type="submit"
+                                                        class="btn btn-success
+                                                               btn-sm mb-1"
+                                                        title="Xác nhận đã nhận tiền"
+                                                        onclick="return confirm(
+                                                            'Xác nhận hóa đơn đã được thanh toán?')">
+                                                    <i class="fa fa-check mr-1"></i>
+                                                    Xác nhận TT
+                                                </button>
+                                            }
+
+                                            using (Html.BeginForm(
+                                                "TuChoiBienLai",
+                                                "ChuTroHoaDon",
+                                                FormMethod.Post,
+                                                new
+                                                {
+                                                    style =
+                                                    "display:inline"
+                                                }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden"
+                                                       name="maThanhToan"
+                                                       value="@tt.MaThanhToan" />
+                                                <div class="input-group
+                                                            input-group-sm
+                                                            mt-1">
+                                                    <input type="text"
+                                                           name="lyDo"
+                                                           class="form-control
+                                                                  form-control-sm"
+                                                           placeholder="Lý do từ chối..."
+                                                           required />
+                                                    <div class="input-group-append">
+                                                        <button type="submit"
+                                                                class="btn btn-danger
+                                                                       btn-sm"
+                                                                title="Từ chối biên lai"
+                                                                onclick="return confirm(
+                                                                    'Từ chối biên lai này?')">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted
+                                                         small">—</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header font-weight-bold text-primary">
+                <i class="fa fa-cogs mr-2"></i> Thao tác
+            </div>
+            <div class="card-body">
+
+                @if (Model.TrangThaiHoaDon == "ChuaThanhToan"
+                  || Model.TrangThaiHoaDon == "QuaHan"
+                  || Model.TrangThaiHoaDon == "ChoDuyet")
+                {
+                    using (Html.BeginForm("XacNhanThanhToan",
+                        "ChuTroHoaDon", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="maHoaDon"
+                               value="@Model.MaHoaDon" />
+                        <button type="submit"
+                                class="btn btn-success btn-block mb-2"
+                                onclick="return confirm(
+                                    'Xác nhận hóa đơn đã được thanh toán?')">
+                            <i class="fa fa-check mr-1"></i>
+                            Xác nhận thanh toán
+                        </button>
+                    }
+                }
+
+                @if (Model.TrangThaiHoaDon == "ChuaThanhToan")
+                {
+                    <a href="@Url.Action("SuaThongTin",
+                               new { maHoaDon = Model.MaHoaDon })"
+                       class="btn btn-warning btn-block mb-2">
+                        <i class="fa fa-edit mr-1"></i>
+                        Sửa hóa đơn
+                    </a>
+
+                    using (Html.BeginForm("DanhDauQuaHan",
+                        "ChuTroHoaDon", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="maHoaDon"
+                               value="@Model.MaHoaDon" />
+                        <button type="submit"
+                                class="btn btn-danger btn-block mb-2"
+                                onclick="return confirm(
+                                    'Đánh dấu hóa đơn này quá hạn?')">
+                            <i class="fa fa-clock mr-1"></i>
+                            Đánh dấu quá hạn
+                        </button>
+                    }
+                }
+
+                <a href="@Url.Action("DanhSach")"
+                   class="btn btn-secondary btn-block">
+                    <i class="fa fa-arrow-left mr-1"></i>
+                    Trở lại
+                </a>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header font-weight-bold text-primary">
+                <i class="fa fa-info-circle mr-2"></i>
+                Tóm tắt
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-sm mb-0">
+                    <tr>
+                        <td class="font-weight-bold pl-3">
+                            Tiền phòng
+                        </td>
+                        <td class="text-right pr-3">
+                            @String.Format("{0:N0}",
+                                Model.TienPhong)đ
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold pl-3">
+                            Tiền điện
+                        </td>
+                        <td class="text-right pr-3">
+                            @String.Format("{0:N0}",
+                                Model.TienDien)đ
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold pl-3">
+                            Tiền nước
+                        </td>
+                        <td class="text-right pr-3">
+                            @String.Format("{0:N0}",
+                                Model.TienNuoc)đ
+                        </td>
+                    </tr>
+                    @if (Model.TienDichVu > 0)
+                    {
+                        <tr>
+                            <td class="font-weight-bold pl-3">
+                                Dịch vụ
+                            </td>
+                            <td class="text-right pr-3">
+                                @String.Format("{0:N0}",
+                                    Model.TienDichVu)đ
+                            </td>
+                        </tr>
+                    }
+                    <tr class="table-success">
+                        <td class="font-weight-bold pl-3">
+                            TỔNG CỘNG
+                        </td>
+                        <td class="text-right pr-3 font-weight-bold"
+                            style="color:#1cc88a;font-size:15px;">
+                            @String.Format("{0:N0}",
+                                Model.TongTien)đ
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

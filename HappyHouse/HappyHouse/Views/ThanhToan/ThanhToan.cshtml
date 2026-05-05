@@ -1,0 +1,645 @@
+﻿@using HappyHouse.Models
+@model HappyHouse.Models.HoaDon
+
+@{
+    ViewBag.Title = "Thanh Toán Hóa Đơn";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    ViewBag.ActiveMenu = "TaiKhoan";
+
+    var chuTro = ViewBag.ChuTro as NguoiDung;
+    var bienLaiCho = ViewBag.BienLaiCho as ThanhToan;
+    var bienLaiTuChoi = ViewBag.BienLaiTuChoi as ThanhToan;
+    var user = Session["UserOnline"] as NguoiDung;
+    var phong = Model.HopDong?.PhongTro;
+    var toaNha = phong?.ToaNha;
+}
+
+<style>
+    .tt-card {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0,0,0,.07);
+        padding: 24px;
+        margin-bottom: 20px;
+    }
+
+    .tt-title {
+        font-weight: 700;
+        font-size: 15px;
+        color: #222;
+        margin-bottom: 16px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #2cbdb8;
+    }
+
+    .tt-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #f5f5f5;
+        font-size: 14px;
+    }
+
+    .tt-label {
+        color: #888;
+    }
+
+    .tt-val {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .hd-sidebar-menu a {
+        display: block;
+        padding: 13px 20px;
+        font-size: 14px;
+        color: #555;
+        text-decoration: none;
+        border-bottom: 1px solid #f5f5f5;
+    }
+
+        .hd-sidebar-menu a.active {
+            color: #2cbdb8;
+            font-weight: 700;
+            border-left: 3px solid #2cbdb8;
+            background: #f0fafa;
+        }
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        font-size: 13px;
+        margin-bottom: 5px;
+        display: block;
+        color: #333;
+    }
+
+    .form-note {
+        font-size: 11px;
+        color: #999;
+        font-weight: 400;
+        margin-top: 5px;
+    }
+
+    .form-control {
+        width: 100%;
+        height: 42px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 0 12px;
+        font-size: 13px;
+        outline: none;
+        transition: 0.2s;
+    }
+
+        .form-control:focus {
+            border-color: #2cbdb8;
+        }
+</style>
+
+<section class="spad" style="background:#f7f8fa;">
+    <div class="container">
+
+        <div style="font-size:13px;color:#888;margin-bottom:20px;">
+            <a href="@Url.Action("Index","TrangChu")"
+               style="color:#2cbdb8;">Trang chủ</a>
+            <i class="fa fa-angle-right mx-2"></i>
+            <a href="@Url.Action("DanhSach","ThanhToan")"
+               style="color:#2cbdb8;">Hóa đơn</a>
+            <i class="fa fa-angle-right mx-2"></i>
+            <span style="color:#555;">Thanh Toán</span>
+        </div>
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">
+                @TempData["Success"]
+                <button type="button" class="close"
+                        data-dismiss="alert">
+                    <span>&times;</span>
+                </button>
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show">
+                @TempData["Error"]
+                <button type="button" class="close"
+                        data-dismiss="alert">
+                    <span>&times;</span>
+                </button>
+            </div>
+        }
+
+        @if (bienLaiTuChoi != null && bienLaiCho == null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show">
+                <i class="fa fa-times-circle mr-2"></i>
+                <strong>Biên lai bị từ chối!</strong>
+                Lý do: <em>@bienLaiTuChoi.LyDoTuChoi</em>
+                <br />
+                <small>Vui lòng kiểm tra và gửi lại biên lai mới.</small>
+                <button type="button" class="close"
+                        data-dismiss="alert">
+                    <span>&times;</span>
+                </button>
+            </div>
+        }
+
+        <div class="row">
+
+            @* ── Sidebar ── *@
+            <div class="col-lg-3">
+                <div style="background:#fff;border-radius:10px;
+                            box-shadow:0 2px 15px rgba(0,0,0,.07);
+                            overflow:hidden;margin-bottom:20px;">
+                    @if (user != null)
+                    {
+                        <div style="padding:20px;text-align:center;
+                                    background:#f0fafa;
+                                    border-bottom:1px solid #c8eeed;">
+                            @if (!string.IsNullOrEmpty(user.AnhDaiDien))
+                            {
+                                <img src="~/Content/images/avatars/@user.AnhDaiDien"
+                                     style="width:60px;height:60px;border-radius:50%;
+                                            object-fit:cover;
+                                            border:2px solid #2cbdb8;
+                                            margin-bottom:10px;" />
+                            }
+                            else
+                            {
+                                <div style="width:60px;height:60px;border-radius:50%;
+                                            background:#2cbdb8;color:#fff;font-size:24px;
+                                            font-weight:700;line-height:60px;
+                                            margin:0 auto 10px;">
+                                    @user.HoTen.Substring(0, 1).ToUpper()
+                                </div>
+                            }
+                            <h6 style="font-weight:700;margin:0;">@user.HoTen</h6>
+                            <small style="color:#999;">@user.Email</small>
+                        </div>
+                    }
+                    <div class="hd-sidebar-menu">
+                        <a href="@Url.Action("ThongTin","TaiKhoan")">
+                            <i class="fa fa-user mr-2"></i>Thông Tin Cá Nhân
+                        </a>
+                        <a href="@Url.Action("DanhSach","HopDong")">
+                            <i class="fa fa-file-text-o mr-2"></i>Hợp Đồng
+                        </a>
+                        <a href="@Url.Action("DanhSach","ThanhToan")"
+                           class="active">
+                            <i class="fa fa-money mr-2"></i>Hóa Đơn
+                        </a>
+                        <a href="@Url.Action("DanhSach","DanhGia")">
+                            <i class="fa fa-star mr-2"></i>Đánh Giá
+                        </a>
+                        <a href="@Url.Action("DangXuat","TaiKhoan")"
+                           style="color:#e74a3b;">
+                            <i class="fa fa-sign-out mr-2"></i>Đăng Xuất
+                        </a>
+                    </div>
+                </div>
+
+                <div class="tt-card">
+                    <div class="tt-title">
+                        <i class="fa fa-info-circle mr-1"
+                           style="color:#2cbdb8;"></i>Tóm Tắt
+                    </div>
+                    @foreach (var r in new[]
+                    {
+                        new { L="Tháng",
+                              V=Model.ThangHoaDon.ToString("MM/yyyy") },
+                        new { L="Tiền phòng",
+                              V=String.Format("{0:N0}", Model.TienPhong) + "đ" },
+                        new { L="Tiền điện",
+                              V=String.Format("{0:N0}", Model.TienDien) + "đ" },
+                        new { L="Tiền nước",
+                              V=String.Format("{0:N0}", Model.TienNuoc) + "đ" },
+                        new { L="Dịch vụ",
+                              V=String.Format("{0:N0}", Model.TienDichVu) + "đ" },
+                    })
+                    {
+                        <div class="tt-row">
+                            <span class="tt-label">@r.L</span>
+                            <span class="tt-val">@r.V</span>
+                        </div>
+                    }
+                    <div style="display:flex;justify-content:space-between;
+                                padding:12px 0;margin-top:4px;">
+                        <span style="font-weight:700;color:#222;">
+                            Tổng cộng
+                        </span>
+                        <span style="font-weight:800;color:#2cbdb8;
+                                     font-size:18px;">
+                            @String.Format("{0:N0}", Model.TongTien)đ
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            @* ── Nội dung ── *@
+            <div class="col-lg-9">
+
+                <div class="tt-card"
+                     style="display:flex;justify-content:space-between;
+                            align-items:center;flex-wrap:wrap;gap:10px;
+                            padding:18px 24px;">
+                    <div>
+                        <h5 style="font-weight:800;margin:0 0 3px;">
+                            Thanh Toán
+                            <span style="color:#2cbdb8;">
+                                #@Model.MaHoaDon
+                            </span>
+                        </h5>
+                        <p style="color:#888;font-size:13px;margin:0;">
+                            <i class="fa fa-calendar mr-1"
+                               style="color:#2cbdb8;"></i>
+                            Tháng @Model.ThangHoaDon.ToString("MM/yyyy")
+                            @if (phong != null)
+                            {
+                                <span>· Phòng @phong.SoPhong</span>
+                            }
+                            @if (toaNha != null)
+                            {
+                                <span>· @toaNha.TenToaNha</span>
+                            }
+                        </p>
+                    </div>
+                    <div style="font-size:24px;font-weight:800;color:#2cbdb8;">
+                        @String.Format("{0:N0}", Model.TongTien)đ
+                    </div>
+                </div>
+
+                @if (bienLaiCho != null)
+                {
+                    <div class="tt-card" style="text-align:center;padding:40px;">
+                        <div style="font-size:60px;margin-bottom:16px;">⏳</div>
+                        <h5 style="font-weight:700;color:#222;margin-bottom:8px;">
+                            Biên lai đang chờ xác nhận
+                        </h5>
+                        <p style="color:#888;margin-bottom:16px;">
+                            Bạn đã gửi lúc
+                            <strong>
+                                @bienLaiCho.NgayThanhToan.ToString("dd/MM/yyyy HH:mm")
+                            </strong>
+                        </p>
+
+                        @if (!string.IsNullOrEmpty(bienLaiCho.AnhBienLai))
+                        {
+                            bool laPdf = bienLaiCho.AnhBienLai.ToLower().EndsWith(".pdf");
+
+                            if (laPdf)
+                            {
+                                <a href="~/Content/images/bienlai/@bienLaiCho.AnhBienLai"
+                                   target="_blank"
+                                   style="color:#2cbdb8;font-weight:600;">
+                                    <i class="fa fa-file-pdf-o mr-1"></i>
+                                    Xem biên lai PDF
+                                </a>
+                            }
+                            else
+                            {
+                                <img src="~/Content/images/bienlai/@bienLaiCho.AnhBienLai"
+                                     style="max-width:260px;border-radius:8px;
+                                    border:2px solid #c8eeed;
+                                    margin-bottom:16px;" />
+                            }
+                        }
+
+                        <div style="background:#f0fafa;border-radius:8px;
+                                    padding:14px;max-width:400px;margin:0 auto;
+                                    border:1px solid #c8eeed;">
+                            <p style="color:#2cbdb8;margin:0;font-size:13px;">
+                                <i class="fa fa-info-circle mr-1"></i>
+                                Chủ trọ sẽ xác nhận sớm nhất.
+                                Bạn sẽ nhận thông báo khi được duyệt.
+                            </p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+
+                        <div class="col-md-5 mb-3">
+                            <div class="tt-card" style="text-align:center;
+                                                         height:100%;">
+                                <div class="tt-title">
+                                    <i class="fa fa-qrcode mr-1"
+                                       style="color:#2cbdb8;"></i>
+                                    Bước 1 — Quét QR
+                                </div>
+
+                                @if (chuTro != null
+                                  && !string.IsNullOrEmpty(chuTro.AnhQR))
+                                {
+                                    <img src="~/Content/images/qr/@chuTro.AnhQR"
+                                         style="max-width:200px;border-radius:8px;
+                                                border:3px solid #2cbdb8;
+                                                margin-bottom:14px;" />
+
+                                    if (!string.IsNullOrEmpty(chuTro.TenNganHang))
+                                    {
+                                        <p style="font-weight:700;margin-bottom:6px;">
+                                            <i class="fa fa-university mr-1"
+                                               style="color:#2cbdb8;"></i>
+                                            @chuTro.TenNganHang
+                                        </p>
+                                    }
+                                    if (!string.IsNullOrEmpty(chuTro.SoTaiKhoan))
+                                    {
+                                        <div style="background:#f8fffe;padding:8px 14px;
+                                                    border-radius:6px;
+                                                    border:1px solid #c8eeed;
+                                                    margin-bottom:6px;
+                                                    display:inline-flex;
+                                                    align-items:center;gap:8px;">
+                                            <span style="font-size:16px;
+                                                         font-weight:700;
+                                                         letter-spacing:1px;">
+                                                @chuTro.SoTaiKhoan
+                                            </span>
+                                            <button type="button"
+                                                    onclick="copyText('@chuTro.SoTaiKhoan')"
+                                                    style="background:none;border:none;
+                                                           color:#2cbdb8;cursor:pointer;
+                                                           padding:0;">
+                                                <i class="fa fa-copy"></i>
+                                            </button>
+                                        </div>
+                                    }
+                                    if (!string.IsNullOrEmpty(chuTro.TenTaiKhoan))
+                                    {
+                                        <p style="color:#888;font-size:13px;
+                                                  margin-bottom:12px;">
+                                            @chuTro.TenTaiKhoan
+                                        </p>
+                                    }
+
+                                    <div style="background:#fff3cd;padding:10px 14px;
+                                                border-radius:6px;font-size:12px;
+                                                text-align:left;">
+                                        <strong>Nội dung CK:</strong>
+                                        <span id="noiDungCK"
+                                              style="font-weight:700;">
+                                            @Model.MaHoaDon
+                                        </span>
+                                        <button type="button"
+                                                onclick="copyText('@Model.MaHoaDon')"
+                                                style="background:none;border:none;
+                                                       color:#2cbdb8;cursor:pointer;
+                                                       padding:0;margin-left:5px;">
+                                            <i class="fa fa-copy"></i>
+                                        </button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div style="padding:30px 0;">
+                                        <i class="fa fa-qrcode"
+                                           style="font-size:48px;color:#ddd;
+                                                  display:block;
+                                                  margin-bottom:14px;"></i>
+                                        <p style="color:#888;font-size:13px;">
+                                            Chủ trọ chưa cài QR.
+                                            Vui lòng liên hệ trực tiếp:
+                                        </p>
+                                        @if (chuTro != null)
+                                        {
+                                            <a href="tel:@chuTro.SoDienThoai"
+                                               style="font-size:18px;
+                                                      font-weight:700;
+                                                      color:#2cbdb8;
+                                                      text-decoration:none;">
+                                                <i class="fa fa-phone mr-1"></i>
+                                                @chuTro.SoDienThoai
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 mb-3">
+                            <div class="tt-card" style="height:100%;">
+                                <div class="tt-title">
+                                    <i class="fa fa-upload mr-1"
+                                       style="color:#2cbdb8;"></i>
+                                    Bước 2 — Gửi Biên Lai
+                                </div>
+
+                                <div style="background:#f8fffe;padding:12px 14px;
+                                            border-radius:8px;margin-bottom:18px;
+                                            border:1px solid #c8eeed;
+                                            font-size:13px;color:#555;">
+                                    <ol style="margin:0;padding-left:18px;">
+                                        <li style="margin-bottom:4px;">
+                                            Quét QR hoặc CK theo thông tin bên trái
+                                        </li>
+                                        <li style="margin-bottom:4px;">
+                                            Chụp ảnh biên lai / lịch sử GD
+                                        </li>
+                                        <li>Upload và bấm <strong>Gửi biên lai</strong></li>
+                                    </ol>
+                                </div>
+
+                                @using (Html.BeginForm("UploadBienLai",
+                                    "ThanhToan", FormMethod.Post,
+                                    new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="maHoaDon"
+                                           value="@Model.MaHoaDon" />
+
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Hình thức thanh toán
+                                        </label>
+                                        <select name="hinhThuc" class="form-control">
+                                            <option value="ChuyenKhoan">💳 Chuyển khoản ngân hàng</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" style="margin-top:10px">
+                                            Mã giao dịch
+                                            <span class="form-note">(không bắt buộc)</span>
+                                        </label>
+                                        <input type="text" name="maGiaoDich"
+                                               placeholder="Nhập mã giao dịch..."
+                                               class="form-control" />
+                                    </div>
+
+                                    <div style="margin-bottom:14px;">
+                                        <label style="font-weight:700;
+                                                      font-size:13px;color:#333;
+                                                      display:block;
+                                                      margin-bottom:6px;">
+                                            Ảnh biên lai
+                                            <span style="color:#e74a3b;">*</span>
+                                        </label>
+                                        <div style="border:2px dashed #2cbdb8;
+                                                    border-radius:8px;padding:24px;
+                                                    text-align:center;
+                                                    background:#f8fffe;cursor:pointer;
+                                                    transition:.2s;"
+                                             onclick="document.getElementById(
+                                                         'inputBienLai').click()"
+                                             onmouseover="this.style.background='#e8f7f6'"
+                                             onmouseout="this.style.background='#f8fffe'">
+                                            <i class="fa fa-cloud-upload"
+                                               style="font-size:30px;color:#2cbdb8;
+                                                      display:block;
+                                                      margin-bottom:8px;"></i>
+                                            <p style="color:#555;margin:0 0 4px;
+                                                      font-size:13px;font-weight:600;">
+                                                Nhấn để chọn ảnh biên lai
+                                            </p>
+                                            <p style="color:#aaa;font-size:12px;
+                                                      margin:0;">
+                                                JPG, PNG, PDF (tối đa 5MB)
+                                            </p>
+                                            <input type="file" id="inputBienLai"
+                                                   name="bienLai"
+                                                   accept="image/*,.pdf"
+                                                   style="display:none;"
+                                                   onchange="previewBienLai(this)"
+                                                   required />
+                                        </div>
+
+                                        <div id="previewWrap"
+                                             style="display:none;margin-top:10px;
+                                                    text-align:center;">
+                                            <img id="previewImg" src="#"
+                                                 style="max-width:100%;
+                                                        max-height:160px;
+                                                        border-radius:6px;
+                                                        border:2px solid #c8eeed;" />
+                                            <div id="previewPdf"
+                                                 style="display:none;padding:10px;
+                                                        background:#f0fafa;
+                                                        border-radius:6px;
+                                                        color:#2cbdb8;font-size:13px;">
+                                                <i class="fa fa-file-pdf-o mr-1"></i>
+                                                <span id="previewPdfName"></span>
+                                            </div>
+                                        </div>
+                                        <p id="tenFileDaChon"
+                                           style="display:none;font-size:12px;
+                                                  color:#2cbdb8;margin-top:6px;
+                                                  font-weight:600;"></p>
+                                    </div>
+
+                                    <div style="margin-bottom:18px;">
+                                        <label style="font-weight:700;
+                                                      font-size:13px;color:#333;
+                                                      display:block;
+                                                      margin-bottom:6px;">
+                                            Ghi chú
+                                            <span style="font-weight:400;
+                                                         color:#aaa;font-size:12px;">
+                                                (không bắt buộc)
+                                            </span>
+                                        </label>
+                                        <textarea name="ghiChu"
+                                                  style="width:100%;padding:10px;
+                                                         border:1px solid #ddd;
+                                                         border-radius:6px;
+                                                         font-size:13px;resize:none;
+                                                         outline:none;"
+                                                  rows="2"
+                                                  placeholder="Ghi chú thêm...">
+                                        </textarea>
+                                    </div>
+
+                                    <button type="submit"
+                                            style="width:100%;padding:12px;
+                                                   background:#2cbdb8;color:#fff;
+                                                   border:none;border-radius:8px;
+                                                   font-weight:700;font-size:14px;
+                                                   cursor:pointer;transition:.2s;"
+                                            onmouseover="this.style.background='#24a09b'"
+                                            onmouseout="this.style.background='#2cbdb8'">
+                                        <i class="fa fa-paper-plane mr-2"></i>
+                                        Gửi Biên Lai Xác Nhận
+                                    </button>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function previewBienLai(input) {
+            if (!input.files || !input.files[0]) return;
+            var file = input.files[0];
+
+            document.getElementById('tenFileDaChon').textContent
+                = '✓ ' + file.name;
+            document.getElementById('tenFileDaChon').style.display = 'block';
+            document.getElementById('previewWrap').style.display = 'block';
+
+            if (file.type.startsWith('image/')) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('previewImg').src = e.target.result;
+                    document.getElementById('previewImg').style.display = 'block';
+                    document.getElementById('previewPdf').style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById('previewImg').style.display = 'none';
+                document.getElementById('previewPdfName').textContent = file.name;
+                document.getElementById('previewPdf').style.display = 'block';
+            }
+        }
+
+        function copyText(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(function () {
+                    showToast('Đã copy: ' + text);
+                });
+            } else {
+                var el = document.createElement('textarea');
+                el.value = text;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                showToast('Đã copy: ' + text);
+            }
+        }
+
+        function showToast(msg) {
+            var t = document.createElement('div');
+            t.textContent = msg;
+            t.style.cssText = 'position:fixed;bottom:20px;right:20px;'
+                + 'background:#2cbdb8;color:#fff;padding:10px 18px;'
+                + 'border-radius:8px;z-index:9999;font-size:13px;'
+                + 'font-weight:600;box-shadow:0 4px 12px rgba(44,189,184,.4);';
+            document.body.appendChild(t);
+            setTimeout(function () {
+                t.style.opacity = '0';
+                t.style.transition = 'opacity .4s';
+                setTimeout(function () { document.body.removeChild(t); }, 400);
+            }, 2000);
+        }
+
+        setTimeout(function () {
+            document.querySelectorAll('.alert-dismissible').forEach(function (a) {
+                a.style.opacity = '0';
+                a.style.transition = 'opacity .5s';
+                setTimeout(function () { a.style.display = 'none'; }, 500);
+            });
+        }, 3000);
+    </script>
+}

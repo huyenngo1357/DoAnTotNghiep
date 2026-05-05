@@ -1,0 +1,431 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<HappyHouse.Models.ThanhToan>
+
+@{
+    ViewBag.Title = "Xác nhận thanh toán";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">
+        Xác nhận thanh toán
+    </h2>
+}
+@section breadLink {
+    <a href="#">Danh sách biên lai</a>
+}
+
+@if ((int)(ViewBag.SoChoXacNhan ?? 0) > 0)
+{
+    <div class="alert alert-warning">
+        <i class="fa fa-bell mr-2"></i>
+        Có <strong>@ViewBag.SoChoXacNhan</strong>
+        biên lai đang chờ xác nhận.
+    </div>
+}
+
+<div class="mb-3 d-flex flex-wrap">
+    @{
+        var filters = new[]
+        {
+            new { Value = "",           Text = "Tất cả"        },
+            new { Value = "ChoXacNhan", Text = "Chờ xác nhận" },
+            new { Value = "DaXacNhan",  Text = "Đã xác nhận"  },
+            new { Value = "TuChoi",     Text = "Từ chối"       },
+        };
+    }
+    @foreach (var f in filters)
+    {
+        bool active =
+            ViewBag.TrangThai == f.Value
+         || (string.IsNullOrEmpty(f.Value)
+          && string.IsNullOrEmpty(
+                 ViewBag.TrangThai as string));
+
+        <a href="@Url.Action("DanhSach",
+                   new { trangThai = f.Value })"
+           class="btn mr-2 mb-2
+                  @(active ? "btn-primary"
+                           : "btn-outline-secondary")">
+            @f.Text
+            @if (f.Value == "ChoXacNhan"
+              && (int)(ViewBag.SoChoXacNhan ?? 0) > 0)
+            {
+                <span class="badge badge-danger ml-1">
+                    @ViewBag.SoChoXacNhan
+                </span>
+            }
+        </a>
+    }
+</div>
+
+<p style="text-align:right;margin:10px">
+    <a href="@Url.Action("CaiDatQR")"
+       class="btn btn-outline-primary">
+        <i class="fa fa-qrcode mr-1"></i>
+        Cài đặt QR thanh toán
+    </a>
+</p>
+
+@if (!Model.Any())
+{
+    <div class="text-center py-5 text-muted">
+        <i class="fas fa-receipt fa-3x d-block mb-3"></i>
+        <p>Không có biên lai nào.</p>
+    </div>
+}
+else
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            string bc, bt;
+            switch (item.TrangThaiXacNhan)
+            {
+                case "ChoXacNhan":
+                    bc = "warning"; bt = "Chờ xác nhận"; break;
+                case "DaXacNhan":
+                    bc = "success"; bt = "Đã xác nhận"; break;
+                case "TuChoi":
+                    bc = "danger"; bt = "Từ chối"; break;
+                default:
+                    bc = "secondary";
+                    bt = item.TrangThaiXacNhan ?? "—"; break;
+            }
+
+            // ✅ Khách hàng lấy qua HoaDon.HopDong.NguoiDung1
+            var khach = item.HoaDon?.HopDong?.NguoiDung1;
+            var phong = item.HoaDon?.HopDong?.PhongTro;
+
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100
+                     @(item.TrangThaiXacNhan == "ChoXacNhan"
+                         ? "border-warning" : "")">
+
+                    <div class="card-header d-flex
+                                justify-content-between
+                                align-items-center">
+                        <span class="font-weight-bold">
+                            <i class="fa fa-door-open mr-1
+                               text-muted"></i>
+                            @(phong != null
+                                ? phong.SoPhong
+                                  + " — "
+                                  + phong.ToaNha?.TenToaNha
+                                : "—")
+                        </span>
+                        <span class="badge badge-pill
+                                     badge-@bc px-2 py-1">
+                            @bt
+                        </span>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-md-7">
+                                <table class="table
+                                              table-borderless
+                                              table-sm mb-0">
+                                    <tr>
+                                        <td class="font-weight-bold"
+                                            style="width:110px">
+                                            Khách hàng:
+                                        </td>
+                                        <td>
+                                            @if (khach != null)
+                                            {
+                                                <strong>
+                                                    @khach.HoTen
+                                                </strong>
+                                                <br />
+                                                <small class="text-muted">
+                                                    @khach.SoDienThoai
+                                                </small>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">
+                                                    —
+                                                </span>
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">
+                                            Hóa đơn:
+                                        </td>
+                                        <td>
+                                            @(item.HoaDon != null
+                                                ? "Tháng "
+                                                  + item.HoaDon
+                                                        .ThangHoaDon.Month
+                                                  + "/"
+                                                  + item.HoaDon
+                                                        .ThangHoaDon.Year
+                                                : "—")
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">
+                                            Số tiền:
+                                        </td>
+                                        <td class="font-weight-bold
+                                                   text-success"
+                                            style="font-size:15px">
+                                            @String.Format("{0:N0}",
+                                                item.SoTien)đ
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">
+                                            Hình thức:
+                                        </td>
+                                        <td>@(item.HinhThuc ?? "—")</td>
+                                    </tr>
+                                    @if (!string.IsNullOrEmpty(
+                                        item.MaGiaoDich))
+                                    {
+                                        <tr>
+                                            <td class="font-weight-bold">
+                                                Mã GD:
+                                            </td>
+                                            <td>
+                                                <code class="small">
+                                                    @item.MaGiaoDich
+                                                </code>
+                                            </td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td class="font-weight-bold">
+                                            Gửi lúc:
+                                        </td>
+                                        <td>
+                                            <small>
+                                                @item.NgayThanhToan.ToString("dd/MM/yyyy HH:mm")
+                                            </small>
+                                        </td>
+                                    </tr>
+                                    @if (!string.IsNullOrEmpty(
+                                        item.GhiChu))
+                                    {
+                                        <tr>
+                                            <td class="font-weight-bold">
+                                                Ghi chú:
+                                            </td>
+                                            <td>
+                                                <small class="text-muted">
+                                                    @item.GhiChu
+                                                </small>
+                                            </td>
+                                        </tr>
+                                    }
+                                    @if (item.TrangThaiXacNhan
+                                         == "TuChoi"
+                                      && !string.IsNullOrEmpty(
+                                             item.LyDoTuChoi))
+                                    {
+                                        <tr>
+                                            <td class="font-weight-bold
+                                                       text-danger">
+                                                Lý do:
+                                            </td>
+                                            <td class="text-danger small">
+                                                @item.LyDoTuChoi
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+
+                            <div class="col-md-5 text-center">
+                                @if (!string.IsNullOrEmpty(
+                                    item.AnhBienLai))
+                                {
+                                    bool isPdf = item.AnhBienLai
+                                        .ToLower().EndsWith(".pdf");
+                                    if (isPdf)
+                                    {
+                                        <a href="~/Content/images/bienlai/@item.AnhBienLai"
+                                           target="_blank"
+                                           class="btn btn-outline-danger
+                                                  btn-sm mt-2">
+                                            <i class="fa fa-file-pdf-o
+                                               mr-1"></i>
+                                            Xem PDF
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="~/Content/images/bienlai/@item.AnhBienLai"
+                                           target="_blank">
+                                            <img src="~/Content/images/bienlai/@item.AnhBienLai"
+                                                 style="width:100%;
+                                                        max-height:150px;
+                                                        object-fit:cover;
+                                                        border-radius:8px;
+                                                        border:2px solid
+                                                            #dee2e6;" />
+                                            <small class="text-primary
+                                                          d-block mt-1">
+                                                <i class="fa fa-search-plus
+                                                   mr-1"></i>
+                                                Xem biên lai
+                                            </small>
+                                        </a>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="bg-light rounded d-flex
+                                                align-items-center
+                                                justify-content-center"
+                                         style="height:100px;">
+                                        <span class="text-muted small">
+                                            Không có ảnh
+                                        </span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (item.TrangThaiXacNhan == "ChoXacNhan")
+                    {
+                        <div class="card-footer bg-white">
+                            <div class="d-flex justify-content-between">
+
+                                @using (Html.BeginForm("XacNhan",
+                                    "ChuTroThanhToan",
+                                    FormMethod.Post,
+                                    new { style = "display:inline" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden"
+                                           name="maThanhToan"
+                                           value="@item.MaThanhToan" />
+                                    <button type="submit"
+                                            class="btn btn-success px-4"
+                                            onclick="return confirm(
+                                                'Xác nhận đã nhận tiền?')">
+                                        <i class="fa fa-check mr-1"></i>
+                                        Đã nhận tiền
+                                    </button>
+                                }
+
+                                <button type="button"
+                                        class="btn btn-outline-danger"
+                                        data-toggle="modal"
+                                        data-target="#modal_@item.MaThanhToan">
+                                    <i class="fa fa-times mr-1"></i>
+                                    Từ chối
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="modal fade"
+                             id="modal_@item.MaThanhToan"
+                             tabindex="-1" role="dialog"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title
+                                                   text-danger">
+                                            <i class="fa fa-times-circle
+                                               mr-2"></i>
+                                            Từ chối biên lai
+                                        </h5>
+                                        <button type="button"
+                                                class="close"
+                                                data-dismiss="modal">
+                                            <span>&times;</span>
+                                        </button>
+                                    </div>
+
+                                    @using (Html.BeginForm("TuChoi",
+                                        "ChuTroThanhToan",
+                                        FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden"
+                                               name="maThanhToan"
+                                               value="@item.MaThanhToan" />
+                                        <div class="modal-body">
+                                            <p class="text-muted">
+                                                Khách
+                                                <strong>
+                                                    @(khach?.HoTen ?? "")
+                                                </strong>
+                                                sẽ nhận thông báo
+                                                từ chối.
+                                            </p>
+                                            <div class="form-group mb-0">
+                                                <label class="font-weight-bold">
+                                                    Lý do từ chối
+                                                    <span class="text-danger">
+                                                        *
+                                                    </span>
+                                                </label>
+                                                <textarea name="lyDo"
+                                                          class="form-control"
+                                                          rows="3"
+                                                          placeholder="VD: Ảnh không rõ, sai số tiền..."
+                                                          required>
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button"
+                                                    class="btn btn-secondary"
+                                                    data-dismiss="modal">
+                                                Hủy
+                                            </button>
+                                            <button type="submit"
+                                                    class="btn btn-danger">
+                                                <i class="fa fa-times mr-1">
+                                                </i>
+                                                Xác nhận từ chối
+                                            </button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        }
+    </div>
+
+    if (Model.PageCount > 1)
+    {
+        <div class="d-flex justify-content-center mt-3">
+            @Html.PagedListPager(Model,
+                page => Url.Action("DanhSach", new
+                {
+                    page,
+                    trangThai = ViewBag.TrangThai
+                }),
+                new PagedListRenderOptions
+                {
+                    UlElementClasses = new[]
+                    {
+                        "pagination",
+                        "justify-content-center"
+                    },
+                    LiElementClasses = new[] { "page-item" }
+                })
+        </div>
+    }
+}
+
+<script>
+    setTimeout(function () {
+        $('.alert').fadeOut('slow', function () {
+            $(this).remove();
+        });
+    }, 3000);
+</script>

@@ -1,0 +1,84 @@
+﻿@{
+    var userLayout = Session["UserOnline"] as HappyHouse.Models.NguoiDung;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@ViewBag.Title - Happy House</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/Home/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/Home/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/Home/css/elegant-icons.css">
+    <link rel="stylesheet" href="~/Content/Home/css/themify-icons.css">
+    <link rel="stylesheet" href="~/Content/Home/css/nice-select.css">
+    <link rel="stylesheet" href="~/Content/Home/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/Content/Home/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Content/Home/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/Content/Home/css/slicknav.min.css">
+    <link rel="stylesheet" href="~/Content/Home/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="~/Content/images/favicon.svg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="canvas-open">
+        <i class="icon_menu"></i>
+    </div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="canvas-close">
+            <i class="icon_close"></i>
+        </div>
+        <nav class="main-menu">
+            <ul>
+                <li><a href="@Url.Action("Index","TrangChu")">Trang Chủ</a></li>
+                <li><a href="@Url.Action("DanhSach","PhongTro")">Phòng Trọ</a></li>
+                @if (userLayout != null && userLayout.MaVaiTro == "KHACHHANG")
+                {
+                    <li><a href="@Url.Action("DanhSach","ThanhToan")">Hóa Đơn</a></li>
+                }
+                <li><a href="@Url.Action("DanhSachTinTuc","TrangChu")">Tin Tức</a></li>
+                @if (userLayout != null &&
+                    (userLayout.MaVaiTro == "CHUTHAU" || userLayout.MaVaiTro == "CHUTRO"))
+                {
+                    <li>
+                        <a href="@(userLayout.MaVaiTro == "CHUTHAU"
+                            ? Url.Action("DanhSach","AdminToaNha")
+                            : Url.Action("DanhSach","ChuTroToaNha"))">
+                            Quản Lý
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+
+    @Html.Partial("_HeaderLayoutHome")
+
+    @RenderBody()
+
+    <script src="~/Content/Home/js/jquery-3.3.1.min.js"></script>
+
+    @Html.Partial("_FooterLayoutHome")
+
+    <script src="~/Content/Home/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Content/Home/js/bootstrap.min.js"></script>
+    <script src="~/Content/Home/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/Content/Home/js/jquery.nice-select.min.js"></script>
+    <script src="~/Content/Home/js/jquery.slicknav.js"></script>
+    <script src="~/Content/Home/js/jquery-ui.min.js"></script>
+    <script src="~/Content/Home/js/owl.carousel.min.js"></script>
+    <script src="~/Content/Home/js/main.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

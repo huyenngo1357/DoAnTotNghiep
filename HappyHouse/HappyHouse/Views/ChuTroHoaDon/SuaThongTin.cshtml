@@ -1,0 +1,324 @@
+﻿@model HappyHouse.Models.HoaDon
+
+@{
+    ViewBag.Title = "Sửa hóa đơn";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    var khach = Model.HopDong?.NguoiDung1;
+    var phong = Model.HopDong?.PhongTro;
+    var toaNha = phong?.ToaNha;
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">
+        Hóa đơn tiền phòng
+    </h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","ChuTroHoaDon")">
+        Danh sách hóa đơn
+    </a>
+}
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header font-weight-bold text-primary">
+        <i class="fa fa-info-circle mr-2"></i>
+        Thông tin hóa đơn
+        <span class="badge badge-pill badge-warning
+                     px-2 py-1 float-right">
+            @Model.TrangThaiHoaDon
+        </span>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <p class="mb-1">
+                    <span class="text-muted">Mã hóa đơn:</span>
+                    <code class="ml-2">@Model.MaHoaDon</code>
+                </p>
+                <p class="mb-1">
+                    <span class="text-muted">Tháng:</span>
+                    <strong class="ml-2">
+                        Tháng @Model.ThangHoaDon.Month
+                        /@Model.ThangHoaDon.Year
+                    </strong>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p class="mb-1">
+                    <span class="text-muted">Phòng:</span>
+                    <strong class="ml-2">
+                        @(phong != null
+                            ? "Phòng " + phong.SoPhong
+                              + " — " + toaNha?.TenToaNha
+                            : "—")
+                    </strong>
+                </p>
+                <p class="mb-1">
+                    <span class="text-muted">Khách hàng:</span>
+                    <strong class="ml-2">
+                        @(khach?.HoTen ?? "—")
+                    </strong>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p class="mb-1">
+                    <span class="text-muted">Tổng hiện tại:</span>
+                    <strong class="ml-2 text-success"
+                            style="font-size:16px;">
+                        @String.Format("{0:N0}",
+                            Model.TongTien)đ
+                    </strong>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("SuaThongTin", "ChuTroHoaDon",
+    FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="MaHoaDon"
+           value="@Model.MaHoaDon" />
+    <input type="hidden" name="MaChiSoDien"
+           value="@Model.MaChiSoDien" />
+    <input type="hidden" name="MaChiSoNuoc"
+           value="@Model.MaChiSoNuoc" />
+    <input type="hidden" name="ThangHoaDon"
+           value="@Model.ThangHoaDon.ToString("yyyy-MM-dd")" />
+    <input type="hidden" name="MaHopDong"
+           value="@Model.MaHopDong" />
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header font-weight-bold text-primary">
+            <i class="fa fa-edit mr-2"></i>
+            Chỉnh sửa các khoản tiền
+        </div>
+        <div class="card-body">
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <div class="form-group mb-0">
+                        <label class="font-weight-bold">
+                            Tiền phòng (đ)
+                            <span class="text-danger">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.TienPhong, new
+                        {
+                            @class = "form-control tinh-toan",
+                            type = "number",
+                            min = "0",
+                            step = "50000",
+                            id = "tienPhong"
+                        })
+                        @Html.ValidationMessageFor(
+                            m => m.TienPhong, "",
+                            new { @class = "text-danger small" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-warning mb-3">
+                <div class="card-header bg-warning text-white
+                            py-2 font-weight-bold">
+                    <i class="fa fa-bolt mr-2"></i> Tiền điện
+                    @if (Model.ChiSoDienNuoc != null)
+                    {
+                        <small class="ml-2 font-weight-normal">
+                            (CS: @Model.ChiSoDienNuoc.ChiSoDau
+                            → @Model.ChiSoDienNuoc.ChiSoCuoi |
+                            @Model.ChiSoDienNuoc.SoTieuThu kWh ×
+                            @String.Format("{0:N0}",
+                                Model.ChiSoDienNuoc.DonGia)đ)
+                        </small>
+                    }
+                </div>
+                <div class="card-body py-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="small font-weight-bold">
+                                Tiền điện (đ)
+                            </label>
+                            @Html.TextBoxFor(m => m.TienDien, new
+                            {
+                                @class = "form-control tinh-toan",
+                                type = "number",
+                                min = "0",
+                                step = "1000",
+                                id = "tienDien"
+                            })
+                        </div>
+                        @if (Model.ChiSoDienNuoc != null)
+                        {
+                            <div class="col-md-8 d-flex
+                                        align-items-center">
+                                <div class="alert alert-light
+                                            py-2 mb-0 small w-100">
+                                    <i class="fa fa-info-circle
+                                       text-warning mr-1"></i>
+                                    Tính từ chỉ số:
+                                    <strong>
+                                        @Model.ChiSoDienNuoc.SoTieuThu kWh
+                                    </strong>
+                                    × @String.Format("{0:N0}", Model.ChiSoDienNuoc.DonGia)đ
+                                    =
+                                    <strong class="text-warning">
+                                        @String.Format("{0:N0}", Model.ChiSoDienNuoc.ThanhTien)đ
+                                    </strong>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-info mb-3">
+                <div class="card-header bg-info text-white
+                            py-2 font-weight-bold">
+                    <i class="fa fa-tint mr-2"></i> Tiền nước
+                    @if (Model.ChiSoDienNuoc1 != null)
+                    {
+                        <small class="ml-2 font-weight-normal">
+                            (CS: @Model.ChiSoDienNuoc1.ChiSoDau
+                            → @Model.ChiSoDienNuoc1.ChiSoCuoi |
+                            @Model.ChiSoDienNuoc1.SoTieuThu m³ ×
+                            @String.Format("{0:N0}",
+                                Model.ChiSoDienNuoc1.DonGia)đ)
+                        </small>
+                    }
+                </div>
+                <div class="card-body py-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="small font-weight-bold">
+                                Tiền nước (đ)
+                            </label>
+                            @Html.TextBoxFor(m => m.TienNuoc, new
+                            {
+                                @class = "form-control tinh-toan",
+                                type = "number",
+                                min = "0",
+                                step = "1000",
+                                id = "tienNuoc"
+                            })
+                        </div>
+                        @if (Model.ChiSoDienNuoc1 != null)
+                        {
+                            <div class="col-md-8 d-flex
+                                        align-items-center">
+                                <div class="alert alert-light
+                                            py-2 mb-0 small w-100">
+                                    <i class="fa fa-info-circle
+                                       text-info mr-1"></i>
+                                    Tính từ chỉ số:
+                                    <strong>
+                                        @Model.ChiSoDienNuoc1.SoTieuThu m&#179;
+                                    </strong>
+                                    × @String.Format("{0:N0}", Model.ChiSoDienNuoc1.DonGia)đ
+                                    =
+                                    <strong class="text-info">
+                                        @String.Format("{0:N0}", Model.ChiSoDienNuoc1.ThanhTien)đ
+                                    </strong>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-secondary mb-3">
+                <div class="card-header bg-secondary text-white
+                            py-2 font-weight-bold">
+                    <i class="fa fa-cog mr-2"></i> Dịch vụ
+                </div>
+                <div class="card-body py-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="small font-weight-bold">
+                                Tiền dịch vụ (đ)
+                            </label>
+                            @Html.TextBoxFor(m => m.TienDichVu, new
+                            {
+                                @class = "form-control tinh-toan",
+                                type = "number",
+                                min = "0",
+                                step = "1000",
+                                id = "tienDichVu"
+                            })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="font-weight-bold">
+                            Hạn thanh toán
+                            <span class="text-danger">*</span>
+                        </label>
+                        @Html.TextBoxFor(
+                            m => m.HanThanhToan,
+                            "{0:yyyy-MM-dd}",
+                            new
+                            {
+                                @class = "form-control",
+                                type = "date",
+                                id = "hanThanhToan"
+                            })
+                    </div>
+                </div>
+                <div class="col-md-5 offset-md-4">
+                    <label class="font-weight-bold">
+                        Tổng tiền mới
+                    </label>
+                    <div class="p-3 text-right font-weight-bold
+                                border rounded bg-light"
+                         id="tongTien"
+                         style="font-size:22px;color:#1cc88a;">
+                        @String.Format("{0:N0}",
+                            Model.TongTien) đ
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mt-2 mb-0">
+                <label class="font-weight-bold">Ghi chú</label>
+                @Html.TextAreaFor(m => m.GhiChu, new
+                {
+                    @class = "form-control",
+                    rows = 2,
+                    placeholder = "Ghi chú thêm nếu có..."
+                })
+            </div>
+
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        @Html.ActionLink("Trở lại", "ChiTiet",
+            new { maHoaDon = Model.MaHoaDon },
+            new { @class = "btn btn-secondary px-4" })
+        <button type="submit" class="btn btn-warning px-4">
+            <i class="fa fa-save mr-1"></i>
+            Lưu thay đổi
+        </button>
+    </div>
+}
+
+@section Scripts {
+    <script>
+function tinhTong() {
+    var p  = parseFloat($('#tienPhong').val())  || 0;
+    var d  = parseFloat($('#tienDien').val())   || 0;
+    var n  = parseFloat($('#tienNuoc').val())   || 0;
+    var dv = parseFloat($('#tienDichVu').val()) || 0;
+    var t  = p + d + n + dv;
+    $('#tongTien').text(
+        t.toLocaleString('vi-VN') + ' đ');
+}
+
+$('.tinh-toan').on('input', tinhTong);
+    </script>
+}

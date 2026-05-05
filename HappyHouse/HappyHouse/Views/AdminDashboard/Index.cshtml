@@ -1,0 +1,585 @@
+﻿@using System.Collections.Generic
+@using HappyHouse.Models
+
+@{
+    ViewBag.Title = "Dashboard Admin";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int nam = (int)ViewBag.NamHienTai;
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Dashboard</h2>
+}
+@section breadLink {
+    <a href="#">Tổng quan</a>
+}
+
+<style>
+    .db-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 22px 24px;
+        box-shadow: 0 2px 10px rgba(0,0,0,.06);
+        border: 1px solid #eef0f4;
+        transition: transform .2s, box-shadow .2s;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
+        .db-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,.09);
+        }
+
+        .db-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .db-card.c1::before {
+            background: #4e73df;
+        }
+
+        .db-card.c2::before {
+            background: #1cc88a;
+        }
+
+        .db-card.c3::before {
+            background: #f6c23e;
+        }
+
+        .db-card.c4::before {
+            background: #e74a3b;
+        }
+
+        .db-card.c5::before {
+            background: #36b9cc;
+        }
+
+        .db-card.c6::before {
+            background: #858796;
+        }
+
+    .db-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: #a0aec0;
+        margin-bottom: 6px;
+    }
+
+    .db-value {
+        font-size: 26px;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 3px;
+    }
+
+    .db-sub {
+        font-size: 12px;
+        color: #a0aec0;
+    }
+
+    .db-icon {
+        position: absolute;
+        right: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 40px;
+        opacity: .06;
+        color: #2d3748;
+    }
+
+    .sec-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: #1a202c;
+        margin-bottom: 4px;
+    }
+
+    .sec-sub {
+        font-size: 12px;
+        color: #a0aec0;
+        margin-bottom: 18px;
+    }
+
+    .panel {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,.06);
+        border: 1px solid #eef0f4;
+        padding: 24px;
+        margin-bottom: 24px;
+    }
+
+    .view-btn {
+        border: 1.5px solid #e2e8f0;
+        background: #fff;
+        color: #718096;
+        padding: 6px 16px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: .18s;
+    }
+
+        .view-btn:hover {
+            border-color: #4e73df;
+            color: #4e73df;
+        }
+
+        .view-btn.active {
+            background: #4e73df;
+            color: #fff;
+            border-color: #4e73df;
+        }
+
+    .alert-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 14px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        margin: 0 6px 6px 0;
+        transition: .18s;
+    }
+
+        .alert-pill:hover {
+            opacity: .85;
+            text-decoration: none;
+        }
+
+    .ap-w {
+        background: #fffbeb;
+        color: #92400e;
+        border: 1.5px solid #fde68a;
+    }
+
+    .ap-d {
+        background: #fff5f5;
+        color: #c53030;
+        border: 1.5px solid #feb2b2;
+    }
+
+    .ap-i {
+        background: #ebf8ff;
+        color: #2b6cb0;
+        border: 1.5px solid #bee3f8;
+    }
+
+    .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .ap-w .dot {
+        background: #d97706;
+    }
+
+    .ap-d .dot {
+        background: #e53e3e;
+    }
+
+    .ap-i .dot {
+        background: #3182ce;
+    }
+
+    .nt-table thead th {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .6px;
+        color: #718096;
+        padding: 12px 16px;
+        border: none;
+        border-bottom: 2px solid #edf2f7;
+        background: #f8fafc;
+    }
+
+    .nt-table tbody td {
+        padding: 13px 16px;
+        font-size: 13px;
+        color: #2d3748;
+        border-top: 1px solid #f7fafc;
+        vertical-align: middle;
+    }
+
+    .nt-table tbody tr:hover td {
+        background: #f7fafc;
+    }
+
+    .tt-badge {
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .chart-area {
+        position: relative;
+        height: 280px;
+    }
+</style>
+
+<div>
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h5 style="font-weight:800;color:#1a202c;margin:0;">
+                Tổng Quan Hệ Thống
+            </h5>
+            <p style="margin:0;font-size:13px;color:#a0aec0;">
+                HappyHouse — Quản lý nhà trọ toàn quốc
+            </p>
+        </div>
+        <span style="font-size:13px;color:#a0aec0;font-weight:600;">
+            <i class="fa fa-calendar mr-1"></i>Năm @nam
+        </span>
+    </div>
+
+    @{
+        int choDuyet = (int)(ViewBag.ToaNhaChoDuyet ?? 0);
+        int yeuCauXoa = (int)(ViewBag.ToaNhaYeuCauXoa ?? 0);
+        int choXN = (int)(ViewBag.TongChoXacNhan ?? 0);
+        int tinChuaDang = (int)(ViewBag.TongTinChuaDang ?? 0);
+    }
+    @if (choDuyet > 0 || yeuCauXoa > 0 || choXN > 0 || tinChuaDang > 0)
+    {
+        <div class="mb-4">
+            @if (choDuyet > 0)
+            {
+                <a href="@Url.Action("DanhSach","AdminToaNha",
+                           new { trangThaiDuyet = "ChoDuyet" })"
+                   class="alert-pill ap-w">
+                    <span class="dot"></span>
+                    @choDuyet tòa nhà chờ duyệt
+                </a>
+            }
+            @if (yeuCauXoa > 0)
+            {
+                <a href="@Url.Action("DanhSach","AdminToaNha",
+                           new { trangThaiDuyet = "YeuCauXoa" })"
+                   class="alert-pill ap-d">
+                    <span class="dot"></span>
+                    @yeuCauXoa yêu cầu xóa tòa nhà
+                </a>
+            }
+            @if (choXN > 0)
+            {
+                <a href="@Url.Action("DanhSach","ChuTroThanhToan")"
+                   class="alert-pill ap-i">
+                    <span class="dot"></span>
+                    @choXN biên lai chờ xác nhận
+                </a>
+            }
+            @if (tinChuaDang > 0)
+            {
+                <a href="@Url.Action("DanhSach","AdminTinTuc",
+                           new { trangThaiDang = "ChuaDang" })"
+                   class="alert-pill ap-w">
+                    <span class="dot"></span>
+                    @tinChuaDang tin tức chờ đăng
+                </a>
+            }
+        </div>
+    }
+
+    <div class="row">
+        @foreach (var m in new[]
+        {
+            new { Label="Tòa nhà",        Val=(int)(ViewBag.TongToaNha    ??0),
+                  Sub="Đã duyệt: "+(int)(ViewBag.ToaNhaDaDuyet??0),
+                  Color="c1", Icon="fa-building" },
+            new { Label="Phòng trống",    Val=(int)(ViewBag.TongPhongTrong??0),
+                  Sub="Đang thuê: "+(int)(ViewBag.TongPhongDaThue??0),
+                  Color="c2", Icon="fa-home" },
+            new { Label="Khách hàng",     Val=(int)(ViewBag.TongKhachHang??0),
+                  Sub="Chủ trọ: "+(int)(ViewBag.TongChuTro??0),
+                  Color="c3", Icon="fa-users" },
+            new { Label="Hợp đồng",       Val=(int)(ViewBag.TongHopDongDangThue??0),
+                  Sub="Đang hiệu lực",
+                  Color="c4", Icon="fa-file-contract" },
+            new { Label="Hóa đơn chưa TT",Val=(int)(ViewBag.TongHoaDonChuaTT??0),
+                  Sub="Chờ xác nhận: "+(int)(ViewBag.TongChoXacNhan??0),
+                  Color="c5", Icon="fa-money" },
+        })
+        {
+            <div class="col-xl-2 col-lg-4 col-md-6">
+                <div class="db-card @m.Color">
+                    <div class="db-label">@m.Label</div>
+                    <div class="db-value"
+                         style="color:@(m.Color=="c1"?"#4e73df":
+                                        m.Color=="c2"?"#1cc88a":
+                                        m.Color=="c3"?"#f6c23e":
+                                        m.Color=="c4"?"#e74a3b":"#36b9cc")">
+                        @m.Val.ToString("N0")
+                    </div>
+                    <div class="db-sub">@m.Sub</div>
+                    <i class="fa @m.Icon db-icon"></i>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="panel">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <div>
+                <div class="sec-title">Doanh thu theo thời gian</div>
+                <div class="sec-sub">
+                    Tổng tiền thuê hợp đồng đang hiệu lực
+                </div>
+            </div>
+            <div style="display:flex;gap:5px;">
+                <button class="view-btn active"
+                        onclick="setView('thang',this)">
+                    Tháng
+                </button>
+                <button class="view-btn"
+                        onclick="setView('quy',this)">
+                    Quý
+                </button>
+                <button class="view-btn"
+                        onclick="setView('nam',this)">
+                    Năm
+                </button>
+            </div>
+        </div>
+        <div class="chart-area">
+            <canvas id="chartAdmin"></canvas>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel">
+                <div class="sec-title">
+                    <i class="fa fa-building mr-2"
+                       style="color:#4e73df;"></i>Tòa Nhà Mới Nhất
+                </div>
+                <div class="sec-sub">5 tòa nhà đăng ký gần đây</div>
+                <table class="table nt-table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Tòa nhà</th>
+                            <th>Chủ trọ</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.DsToaNhaMoi != null)
+                        {
+                            foreach (var tn in
+                                (List<ToaNha>)ViewBag.DsToaNhaMoi)
+                            {
+                                string bc, bt;
+                                switch (tn.TrangThaiDuyet)
+                                {
+                                    case "DaDuyet":
+                                        bc = "#f0fff4"; bt = "Đã duyệt"; break;
+                                    case "ChoDuyet":
+                                        bc = "#fffbeb"; bt = "Chờ duyệt"; break;
+                                    case "TuChoi":
+                                        bc = "#fff5f5"; bt = "Từ chối"; break;
+                                    default:
+                                        bc = "#f7fafc"; bt = tn.TrangThaiDuyet;
+                                        break;
+                                }
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:600;">
+                                            @tn.TenToaNha
+                                        </div>
+                                        <div style="font-size:11px;
+                                                    color:#a0aec0;">
+                                            @tn.TinhThanh
+                                        </div>
+                                    </td>
+                                    <td style="font-size:13px;">
+                                        @(tn.NguoiDung?.HoTen ?? "—")
+                                    </td>
+                                    <td>
+                                        <span class="tt-badge"
+                                              style="background:@bc;">
+                                            @bt
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="panel">
+                <div class="sec-title">
+                    <i class="fa fa-clock-o mr-2"
+                       style="color:#e74a3b;"></i>Hợp Đồng Sắp Hết Hạn
+                </div>
+                <div class="sec-sub">Trong 30 ngày tới</div>
+                @if (ViewBag.DsHopDongSapHet != null)
+                {
+                    var ds = (List<HopDong>)ViewBag.DsHopDongSapHet;
+                    if (ds.Any())
+                    {
+                        <table class="table nt-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Phòng</th>
+                                    <th>Khách hàng</th>
+                                    <th>Ngày KT</th>
+                                    <th>Còn lại</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var hd in ds)
+                                {
+                                    int conLai = (hd.NgayKetThuc
+                                                  - DateTime.Today).Days;
+                                    <tr>
+                                        <td style="font-weight:600;">
+                                            @(hd.PhongTro?.SoPhong ?? "—")
+                                            <div style="font-size:11px;
+                                                        color:#a0aec0;">
+                                                @(hd.PhongTro?.ToaNha
+                                                    ?.TenToaNha ?? "")
+                                            </div>
+                                        </td>
+                                        <td style="font-size:13px;">
+                                            @(hd.NguoiDung1.HoTen ?? "—")
+                                        </td>
+                                        <td style="font-size:12px; color:#718096;">
+                                            @String.Format("{0:dd/MM/yyyy}", hd.NgayKetThuc)
+                                        </td>
+                                        <td>
+                                            <span class="tt-badge"
+                                                  style="background:@(conLai<=7
+                                                      ?"#fff5f5":"#fffbeb");
+                                                         color:@(conLai<=7
+                                                      ?"#c53030":"#92400e");">
+                                                @conLai ngày
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div style="text-align:center;padding:40px 0;
+                                    color:#a0aec0;">
+                            <i class="fa fa-check-circle fa-2x
+                               d-block mb-2"
+                               style="color:#1cc88a;"></i>
+                            Không có hợp đồng sắp hết hạn
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+var DATA = {
+    thang: {
+        labels:  [@Html.Raw(ViewBag.ThangLabels)],
+        revenue: [@Html.Raw(ViewBag.ThangRevenue)]
+    },
+    quy: {
+        labels:  [@Html.Raw(ViewBag.QuyLabels)],
+        revenue: [@Html.Raw(ViewBag.QuyRevenue)]
+    },
+    nam: {
+        labels:  [@Html.Raw(ViewBag.NamLabels)],
+        revenue: [@Html.Raw(ViewBag.NamRevenue)]
+    }
+};
+
+function fmtVND(v) {
+    if (v >= 1000000) return (v/1000000).toFixed(1) + 'M đ';
+    if (v >= 1000)    return (v/1000).toFixed(0) + 'K đ';
+    return v + ' đ';
+}
+
+var chart;
+function buildChart(view) {
+    var d   = DATA[view];
+    var ctx = document.getElementById('chartAdmin').getContext('2d');
+    if (chart) chart.destroy();
+    chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: d.labels,
+            datasets: [{
+                label: 'Doanh thu',
+                data: d.revenue,
+                backgroundColor: 'rgba(78,115,223,.7)',
+                borderColor: '#4e73df',
+                borderWidth: 0,
+                hoverBackgroundColor: '#4e73df'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                xAxes: [{
+                    gridLines: { display: false },
+                    ticks: { fontSize:12, fontColor:'#a0aec0' }
+                }],
+                yAxes: [{
+                    ticks: {
+                        maxTicksLimit: 5,
+                        fontSize:12, fontColor:'#a0aec0',
+                        callback: function(v){ return fmtVND(v); }
+                    },
+                    gridLines: {
+                        color:'#f0f4f8',
+                        drawBorder: false,
+                        borderDash:[4,4]
+                    }
+                }]
+            },
+            legend: { display: false },
+            tooltips: {
+                backgroundColor:'#1a202c',
+                bodyFontColor:'#fff',
+                titleFontColor:'#a0aec0',
+                cornerRadius: 8,
+                callbacks: {
+                    label: function(t){
+                        return 'Doanh thu: ' + fmtVND(t.yLabel);
+                    }
+                }
+            }
+        }
+    });
+}
+
+function setView(view, btn) {
+    document.querySelectorAll('.view-btn')
+            .forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    buildChart(view);
+}
+
+buildChart('thang');
+    </script>
+}

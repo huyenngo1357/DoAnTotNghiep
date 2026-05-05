@@ -1,0 +1,195 @@
+﻿@model HappyHouse.Models.PhongTro
+
+@{
+    ViewBag.Title = "Chi tiết phòng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold; color:black">Phòng trọ của tôi</h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","ChuTroPhongTro")">Danh sách phòng</a>
+}
+
+@{
+    string bc, bt;
+    switch (Model.TrangThaiPhong)
+    {
+        case "Trong": bc = "success"; bt = "Còn trống"; break;
+        case "DaThue": bc = "danger"; bt = "Đã thuê"; break;
+        case "BaoTri": bc = "warning"; bt = "Bảo trì"; break;
+        case "ChoDuyet": bc = "secondary"; bt = "Chờ duyệt"; break;
+        default: bc = "secondary"; bt = Model.TrangThaiPhong; break;
+    }
+}
+
+<div class="row">
+    <div class="col-md-8">
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header font-weight-bold text-primary">
+                <i class="fa fa-door-open mr-2"></i> Thông tin phòng
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-borderless mb-0">
+                            <tr>
+                                <td style="width:130px" class="font-weight-bold">Mã phòng:</td>
+                                <td><code>@Model.MaPhong</code></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Số phòng:</td>
+                                <td><strong>@Model.SoPhong</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Tòa nhà:</td>
+                                <td>@(Model.ToaNha != null ? Model.ToaNha.TenToaNha : "—")</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Tầng:</td>
+                                <td>Tầng @Model.Tang</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Diện tích:</td>
+                                <td>
+                                    @(Model.DienTich.HasValue
+                                        ? Model.DienTich.Value + " m²" : "—")
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Số người tối đa:</td>
+                                <td>@Model.SoNguoiToiDa người</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-borderless mb-0">
+                            <tr>
+                                <td style="width:120px" class="font-weight-bold">Giá thuê:</td>
+                                <td>
+                                    <strong class="text-primary">
+                                        @String.Format("{0:N0}", Model.GiaThue) đ/tháng
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Tiền cọc:</td>
+                                <td>
+                                    @(Model.TienCoc.HasValue
+                                        ? String.Format("{0:N0}", Model.TienCoc.Value) + " đ"
+                                        : "—")
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Trạng thái:</td>
+                                <td>
+                                    <span class="badge badge-pill badge-@bc px-2 py-1">
+                                        @bt
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Ngày tạo:</td>
+                                <td>
+                                    @(Model.NgayTao.HasValue
+                                        ? Model.NgayTao.Value.ToString("dd/MM/yyyy") : "—")
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.MoTa))
+                {
+                    <hr />
+                    <div>
+                        <label class="font-weight-bold">Mô tả:</label>
+                        <p class="mb-0">@Model.MoTa</p>
+                    </div>
+                }
+
+                @if (Model.TienIches != null && Model.TienIches.Any())
+                {
+                    <hr />
+                    <label class="font-weight-bold d-block mb-2">Tiện ích:</label>
+                    foreach (var ti in Model.TienIches)
+                    {
+                        <span class="badge badge-light border mr-1 mb-1 px-2 py-1">
+                            <i class="fas @ti.BieuTuong mr-1 text-primary"></i>
+                            @ti.TenTienIch
+                        </span>
+                    }
+                }
+            </div>
+        </div>
+
+        @if (Model.HinhAnhPhongs != null && Model.HinhAnhPhongs.Any(x => x.TrangThai))
+        {
+            <div class="card shadow-sm mb-4">
+                <div class="card-header font-weight-bold text-primary">
+                    <i class="fa fa-image mr-2"></i> Hình ảnh phòng
+                </div>
+                <div class="card-body d-flex flex-wrap">
+                    @foreach (var hinh in Model.HinhAnhPhongs.Where(x => x.TrangThai))
+                    {
+                        <div class="text-center mr-2 mb-2">
+                            <img src="~/Content/images/phongs/@hinh.TenFile"
+                                 style="width:120px;height:100px;object-fit:cover;
+                                        border-radius:6px;
+                                        border:2px solid @(hinh.LaDaiDien ? "#4e73df" : "#dee2e6");" />
+                            @if (hinh.LaDaiDien)
+                            {
+                                <div>
+                                    <span class="badge badge-primary" style="font-size:10px">
+                                        Đại diện
+                                    </span>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-header font-weight-bold text-primary">
+                <i class="fa fa-cogs mr-2"></i> Thao tác
+            </div>
+            <div class="card-body">
+                @if (Model.TrangThaiPhong != "DaThue")
+                {
+                    @Html.ActionLink("Sửa thông tin", "SuaThongTin",
+                        new { maPhong = Model.MaPhong },
+                        new { @class = "btn btn-warning btn-block mb-2" })
+
+                    using (Html.BeginForm("Xoa", "ChuTroPhongTro", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="maPhong" value="@Model.MaPhong" />
+                        <button type="submit" class="btn btn-danger btn-block mb-2"
+                                onclick="return confirm('Xóa phòng này?')">
+                            <i class="fa fa-trash mr-1"></i> Xóa phòng
+                        </button>
+                    }
+                }
+                else
+                {
+                    <div class="alert alert-info small">
+                        <i class="fa fa-info-circle mr-1"></i>
+                        Phòng đang có người thuê, không thể sửa hoặc xóa.
+                    </div>
+                }
+
+                <a href="@Url.Action("DanhSach")"
+                   class="btn btn-secondary btn-block">
+                    <i class="fa fa-arrow-left mr-1"></i> Trở lại
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

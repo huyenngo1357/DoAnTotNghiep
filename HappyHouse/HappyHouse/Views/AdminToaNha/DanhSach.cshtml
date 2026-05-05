@@ -1,0 +1,244 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<HappyHouse.Models.ToaNha>
+
+@{
+    ViewBag.Title = "Quản lý tòa nhà";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Quản lý tòa nhà</h2>
+}
+@section breadLink {
+    <a href="#">Danh sách tòa nhà</a>
+}
+
+@using (Html.BeginForm("DanhSach", "AdminToaNha", FormMethod.Post))
+{
+    <fieldset class="border p-3 shadow-sm mb-3">
+        <legend class="w-auto px-2" style="font-weight:bold;color:black">Tìm kiếm</legend>
+        <div class="row">
+            <label class="col-md-1 col-form-label" style="font-weight:bold;color:black">
+                Từ khóa:
+            </label>
+            <div class="col-md-3">
+                <input type="text" name="tuKhoa" value="@ViewBag.TuKhoa"
+                       class="form-control"
+                       placeholder="Tên tòa nhà, địa chỉ, chủ trọ..." />
+            </div>
+
+            <label class="col-md-1 col-form-label" style="font-weight:bold;color:black">
+                Trạng thái:
+            </label>
+            <div class="col-md-2">
+                @Html.DropDownList("trangThaiDuyet",
+                    (SelectList)ViewBag.DsTrangThai,
+                    new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-3 d-flex align-items-center">
+                <input type="submit" class="btn btn-primary"
+                       value="Tìm kiếm" style="margin-right:8px" />
+                <a href="@Url.Action("DanhSach","AdminToaNha")"
+                   class="btn btn-secondary">Làm mới</a>
+            </div>
+        </div>
+    </fieldset>
+}
+
+@if ((int)(ViewBag.SoChoduyet ?? 0) > 0)
+{
+    <div class="alert alert-warning alert-dismissible fade show">
+        <i class="fa fa-bell mr-2"></i>
+        Có <strong>@ViewBag.SoChoduyet</strong> tòa nhà đang chờ duyệt.
+        <a href="@Url.Action("DanhSach", new { trangThaiDuyet = "ChoDuyet" })"
+           class="alert-link ml-2">Xem ngay</a>
+        <button type="button" class="close" data-dismiss="alert">
+            <span>&times;</span>
+        </button>
+    </div>
+}
+
+<table class="table table-bordered table-hover" width="100%">
+    <thead class="thead-light">
+        <tr style="text-align:center">
+            <th style="width:70px">Ảnh</th>
+            <th>Tên tòa nhà</th>
+            <th>Chủ trọ</th>
+            <th>Địa chỉ</th>
+            <th style="width:110px">Tỉnh/Thành</th>
+            <th style="width:110px">Trạng thái</th>
+            <th style="width:95px">Ngày tạo</th>
+            <th style="width:220px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="8">
+                    <div style="text-align:center;padding:40px 20px;">
+                        <i class="fas fa-building"
+                           style="font-size:48px;color:#b0b8c9;
+                                  display:block;margin-bottom:12px;"></i>
+                        <p style="color:#9aa0ac;font-size:15px;margin:0;">
+                            Không tìm thấy tòa nhà nào.
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                var anh = item.HinhAnhToaNhas
+                              .FirstOrDefault(x => x.LaDaiDien && x.TrangThai)
+                          ?? item.HinhAnhToaNhas.FirstOrDefault(x => x.TrangThai);
+
+                string bc, bt;
+                switch (item.TrangThaiDuyet)
+                {
+                    case "ChoDuyet": bc = "warning"; bt = "Chờ duyệt"; break;
+                    case "DaDuyet": bc = "success"; bt = "Đã duyệt"; break;
+                    case "TuChoi": bc = "danger"; bt = "Từ chối"; break;
+                    case "TamNgung": bc = "secondary"; bt = "Tạm ngưng"; break;
+                    default: bc = "secondary"; bt = item.TrangThaiDuyet; break;
+                }
+
+                <tr style="vertical-align:middle">
+                    <td class="text-center">
+                        @if (anh != null)
+                        {
+                            <img src="~/Content/images/toanhas/@anh.TenFile"
+                                 style="width:55px;height:55px;
+                                        object-fit:cover;border-radius:4px;" />
+                        }
+                        else
+                        {
+                            <span class="text-muted">—</span>
+                        }
+                    </td>
+                    <td>
+                        <strong>@item.TenToaNha</strong>
+                        @if (!string.IsNullOrEmpty(item.LyDoTuChoi))
+                        {
+                            <br />
+                            <small class="text-danger">
+                                <i class="fa fa-exclamation-circle mr-1"></i>
+                                @item.LyDoTuChoi
+                            </small>
+                        }
+                    </td>
+                    <td>
+                        @if (item.NguoiDung != null)
+                        {
+                            @item.NguoiDung.HoTen
+                            <br />
+                            <small class="text-muted">@item.NguoiDung.SoDienThoai</small>
+                        }
+                    </td>
+                    <td>@item.DiaChi</td>
+                    <td class="text-center">@item.TinhThanh</td>
+                    <td class="text-center">
+                        <span class="badge badge-pill badge-@bc px-2 py-1">@bt</span>
+                    </td>
+                    <td class="text-center">
+                        @(item.NgayTao.HasValue
+                            ? item.NgayTao.Value.ToString("dd/MM/yyyy") : "—")
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink("Chi tiết", "ChiTiet",
+                            new { maToaNha = item.MaToaNha },
+                            new { @class = "btn btn-info btn-sm mb-1" })
+
+                        @if (item.TrangThaiDuyet == "ChoDuyet" ||
+                             item.TrangThaiDuyet == "TuChoi")
+                        {
+                            using (Html.BeginForm("Duyet", "AdminToaNha",
+                                FormMethod.Post, new { style = "display:inline" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="maToaNha"
+                                       value="@item.MaToaNha" />
+                                <button type="submit"
+                                        class="btn btn-success btn-sm mb-1"
+                                        onclick="return confirm('Duyệt tòa nhà này?')">
+                                    Duyệt
+                                </button>
+                            }
+                            @Html.ActionLink("Từ chối", "TuChoi",
+                                new { maToaNha = item.MaToaNha },
+                                new { @class = "btn btn-danger btn-sm mb-1" })
+                        }
+
+                        @if (item.TrangThaiDuyet == "DaDuyet")
+                        {
+                            @Html.ActionLink("Tạm ngưng", "TamNgung",
+                                new { maToaNha = item.MaToaNha },
+                                new { @class = "btn btn-warning btn-sm mb-1" })
+                        }
+
+                        @if (item.TrangThaiDuyet == "TamNgung")
+                        {
+                            using (Html.BeginForm("MoLai", "AdminToaNha",
+                                FormMethod.Post, new { style = "display:inline" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="maToaNha"
+                                       value="@item.MaToaNha" />
+                                <button type="submit"
+                                        class="btn btn-success btn-sm mb-1"
+                                        onclick="return confirm('Mở lại tòa nhà này?')">
+                                    Mở lại
+                                </button>
+                            }
+                        }
+                        @if (item.TrangThaiDuyet == "YeuCauXoa")
+                        {
+                            using (Html.BeginForm("XacNhanXoa", "AdminToaNha",
+                                FormMethod.Post, new { style = "display:inline" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="maToaNha" value="@item.MaToaNha" />
+                                <button type="submit" class="btn btn-danger btn-sm mb-1"
+                                        onclick="return confirm('Xác nhận xóa tòa nhà này?')">
+                                    Xóa
+                                </button>
+                            }
+
+                            using (Html.BeginForm("TuChoiXoa", "AdminToaNha",
+                                FormMethod.Post, new { style = "display:inline" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="maToaNha" value="@item.MaToaNha" />
+                                <button type="submit" class="btn btn-secondary btn-sm mb-1"
+                                        onclick="return confirm('Từ chối yêu cầu xóa?')">
+                                    Từ chối xóa
+                                </button>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@if (Model.PageCount > 1)
+{
+    <div class="d-flex justify-content-center mt-3">
+        @Html.PagedListPager(Model,
+            page => Url.Action("DanhSach", new
+            {
+                page,
+                tuKhoa = ViewBag.TuKhoa,
+                trangThaiDuyet = ViewBag.TrangThaiDuyet
+            }),
+            new PagedListRenderOptions
+            {
+                UlElementClasses = new[] { "pagination", "justify-content-center" },
+                LiElementClasses = new[] { "page-item" }
+            })
+    </div>
+}

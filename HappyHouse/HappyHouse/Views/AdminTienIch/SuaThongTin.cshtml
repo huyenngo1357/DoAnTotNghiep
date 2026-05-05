@@ -1,0 +1,214 @@
+﻿@model HappyHouse.Models.TienIch
+
+@{
+    ViewBag.Title = "Sửa tiện ích";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Quản lý tiện ích</h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","AdminTienIch")">Danh sách tiện ích</a>
+}
+
+@using (Html.BeginForm("SuaThongTin", "AdminTienIch", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="MaTienIch" value="@Model.MaTienIch" />
+
+    <div class="row">
+        <div class="col-md-8">
+
+            {{-- Thông tin sử dụng --}}
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="card border-primary shadow-sm">
+                        <div class="card-body text-center py-3">
+                            <div style="font-size:36px;color:#4e73df;">
+                                <i class="fas @Model.BieuTuong"></i>
+                            </div>
+                            <h5 class="font-weight-bold mt-2 mb-1">
+                                @Model.TenTienIch
+                            </h5>
+                            <small class="text-muted">
+                                <code>@Model.MaTienIch</code>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <p class="mb-2">
+                                <i class="fa fa-door-open mr-2 text-info"></i>
+                                Đang dùng ở
+                                <strong class="text-info">
+                                    @ViewBag.SoPhongDung phòng
+                                </strong>
+                            </p>
+                            <p class="mb-2">
+                                <i class="fa fa-cog mr-2 text-warning"></i>
+                                Đang dùng ở
+                                <strong class="text-warning">
+                                    @ViewBag.SoDichVuDung dịch vụ
+                                </strong>
+                            </p>
+                            <p class="mb-0">
+                                <i class="fa fa-calendar mr-2 text-muted"></i>
+                                <small class="text-muted">
+                                    Tạo lúc:
+                                    @(Model.NgayTao.HasValue
+                                        ? Model.NgayTao.Value
+                                            .ToString("dd/MM/yyyy HH:mm")
+                                        : "—")
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Tên tiện ích <span class="text-danger">*</span>
+                </label>
+                @Html.TextBoxFor(m => m.TenTienIch, new
+                {
+                    @class = "form-control",
+                    maxlength = "100",
+                    id = "inputTen"
+                })
+                @Html.ValidationMessageFor(m => m.TenTienIch, "",
+                    new { @class = "text-danger small" })
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Class icon Font Awesome <span class="text-danger">*</span>
+                </label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width:50px;
+                              font-size:20px;justify-content:center;">
+                            <i class="fas @Model.BieuTuong"
+                               id="previewIcon"></i>
+                        </span>
+                    </div>
+                    @Html.TextBoxFor(m => m.BieuTuong, new
+                    {
+                        @class = "form-control",
+                        maxlength = "100",
+                        id = "inputIcon",
+                        oninput = "capNhatIcon(this.value)"
+                    })
+                </div>
+                @Html.ValidationMessageFor(m => m.BieuTuong, "",
+                    new { @class = "text-danger small" })
+                <small class="text-muted">
+                    VD: <code>fa-wifi</code>, <code>fa-motorcycle</code>,
+                    <code>fa-trash</code>
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold d-block">Loại tiện ích</label>
+                @if ((int)ViewBag.SoDichVuDung > 0
+                  || (int)ViewBag.SoPhongDung > 0)
+                {
+                    <div class="alert alert-warning small py-2">
+                        <i class="fa fa-exclamation-triangle mr-1"></i>
+                        Tiện ích đang được sử dụng. Thay đổi loại có thể ảnh hưởng
+                        đến dữ liệu hiện có.
+                    </div>
+                }
+                <div class="d-flex">
+                    <div class="custom-control custom-radio mr-4">
+                        <input type="radio" id="rdHienThi"
+                               name="CoTinhTien" value="false"
+                               class="custom-control-input"
+                               @(!Model.CoTinhTien ? new MvcHtmlString("checked=\"checked\"") : null) />
+                        <label class="custom-control-label" for="rdHienThi">
+                            <i class="fa fa-eye mr-1 text-info"></i>
+                            <strong>Hiển thị</strong>
+                            <span class="text-muted small d-block">
+                                Không thu tiền
+                            </span>
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="rdTinhTien"
+                               name="CoTinhTien" value="true"
+                               class="custom-control-input"
+                               @(Model.CoTinhTien ? new MvcHtmlString("checked=\"checked\"") : null) />
+                        <label class="custom-control-label" for="rdTinhTien">
+                            <i class="fa fa-dollar-sign mr-1 text-warning"></i>
+                            <strong>Tính tiền</strong>
+                            <span class="text-muted small d-block">
+                                Có giá hàng tháng
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header font-weight-bold text-primary">
+                    <i class="fa fa-eye mr-2"></i> Xem trước
+                </div>
+                <div class="card-body text-center py-4">
+                    <div style="font-size:48px;margin-bottom:10px;">
+                        <i class="fas @Model.BieuTuong text-primary"
+                           id="bigPreviewIcon"></i>
+                    </div>
+                    <h6 id="previewName" class="font-weight-bold">
+                        @Model.TenTienIch
+                    </h6>
+                    <span id="previewBadge"
+                          class="badge @(Model.CoTinhTien
+                              ? "badge-warning" : "badge-info") px-3 py-1 mt-1">
+                        @(Model.CoTinhTien ? "Tính tiền" : "Hiển thị")
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-3">
+        @Html.ActionLink("Trở lại", "DanhSach", null,
+            new { @class = "btn btn-secondary px-4" })
+        <button type="submit" class="btn btn-warning px-4">
+            <i class="fa fa-save mr-1"></i> Lưu thay đổi
+        </button>
+    </div>
+}
+
+@section Scripts {
+    <script>
+    function capNhatIcon(val) {
+        var cls = val.trim() || 'fa-question';
+        $('#previewIcon').attr('class', 'fas ' + cls);
+        $('#bigPreviewIcon').attr('class', 'fas ' + cls + ' text-primary');
+    }
+
+    $('#inputTen').on('input', function () {
+        $('#previewName').text($(this).val() || 'Tên tiện ích');
+    });
+
+    $('[name=CoTinhTien]').on('change', function () {
+        var laTinhTien = $(this).val() === 'true';
+        if (laTinhTien) {
+            $('#previewBadge')
+                .removeClass('badge-info').addClass('badge-warning')
+                .html('<i class="fa fa-dollar-sign mr-1"></i>Tính tiền');
+        } else {
+            $('#previewBadge')
+                .removeClass('badge-warning').addClass('badge-info')
+                .html('<i class="fa fa-eye mr-1"></i>Hiển thị');
+        }
+    });
+    </script>
+}

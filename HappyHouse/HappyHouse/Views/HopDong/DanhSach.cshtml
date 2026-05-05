@@ -1,0 +1,350 @@
+﻿@using System.Collections.Generic
+@using HappyHouse.Models
+@model List<HappyHouse.Models.HopDong>
+
+@{
+    ViewBag.Title = "Hợp Đồng Của Tôi";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    ViewBag.ActiveMenu = "TaiKhoan";
+
+    var user = Session["UserOnline"] as NguoiDung;
+    var dsPhongDaDG = ViewBag.DsPhongDaDanhGia
+                        as List<string> ?? new List<string>();
+}
+
+<style>
+    .hd-card {
+        background: #fff;
+        border: 1px solid #f0f0f0;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 18px;
+        transition: box-shadow .2s;
+    }
+
+        .hd-card:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,.1);
+        }
+
+    .hd-badge {
+        display: inline-block;
+        padding: 3px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: .4px;
+        color: #fff;
+        margin-bottom: 8px;
+    }
+
+    .hd-btn {
+        display: block;
+        padding: 9px 0;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+        transition: opacity .2s;
+        margin-bottom: 6px;
+    }
+
+        .hd-btn:hover {
+            opacity: .85;
+            text-decoration: none;
+            color: inherit;
+        }
+
+    .sidebar-menu a {
+        display: block;
+        padding: 13px 20px;
+        font-size: 14px;
+        color: #555;
+        text-decoration: none;
+        border-bottom: 1px solid #f5f5f5;
+        transition: background .15s;
+    }
+
+        .sidebar-menu a:hover {
+            background: #fafafa;
+        }
+
+        .sidebar-menu a.active {
+            color: #2cbdb8;
+            font-weight: 700;
+            border-left: 3px solid #2cbdb8;
+            background: #f0fafa;
+        }
+</style>
+
+<section class="spad" style="background:#f7f8fa;">
+    <div class="container">
+        <div style="font-size:13px;color:#888;margin-bottom:20px;">
+            <a href="@Url.Action("Index","TrangChu")"
+               style="color:#2cbdb8;">Trang chủ</a>
+            <i class="fa fa-angle-right mx-2"></i>
+            <span style="color:#555;font-weight:600;">Hợp Đồng</span>
+        </div>
+
+        <div class="row">
+
+            @* ── Sidebar ── *@
+            <div class="col-lg-3">
+                <div style="background:#fff;border-radius:10px;
+                            box-shadow:0 2px 15px rgba(0,0,0,.07);
+                            overflow:hidden;margin-bottom:20px;">
+                    @if (user != null)
+                    {
+                        <div style="padding:20px;text-align:center;
+                                    background:#f0fafa;
+                                    border-bottom:1px solid #c8eeed;">
+                            @if (!string.IsNullOrEmpty(user.AnhDaiDien))
+                            {
+                                <img src="~/Content/images/avatars/@user.AnhDaiDien"
+                                     style="width:60px;height:60px;border-radius:50%;
+                                            object-fit:cover;border:2px solid #2cbdb8;
+                                            margin-bottom:10px;" />
+                            }
+                            else
+                            {
+                                <div style="width:60px;height:60px;border-radius:50%;
+                                            background:#2cbdb8;color:#fff;font-size:24px;
+                                            font-weight:700;line-height:60px;
+                                            margin:0 auto 10px;">
+                                    @user.HoTen.Substring(0, 1).ToUpper()
+                                </div>
+                            }
+                            <h6 style="font-weight:700;margin:0;">@user.HoTen</h6>
+                            <small style="color:#999;">@user.Email</small>
+                        </div>
+                    }
+                <div class="sidebar-menu">
+                    <a href="@Url.Action("ThongTin","TaiKhoan")">
+                        <i class="fa fa-user mr-2"></i>Thông Tin Cá Nhân
+                    </a>
+                    <a href="@Url.Action("DanhSach","HopDong")"
+                       class="active">
+                        <i class="fa fa-file-text-o mr-2"></i>Hợp Đồng
+                    </a>
+                    <a href="@Url.Action("DanhSach","ThanhToan")">
+                        <i class="fa fa-money mr-2"></i>Hóa Đơn
+                    </a>
+                    <a href="@Url.Action("DanhSach","DanhGia")">
+                        <i class="fa fa-star mr-2"></i>Đánh Giá
+                    </a>
+                    <a href="@Url.Action("DangXuat","TaiKhoan")"
+                       style="color:#e74a3b !important;">
+                        <i class="fa fa-sign-out mr-2"></i>Đăng Xuất
+                    </a>
+                </div>
+                </div>
+            </div>
+
+            @* ── Nội dung ── *@
+            <div class="col-lg-9">
+                <div style="background:#fff;border-radius:10px;
+                            box-shadow:0 2px 15px rgba(0,0,0,.07);
+                            padding:28px;">
+
+                    <h5 style="font-weight:700;color:#222;margin-bottom:24px;
+                               padding-bottom:12px;
+                               border-bottom:2px solid #2cbdb8;">
+                        <i class="fa fa-file-text-o mr-2"
+                           style="color:#2cbdb8;"></i>
+                        Danh Sách Hợp Đồng
+                        <span style="font-size:13px;color:#999;
+                                     font-weight:400;margin-left:8px;">
+                            (@Model.Count hợp đồng)
+                        </span>
+                    </h5>
+
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible
+                                    fade show">
+                            @TempData["Success"]
+                            <button type="button" class="close"
+                                    data-dismiss="alert">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                    }
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible
+                                    fade show">
+                            @TempData["Error"]
+                            <button type="button" class="close"
+                                    data-dismiss="alert">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                    }
+
+                    @if (!Model.Any())
+                    {
+                        <div style="text-align:center;padding:60px 0;">
+                            <i class="fa fa-file-o"
+                               style="font-size:60px;color:#ddd;
+                                      display:block;margin-bottom:20px;"></i>
+                            <h5 style="color:#999;">
+                                Bạn chưa có hợp đồng nào.
+                            </h5>
+                            <a href="@Url.Action("DanhSach","PhongTro")"
+                               style="display:inline-block;margin-top:15px;
+                                      padding:10px 25px;background:#2cbdb8;
+                                      color:#fff;border-radius:6px;
+                                      text-decoration:none;font-weight:600;">
+                                Tìm Phòng Trọ
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        foreach (var hd in Model)
+                        {
+                            string badgeColor, trangThaiText;
+                            switch (hd.TrangThaiHopDong)
+                            {
+                                case "DangHieuLuc":
+                                    badgeColor = "#2cbdb8";
+                                    trangThaiText = "Đang Hiệu Lực"; break;
+                                case "ChuaKy":
+                                    badgeColor = "#ffc107";
+                                    trangThaiText = "Chưa Ký"; break;
+                                case "DaHuy":
+                                    badgeColor = "#dc3545";
+                                    trangThaiText = "Đã Hủy"; break;
+                                case "DaKetThuc":
+                                    badgeColor = "#6c757d";
+                                    trangThaiText = "Đã Kết Thúc"; break;
+                                default:
+                                    badgeColor = "#6c757d";
+                                    trangThaiText = hd.TrangThaiHopDong ?? "—";
+                                    break;
+                            }
+
+                            var phong = hd.PhongTro;
+                            var dsAnh = phong != null
+                                ? phong.HinhAnhPhongs.ToList()
+                                : new List<HinhAnhPhong>();
+                            var anh = dsAnh.FirstOrDefault(
+                                             x => x.LaDaiDien && x.TrangThai)
+                                         ?? dsAnh.FirstOrDefault(
+                                             x => x.TrangThai);
+                            string anhUrl = anh != null
+                                ? Url.Content("~/Content/images/phongs/"
+                                              + anh.TenFile)
+                                : "/Content/Home/img/properties/property-1.jpg";
+
+                            bool ketThuc = hd.TrangThaiHopDong == "DaKetThuc";
+                            bool daDG = ketThuc && phong != null
+                                           && dsPhongDaDG.Contains(phong.MaPhong);
+
+                            <div class="hd-card">
+                                <div class="row align-items-center">
+
+                                    <div class="col-md-3">
+                                        <img src="@anhUrl" alt=""
+                                             style="width:100%;height:115px;
+                                                    object-fit:cover;
+                                                    border-radius:8px;" />
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <span class="hd-badge"
+                                              style="background:@badgeColor;">
+                                            @trangThaiText
+                                        </span>
+                                        <h6 style="font-weight:700;
+                                                   margin:4px 0 4px;">
+                                            @(phong != null
+                                                ? "Phòng " + phong.SoPhong
+                                                : "—")
+                                            @if (phong?.ToaNha != null)
+                                            {
+                                                <span style="font-weight:400;
+                                                             color:#888;
+                                                             font-size:13px;">
+                                                    — @phong.ToaNha.TenToaNha
+                                                </span>
+                                            }
+                                        </h6>
+                                        <p style="color:#888;font-size:13px;
+                                                  margin:0 0 3px;">
+                                            <i class="fa fa-map-marker mr-1"
+                                               style="color:#2cbdb8;"></i>
+                                            @(phong?.ToaNha != null
+                                                ? phong.ToaNha.DiaChi + ", "
+                                                  + phong.ToaNha.TinhThanh
+                                                : "—")
+                                        </p>
+                                        <p style="color:#888;font-size:13px;
+                                                  margin:0 0 3px;">
+                                            <i class="fa fa-calendar mr-1"
+                                               style="color:#2cbdb8;"></i>
+                                            @hd.NgayBatDau.ToString("dd/MM/yyyy")
+                                            →
+                                            @hd.NgayKetThuc.ToString("dd/MM/yyyy")
+                                        </p>
+                                        <p style="color:#2cbdb8;font-size:14px;
+                                                  font-weight:700;margin:0;">
+                                            <i class="fa fa-money mr-1"></i>
+                                            @String.Format("{0:N0}",
+                                                hd.GiaThueThang)đ/tháng
+                                        </p>
+                                        <p style="color:#bbb;font-size:11px;
+                                                  margin:4px 0 0;">
+                                            Mã HĐ: <code>@hd.MaHopDong</code>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <a class="hd-btn"
+                                           href="@Url.Action("ChiTiet","HopDong",
+                                                  new { maHopDong = hd.MaHopDong })"
+                                           style="background:#2cbdb8;color:#fff;">
+                                            <i class="fa fa-eye mr-1"></i>
+                                            Xem Chi Tiết
+                                        </a>
+
+                                        @if (ketThuc)
+                                        {
+                                            if (daDG)
+                                            {
+                                                <div style="text-align:center;
+                                                            font-size:12px;
+                                                            color:#2cbdb8;
+                                                            font-weight:600;
+                                                            padding:6px 0;">
+                                                    <i class="fa fa-check-circle mr-1"></i>
+                                                    Đã đánh giá
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <a class="hd-btn"
+                                                   href="@Url.Action("TaoDanhGia",
+                                                          "DanhGia",
+                                                          new { maHopDong =
+                                                                hd.MaHopDong })"
+                                                   style="background:#f0fafa;
+                                                          color:#2cbdb8;
+                                                          border:1px solid #c8eeed;">
+                                                    <i class="fa fa-star mr-1"></i>
+                                                    Đánh Giá Phòng
+                                                </a>
+                                            }
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

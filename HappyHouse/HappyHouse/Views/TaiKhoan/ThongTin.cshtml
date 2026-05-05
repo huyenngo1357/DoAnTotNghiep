@@ -1,0 +1,464 @@
+﻿@model HappyHouse.Models.NguoiDung
+
+@{
+    ViewBag.Title = "Thông Tin Tài Khoản";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    ViewBag.ActiveMenu = "TaiKhoan";
+}
+
+<style>
+    .tk-section {
+        background: #f7f8fa;
+        padding: 40px 0;
+    }
+
+    /* Card chung */
+    .tk-card {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0,0,0,.07);
+        padding: 28px;
+        margin-bottom: 22px;
+    }
+
+    .tk-card-title {
+        font-weight: 700;
+        color: #222;
+        font-size: 15px;
+        margin-bottom: 22px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #2cbdb8;
+    }
+
+        .tk-card-title i {
+            color: #2cbdb8;
+            margin-right: 8px;
+        }
+
+    /* Avatar card */
+    .tk-avatar-wrap {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0,0,0,.07);
+        padding: 28px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .tk-avatar-img {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #2cbdb8;
+    }
+
+    .tk-avatar-initials {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        background: #2cbdb8;
+        color: #fff;
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 110px;
+        margin: 0 auto;
+    }
+
+    .tk-avatar-btn {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 32px;
+        height: 32px;
+        background: #2cbdb8;
+        color: #fff;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        border: 2px solid #fff;
+    }
+
+    /* Sidebar menu */
+    .tk-menu {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0,0,0,.07);
+        overflow: hidden;
+    }
+
+        .tk-menu a {
+            display: block;
+            padding: 13px 20px;
+            color: #555;
+            text-decoration: none;
+            border-bottom: 1px solid #f5f5f5;
+            font-size: 14px;
+            transition: background .15s;
+        }
+
+            .tk-menu a:hover {
+                background: #f8fffe;
+                color: #2cbdb8;
+            }
+
+            .tk-menu a.active {
+                color: #2cbdb8;
+                font-weight: 700;
+                border-left: 3px solid #2cbdb8;
+                background: #f0fafa;
+            }
+
+            .tk-menu a.logout {
+                color: #e74a3b !important;
+            }
+
+                .tk-menu a.logout:hover {
+                    background: #fff5f5;
+                }
+
+    /* Nút lưu */
+    .tk-btn-save {
+        padding: 12px 35px;
+        background: #2cbdb8;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background .2s;
+    }
+
+        .tk-btn-save:hover {
+            background: #24a09b;
+        }
+
+    .tk-btn-cancel {
+        padding: 12px 30px;
+        border: 1px solid #ddd;
+        color: #555;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 14px;
+        margin-right: 10px;
+        display: inline-block;
+        transition: background .15s;
+    }
+
+        .tk-btn-cancel:hover {
+            background: #f5f5f5;
+            color: #555;
+        }
+</style>
+
+<section class="tk-section">
+    <div class="container">
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">
+                @TempData["Success"]
+                <button type="button" class="close" data-dismiss="alert">
+                    <span>&times;</span>
+                </button>
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show">
+                @TempData["Error"]
+                <button type="button" class="close" data-dismiss="alert">
+                    <span>&times;</span>
+                </button>
+            </div>
+        }
+
+        @using (Html.BeginForm("ThongTin", "TaiKhoan", FormMethod.Post,
+            new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+
+                @* ── Cột trái ── *@
+                <div class="col-lg-3">
+
+                    <div class="tk-avatar-wrap">
+                        <div style="position:relative;display:inline-block;
+                                    margin-bottom:14px;">
+                            @if (!string.IsNullOrEmpty(Model.AnhDaiDien))
+                            {
+                                <img id="previewAvatar"
+                                     class="tk-avatar-img"
+                                     src="~/Content/images/avatars/@Model.AnhDaiDien"
+                                     alt="@Model.HoTen" />
+                            }
+                            else
+                            {
+                                <div id="previewAvatar"
+                                     class="tk-avatar-initials">
+                                    @Model.HoTen.Substring(0, 1).ToUpper()
+                                </div>
+                            }
+                            <label for="inputAvatar" class="tk-avatar-btn">
+                                <i class="fa fa-camera"></i>
+                            </label>
+                            <input type="file" id="inputAvatar"
+                                   name="anhDaiDien" accept="image/*"
+                                   style="display:none;" />
+                        </div>
+                        <h5 style="font-weight:700;margin:0 0 4px;">
+                            @Model.HoTen
+                        </h5>
+                        <p style="color:#aaa;font-size:13px;margin:0;">
+                            @Model.Email
+                        </p>
+                    </div>
+
+                    <div class="tk-menu">
+                        <a href="@Url.Action("ThongTin","TaiKhoan")"
+                           class="active">
+                            <i class="fa fa-user mr-2"></i>Thông Tin Cá Nhân
+                        </a>
+                        <a href="@Url.Action("DanhSach","HopDong")">
+                            <i class="fa fa-file-text-o mr-2"></i>Hợp Đồng
+                        </a>
+                        <a href="@Url.Action("DanhSach","ThanhToan")">
+                            <i class="fa fa-money mr-2"></i>Hóa Đơn
+                        </a>
+                        <a href="@Url.Action("DanhSach","DanhGia")">
+                            <i class="fa fa-star mr-2"></i>Đánh Giá
+                        </a>
+                        <a href="@Url.Action("DangXuat","TaiKhoan")"
+                           class="logout">
+                            <i class="fa fa-sign-out mr-2"></i>Đăng Xuất
+                        </a>
+                    </div>
+
+                </div>
+
+                @* ── Cột phải ── *@
+                <div class="col-lg-9">
+
+                    <div class="tk-card">
+                        <div class="tk-card-title">
+                            <i class="fa fa-user"></i>Thông Tin Cá Nhân
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="font-weight-bold"
+                                           style="font-size:13px;">
+                                        Họ Tên
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(m => m.HoTen, new
+                                    {
+                                        @class = "form-control",
+                                        placeholder = "Nhập họ tên..."
+                                    })
+                                    @Html.ValidationMessageFor(m => m.HoTen,
+                                        "", new
+                                             {
+                                                 @class = "text-danger",
+                                                  style = "font-size:12px;"
+                                             })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="font-weight-bold"
+                                           style="font-size:13px;">Email</label>
+                                    <input type="text" class="form-control"
+                                           value="@Model.Email"
+                                           readonly
+                                           style="background:#f8f9fa;" />
+                                    <small class="text-muted">
+                                        Email không thể thay đổi
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="font-weight-bold"
+                                           style="font-size:13px;">
+                                        Số Điện Thoại
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(m => m.SoDienThoai, new
+                                    {
+                                        @class = "form-control",
+                                        placeholder = "Nhập số điện thoại..."
+                                    })
+                                    @Html.ValidationMessageFor(
+                                        m => m.SoDienThoai, "",
+                                        new
+                                             {
+                                                 @class = "text-danger",
+                                              style = "font-size:12px;"
+                                             })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="font-weight-bold"
+                                           style="font-size:13px;">
+                                        Ngày Sinh
+                                    </label>
+                                    @Html.TextBoxFor(m => m.NgaySinh, new
+                                    {
+                                        @class = "form-control",
+                                        type = "date"
+                                    })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" style="font-size:13px;">
+                                        Giới Tính
+                                    </label>
+
+                                    <div>
+                                        <!-- Dòng 1 -->
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" name="GioiTinh" value="1"
+                                                   class="form-check-input"
+                                                   @(Model.GioiTinh == 1 ? "checked" : "") />
+                                            <label class="form-check-label">Nam</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" name="GioiTinh" value="0"
+                                                   class="form-check-input"
+                                                   @(Model.GioiTinh == 0 ? "checked" : "") />
+                                            <label class="form-check-label">Nữ</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" name="GioiTinh" value="2"
+                                                   class="form-check-input"
+                                                   @(Model.GioiTinh == 2 ? "checked" : "") />
+                                            <label class="form-check-label">Khác</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="font-weight-bold"
+                                           style="font-size:13px;">
+                                        Địa Chỉ
+                                    </label>
+                                    @Html.TextBoxFor(m => m.DiaChi, new
+                                    {
+                                        @class = "form-control",
+                                        placeholder = "Nhập địa chỉ..."
+                                    })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tk-card">
+                        <div class="tk-card-title">
+                            <i class="fa fa-lock"></i>Đổi Mật Khẩu
+                            <small style="font-size:12px;color:#999;
+                                          font-weight:400;margin-left:8px;">
+                                (Để trống nếu không muốn đổi)
+                            </small>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="font-weight-bold"
+                                           style="font-size:13px;">
+                                        Mật Khẩu Hiện Tại
+                                    </label>
+                                    <input type="password" name="matKhauCu"
+                                           class="form-control"
+                                           placeholder="Nhập mật khẩu hiện tại..." />
+                                    @Html.ValidationMessage("MatKhauCu", "",
+                                        new
+                                             {
+                                                 @class = "text-danger",
+                                              style = "font-size:12px;"
+                                             })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="font-weight-bold"
+                                           style="font-size:13px;">
+                                        Mật Khẩu Mới
+                                    </label>
+                                    <input type="password" name="matKhauMoi"
+                                           class="form-control"
+                                           placeholder="Nhập mật khẩu mới..." />
+                                    @Html.ValidationMessage("MatKhauMoi", "",
+                                        new
+                                             {
+                                                 @class = "text-danger",
+                                              style = "font-size:12px;"
+                                             })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="font-weight-bold"
+                                           style="font-size:13px;">
+                                        Xác Nhận Mật Khẩu
+                                    </label>
+                                    <input type="password"
+                                           name="xacNhanMatKhau"
+                                           class="form-control"
+                                           placeholder="Nhập lại mật khẩu mới..." />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="text-align:right;">
+                        <a href="@Url.Action("Index","TrangChu")"
+                           class="tk-btn-cancel">
+                            Huỷ
+                        </a>
+                        <button type="submit" class="tk-btn-save">
+                            <i class="fa fa-save mr-2"></i>Lưu Thay Đổi
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        }
+
+    </div>
+</section>
+
+<script>
+    document.getElementById('inputAvatar')
+        .addEventListener('change', function () {
+            var file = this.files[0];
+            if (!file || !file.type.startsWith('image/')) return;
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var preview = document.getElementById('previewAvatar');
+                if (preview.tagName === 'IMG') {
+                    preview.src = e.target.result;
+                } else {
+                    var img = document.createElement('img');
+                    img.id = 'previewAvatar';
+                    img.className = 'tk-avatar-img';
+                    img.src = e.target.result;
+                    preview.parentNode.replaceChild(img, preview);
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+
+    setTimeout(function () {
+        $('.alert').fadeOut('slow', function () { $(this).remove(); });
+    }, 2000);
+</script>

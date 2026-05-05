@@ -1,0 +1,213 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<HappyHouse.Models.GiaDichVu>
+
+@{
+    ViewBag.Title = "Giá dịch vụ";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Giá dịch vụ</h2>
+}
+@section breadLink {
+    <a href="#">Danh sách giá dịch vụ</a>
+}
+
+@using (Html.BeginForm("DanhSach", "ChuTroGiaDichVu", FormMethod.Post))
+{
+    <fieldset class="border p-3 shadow-sm mb-3">
+        <legend class="w-auto px-2" style="font-weight:bold;color:black">
+            Tìm kiếm
+        </legend>
+        <div class="row">
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold;color:black">Tòa nhà:</label>
+            <div class="col-md-3">
+                @Html.DropDownList("maToaNha",
+                    (SelectList)ViewBag.DsToaNha,
+                    "--- Tất cả ---",
+                    new { @class = "form-control" })
+            </div>
+
+            <label class="col-md-2 col-form-label"
+                   style="font-weight:bold;color:black">Loại dịch vụ:</label>
+            <div class="col-md-3">
+                @Html.DropDownList("maTienIch",
+                    (SelectList)ViewBag.DsTienIchFilter,
+                    "--- Tất cả ---",
+                    new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-3 d-flex align-items-center">
+                <input type="submit" class="btn btn-primary"
+                       value="Tìm kiếm" style="margin-right:8px" />
+                <a href="@Url.Action("DanhSach","ChuTroGiaDichVu")"
+                   class="btn btn-secondary">Làm mới</a>
+            </div>
+        </div>
+    </fieldset>
+}
+
+<p style="text-align:right; margin:10px">
+    @Html.ActionLink("+ Thêm giá dịch vụ", "ThemMoi", null,
+        new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-bordered table-hover" width="100%">
+    <thead class="thead-light">
+        <tr style="text-align:center">
+            <th>Tòa nhà</th>
+            <th>Loại dịch vụ</th>
+            <th>Tên dịch vụ</th>
+            <th>Đơn vị</th>
+            <th>Đơn giá</th>
+            <th>Ngày áp dụng</th>
+            <th>Ngày kết thúc</th>
+            <th>Trạng thái</th>
+            <th style="width:170px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="9">
+                    <div style="text-align:center;padding:40px 20px;">
+                        <i class="fas fa-cog"
+                           style="font-size:48px;color:#b0b8c9;
+                                  display:block;margin-bottom:12px;"></i>
+                        <p style="color:#9aa0ac;font-size:15px;margin:0;">
+                            Chưa có giá dịch vụ nào.
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                bool dangApDung = item.TrangThai
+                               && item.NgayApDung <= System.DateTime.Today
+                               && (item.NgayKetThuc == null
+                                   || item.NgayKetThuc >= System.DateTime.Today);
+
+                <tr style="vertical-align:middle">
+                    <td>
+                        @(item.ToaNha != null ? item.ToaNha.TenToaNha : "—")
+                    </td>
+                    <td class="text-center">
+                        @if (item.TienIch != null)
+                        {
+                            <span class="badge badge-light border px-2 py-1">
+                                <i class="fas @item.TienIch.BieuTuong
+                                           mr-1 text-warning"></i>
+                                @item.TienIch.TenTienIch
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">—</span>
+                        }
+                    </td>
+                    <td>
+                        @(string.IsNullOrEmpty(item.TenDichVu)
+                            ? "—" : item.TenDichVu)
+                    </td>
+                    <td class="text-center">@item.DonVi</td>
+                    <td class="text-right">
+                        <strong>@String.Format("{0:N0}", item.DonGia)</strong>
+                        <small class="text-muted">đ/@item.DonVi</small>
+                    </td>
+                    <td class="text-center">
+                        @item.NgayApDung.ToString("dd/MM/yyyy")
+                    </td>
+                    <td class="text-center">
+                        @if (item.NgayKetThuc.HasValue)
+                        {
+                            @item.NgayKetThuc.Value.ToString("dd/MM/yyyy")
+                        }
+                        else
+                        {
+                            <span class="text-muted small">Không giới hạn</span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        @if (dangApDung)
+                        {
+                            <span class="badge badge-success px-2 py-1">
+                                Đang áp dụng
+                            </span>
+                        }
+                        else if (!item.TrangThai)
+                        {
+                            <span class="badge badge-secondary px-2 py-1">
+                                Đã tắt
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-warning px-2 py-1">
+                                Chưa áp dụng
+                            </span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink("Sửa", "SuaThongTin",
+                            new { maGiaDichVu = item.MaGiaDichVu },
+                            new { @class = "btn btn-success btn-sm mb-1" })
+
+                        @using (Html.BeginForm("DoiTrangThai",
+                            "ChuTroGiaDichVu", FormMethod.Post,
+                            new { style = "display:inline" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="maGiaDichVu"
+                                   value="@item.MaGiaDichVu" />
+                            <button type="submit"
+                                    class="btn btn-@(item.TrangThai ? "warning" : "success") btn-sm mb-1"
+                                    onclick="return confirm('@(item.TrangThai ? "Tắt" : "Bật") dịch vụ này?')">
+                                @(item.TrangThai ? "Tắt" : "Bật")
+                            </button>
+                        }
+
+                        @if (!dangApDung)
+                        {
+                            using (Html.BeginForm("Xoa",
+                                "ChuTroGiaDichVu", FormMethod.Post,
+                                new { style = "display:inline" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="maGiaDichVu"
+                                       value="@item.MaGiaDichVu" />
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm mb-1"
+                                        onclick="return confirm('Xóa dịch vụ này?')">
+                                    Xóa
+                                </button>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@if (Model.PageCount > 1)
+{
+    <div class="d-flex justify-content-center mt-3">
+        @Html.PagedListPager(Model,
+            page => Url.Action("DanhSach", new
+            {
+                page,
+                maToaNha = ViewBag.MaToaNha,
+                maTienIch = ViewBag.MaTienIch
+            }),
+            new PagedListRenderOptions
+            {
+                UlElementClasses = new[] { "pagination", "justify-content-center" },
+                LiElementClasses = new[] { "page-item" }
+            })
+    </div>
+}

@@ -1,0 +1,100 @@
+﻿@model HappyHouse.Models.ToaNha
+
+@{
+    ViewBag.Title = "Từ chối tòa nhà";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Quản lý tòa nhà</h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","AdminToaNha")">Danh sách tòa nhà</a>
+}
+
+<div style="max-width:650px;margin:auto">
+    <div class="card shadow-sm mb-3">
+        <div class="card-header font-weight-bold text-primary">
+            <i class="fa fa-building mr-2"></i>Thông tin tòa nhà
+        </div>
+        <div class="card-body">
+            <table class="table table-borderless table-sm mb-0">
+                <tr>
+                    <td style="width:130px" class="font-weight-bold">
+                        Tên tòa nhà:
+                    </td>
+                    <td><strong>@Model.TenToaNha</strong></td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Địa chỉ:</td>
+                    <td>@Model.DiaChi — @Model.TinhThanh</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Chủ trọ:</td>
+                    <td>
+                        @if (Model.NguoiDung != null)
+                        {
+                            <strong>@Model.NguoiDung.HoTen</strong>
+                            <span class="text-muted ml-2">
+                                @Model.NguoiDung.SoDienThoai
+                            </span>
+                        }
+                        else
+                        {
+                            <span>—</span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Ngày tạo:</td>
+                    <td>
+                        @(Model.NgayTao.HasValue
+                            ? Model.NgayTao.Value.ToString("dd/MM/yyyy HH:mm")
+                            : "—")
+                    </td>
+                </tr>
+                @if (!string.IsNullOrEmpty(Model.MoTa))
+                {
+                    <tr>
+                        <td class="font-weight-bold">Mô tả:</td>
+                        <td>@Model.MoTa</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+    <div class="alert alert-danger">
+        <i class="fa fa-exclamation-triangle mr-2"></i>
+        Tòa nhà sẽ bị từ chối. Chủ trọ sẽ nhận thông báo và có thể
+        chỉnh sửa rồi gửi lại.
+    </div>
+
+    @using (Html.BeginForm("TuChoi", "AdminToaNha", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="maToaNha" value="@Model.MaToaNha" />
+
+        <div class="form-group">
+            <label class="font-weight-bold">
+                Lý do từ chối <span class="text-danger">*</span>
+            </label>
+            <textarea name="lyDoTuChoi" class="form-control" rows="4"
+                      placeholder="Nhập lý do cụ thể — chủ trọ sẽ nhận được thông báo này..."
+                      required></textarea>
+            <small class="text-muted">
+                Hãy mô tả rõ ràng để chủ trọ biết cần chỉnh sửa gì.
+            </small>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="@Url.Action("ChiTiet", new { maToaNha = Model.MaToaNha })"
+               class="btn btn-secondary px-4">
+                <i class="fa fa-arrow-left mr-1"></i> Quay lại
+            </a>
+            <button type="submit" class="btn btn-danger px-4">
+                <i class="fa fa-times mr-1"></i> Xác nhận từ chối
+            </button>
+        </div>
+    }
+</div>

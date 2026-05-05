@@ -1,0 +1,226 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<HappyHouse.Models.TinTuc>
+
+@{
+    ViewBag.Title = "Quản lý tin tức";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold; color:black">Quản lý tin tức</h2>
+}
+@section breadLink {
+    <a href="#">Danh sách tin tức</a>
+}
+
+
+@using (Html.BeginForm("DanhSach", "AdminTinTuc", FormMethod.Post))
+{
+    <fieldset class="border p-3 shadow-sm mb-3">
+        <legend class="w-auto px-2" style="font-weight:bold; color:black">
+            Tìm kiếm
+        </legend>
+        <div class="row">
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold; color:black">Từ khóa:</label>
+            <div class="col-md-2">
+                <input type="text" name="tuKhoa" value="@ViewBag.TuKhoa"
+                       class="form-control" placeholder="Tiêu đề, tóm tắt..." />
+            </div>
+
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold; color:black">Chủ đề:</label>
+            <div class="col-md-2">
+                @Html.DropDownList("maChuDe",
+                    (SelectList)ViewBag.DsChuDe,
+                    "--- Tất cả ---",
+                    new { @class = "form-control" })
+            </div>
+
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold; color:black">Trạng thái:</label>
+            <div class="col-md-2">
+                @Html.DropDownList("trangThaiDang",
+                    (SelectList)ViewBag.DsTrangThai,
+                    new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-2 d-flex align-items-center">
+                <input type="submit" class="btn btn-primary"
+                       value="Tìm kiếm" style="margin-right:8px" />
+                <a href="@Url.Action("DanhSach","AdminTinTuc")"
+                   class="btn btn-secondary">Làm mới</a>
+            </div>
+        </div>
+    </fieldset>
+}
+
+<p style="text-align:right; margin:10px">
+    @Html.ActionLink("+ Thêm tin tức", "ThemMoi", null,
+        new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-bordered table-striped" width="100%">
+    <thead>
+        <tr style="text-align:center; color:black">
+            <th>Ảnh</th>
+            <th>Tiêu đề</th>
+            <th>Chủ đề</th>
+            <th>Lượt xem</th>
+            <th>Trạng thái</th>
+            <th>Ngày đăng</th>
+            <th style="width:180px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="7">
+                    <div style="text-align:center; padding:40px 20px;">
+                        <i class="fas fa-newspaper"
+                           style="font-size:48px; color:#b0b8c9;
+                                  display:block; margin-bottom:12px;"></i>
+                        <p style="color:#9aa0ac; font-size:15px; margin:0;">
+                            Không tìm thấy tin tức nào
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                string badgeClass, badgeText;
+                switch (item.TrangThaiDang)
+                {
+                    case "ChuaDang": badgeClass = "secondary"; badgeText = "Chưa đăng"; break;
+                    case "DaDang": badgeClass = "success"; badgeText = "Đã đăng"; break;
+                    case "TamAn": badgeClass = "warning"; badgeText = "Tạm ẩn"; break;
+                    default: badgeClass = "secondary"; badgeText = item.TrangThaiDang; break;
+                }
+
+                <tr style="vertical-align:middle">
+                    <td style="text-align:center; width:80px">
+                        @if (!string.IsNullOrEmpty(item.AnhDaiDien))
+                        {
+                            <img src="~/Content/images/tintuc/@item.AnhDaiDien"
+                                 style="width:60px; height:50px;
+                                        object-fit:cover; border-radius:4px;" />
+                        }
+                        else
+                        {
+                            <span class="text-muted">—</span>
+                        }
+                    </td>
+                    <td>
+                        <strong>@item.TieuDe</strong>
+                        @if (!string.IsNullOrEmpty(item.TomTat))
+                        {
+                            <br />
+                            <small class="text-muted">
+                                @(item.TomTat.Length > 80
+                                    ? item.TomTat.Substring(0, 80) + "..."
+                                    : item.TomTat)
+                            </small>
+                        }
+                    </td>
+                    <td style="text-align:center">
+                        @(item.ChuDeTinTuc != null
+                            ? item.ChuDeTinTuc.TenChuDe : "—")
+                    </td>
+                    <td style="text-align:center">
+                        <i class="fa fa-eye mr-1"></i>@item.LuotXem
+                    </td>
+                    <td style="text-align:center">
+                        <span class="badge badge-pill badge-@badgeClass px-3 py-2">
+                            @badgeText
+                        </span>
+                    </td>
+                    <td style="text-align:center">
+                        @(item.NgayDang.HasValue
+                            ? item.NgayDang.Value.ToString("dd/MM/yyyy")
+                            : "—")
+                    </td>
+                    <td style="text-align:center">
+                        @Html.ActionLink("Sửa", "SuaThongTin",
+                            new { maTinTuc = item.MaTinTuc },
+                            new { @class = "btn btn-success btn-sm mb-1" })
+
+                        @if (item.TrangThaiDang == "ChuaDang" ||
+                             item.TrangThaiDang == "TamAn")
+                        {
+                            using (Html.BeginForm("DangBai", "AdminTinTuc",
+                                FormMethod.Post, new { style = "display:inline" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="maTinTuc"
+                                       value="@item.MaTinTuc" />
+                                <button type="submit"
+                                        class="btn btn-primary btn-sm mb-1"
+                                        onclick="return confirm('Đăng bài này?')">
+                                    Đăng
+                                </button>
+                            }
+                        }
+
+                        @if (item.TrangThaiDang == "DaDang")
+                        {
+                            using (Html.BeginForm("TamAn", "AdminTinTuc",
+                                FormMethod.Post, new { style = "display:inline" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="maTinTuc"
+                                       value="@item.MaTinTuc" />
+                                <button type="submit"
+                                        class="btn btn-warning btn-sm mb-1"
+                                        onclick="return confirm('Tạm ẩn bài này?')">
+                                    Tạm ẩn
+                                </button>
+                            }
+                        }
+
+                        @using (Html.BeginForm("Xoa", "AdminTinTuc",
+                            FormMethod.Post, new { style = "display:inline" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="maTinTuc"
+                                   value="@item.MaTinTuc" />
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm mb-1"
+                                    onclick="return confirm('Xóa tin tức này?')">
+                                Xóa
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@if (Model.PageCount > 1)
+{
+    <div class="d-flex justify-content-center mt-3">
+        @Html.PagedListPager(Model,
+    page => Url.Action("DanhSach", new
+    {
+        page,
+        tuKhoa = ViewBag.TuKhoa,
+        maChuDe = ViewBag.MaChuDe,
+        trangThaiDang = ViewBag.TrangThaiDang
+    }),
+    new PagedListRenderOptions
+    {
+        UlElementClasses = new[] { "pagination", "justify-content-center" },
+        LiElementClasses = new[] { "page-item" }
+    })
+    </div>
+}
+
+<script>
+    setTimeout(function () {
+        $('.alert').fadeOut('slow', function () { $(this).remove(); });
+    }, 1500);
+</script>

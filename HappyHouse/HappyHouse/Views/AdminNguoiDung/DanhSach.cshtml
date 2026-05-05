@@ -1,0 +1,200 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<HappyHouse.Models.NguoiDung>
+
+@{
+    ViewBag.Title = "Quản lý người dùng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold;color:black">Quản lý người dùng</h2>
+}
+@section breadLink {
+    <a href="#">Danh sách người dùng</a>
+}
+
+@using (Html.BeginForm("DanhSach", "AdminNguoiDung", FormMethod.Post))
+{
+    <fieldset class="border p-3 shadow-sm mb-3">
+        <legend class="w-auto px-2"
+                style="font-weight:bold;color:black">Tìm kiếm</legend>
+        <div class="row">
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold;color:black">Từ khóa:</label>
+            <div class="col-md-3">
+                <input type="text" name="tuKhoa" value="@ViewBag.TuKhoa"
+                       class="form-control"
+                       placeholder="Tên, email, số điện thoại..." />
+            </div>
+
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold;color:black">Vai trò:</label>
+            <div class="col-md-2">
+                @Html.DropDownList("maVaiTro",
+                    (SelectList)ViewBag.DsVaiTro,
+                    "--- Tất cả ---",
+                    new { @class = "form-control" })
+            </div>
+
+            <label class="col-md-1 col-form-label"
+                   style="font-weight:bold;color:black">Trạng thái:</label>
+            <div class="col-md-2">
+                @Html.DropDownList("trangThai",
+                    (SelectList)ViewBag.DsTrangThai,
+                    new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-2 d-flex align-items-center">
+                <input type="submit" class="btn btn-primary"
+                       value="Tìm kiếm" style="margin-right:8px" />
+                <a href="@Url.Action("DanhSach","AdminNguoiDung")"
+                   class="btn btn-secondary">Làm mới</a>
+            </div>
+        </div>
+    </fieldset>
+}
+
+<p style="text-align:right;margin:10px">
+    @Html.ActionLink("+ Thêm người dùng", "ThemMoi", null,
+        new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-bordered table-hover" width="100%">
+    <thead class="thead-light">
+        <tr style="text-align:center">
+            <th style="width:70px">Ảnh</th>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Số điện thoại</th>
+            <th style="width:120px">Vai trò</th>
+            <th style="width:110px">Trạng thái</th>
+            <th style="width:100px">Ngày tạo</th>
+            <th style="width:150px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="8">
+                    <div style="text-align:center;padding:40px 20px">
+                        <i class="fas fa-users"
+                           style="font-size:48px;color:#b0b8c9;
+                                  display:block;margin-bottom:12px"></i>
+                        <p style="color:#9aa0ac;font-size:15px;margin:0">
+                            Không tìm thấy người dùng nào.
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                string roleClass = "secondary";
+                string roleName = item.VaiTro?.TenVaiTro ?? item.MaVaiTro;
+                switch (item.MaVaiTro)
+                {
+                    case "CHUTHAU": roleClass = "danger"; break;
+                    case "CHUTRO": roleClass = "primary"; break;
+                    case "KHACHHANG": roleClass = "info"; break;
+                }
+
+                <tr style="vertical-align:middle">
+                    <td class="text-center">
+                        @if (!string.IsNullOrEmpty(item.AnhDaiDien))
+                        {
+                            <img src="~/Content/images/avatars/@item.AnhDaiDien"
+                                 style="width:45px;height:45px;object-fit:cover;
+                                        border-radius:50%;
+                                        border:2px solid #4e73df;" />
+                        }
+                        else
+                        {
+                            <div style="width:45px;height:45px;
+                                        border-radius:50%;background:#4e73df;
+                                        color:#fff;display:inline-flex;
+                                        align-items:center;justify-content:center;
+                                        font-weight:bold;font-size:16px;">
+                                @item.HoTen.Substring(0, 1).ToUpper()
+                            </div>
+                        }
+                    </td>
+                    <td><strong>@item.HoTen</strong></td>
+                    <td>@item.Email</td>
+                    <td>@item.SoDienThoai</td>
+                    <td class="text-center">
+                        <span class="badge badge-pill badge-@roleClass
+                                     px-2 py-1">
+                            @roleName
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        @if (item.TrangThai)
+                        {
+                            <span class="badge badge-pill badge-success
+                                         px-2 py-1">Hoạt động</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-pill badge-danger
+                                         px-2 py-1">Đã khóa</span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        <small>
+                            @(item.NgayTao.HasValue
+                                ? item.NgayTao.Value.ToString("dd/MM/yyyy")
+                                : "—")
+                        </small>
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink("Sửa / Chi tiết", "SuaThongTin",
+                            new { maNguoiDung = item.MaNguoiDung },
+                            new { @class = "btn btn-success btn-sm mb-1" })
+
+                        @using (Html.BeginForm("DoiTrangThai",
+                            "AdminNguoiDung", FormMethod.Post,
+                            new { style = "display:inline" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="maNguoiDung"
+                                   value="@item.MaNguoiDung" />
+                            <button type="submit"
+                                    class="btn btn-sm mb-1
+                                           @(item.TrangThai
+                                               ? "btn-warning"
+                                               : "btn-secondary")"
+                                    onclick="return confirm('@(item.TrangThai
+                                        ? "Khóa tài khoản này?"
+                                        : "Mở khóa tài khoản này?")')">
+                                @(item.TrangThai ? "Khóa" : "Mở khóa")
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@if (Model.PageCount > 1)
+{
+    <div class="d-flex justify-content-center mt-3">
+        @Html.PagedListPager(Model,
+            page => Url.Action("DanhSach", new
+            {
+                page,
+                tuKhoa = ViewBag.TuKhoa,
+                maVaiTro = ViewBag.MaVaiTro,
+                trangThai = ViewBag.TrangThai
+            }),
+            new PagedListRenderOptions
+            {
+                UlElementClasses = new[] { "pagination",
+                                           "justify-content-center" },
+                LiElementClasses = new[] { "page-item" }
+            })
+    </div>
+}

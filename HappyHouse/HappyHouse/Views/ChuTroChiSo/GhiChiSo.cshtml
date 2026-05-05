@@ -1,0 +1,296 @@
+﻿@{
+    ViewBag.Title = "Ghi chỉ số điện nước";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section breadTitle {
+    <h2 style="font-weight:bold; color:black">Chỉ số điện nước</h2>
+}
+@section breadLink {
+    <a href="@Url.Action("DanhSach","ChuTroChiSo")">Danh sách chỉ số</a>
+}
+
+@using (Html.BeginForm("GhiChiSo", "ChuTroChiSo", FormMethod.Post,
+    new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row mb-3">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Hợp đồng (phòng — tòa nhà) <span class="text-danger">*</span>
+                </label>
+                @Html.DropDownList("maHopDong",
+                    (SelectList)ViewBag.DsHopDong,
+                    "--- Chọn hợp đồng ---",
+                    new { @class = "form-control", id = "selHopDong" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Tháng ghi <span class="text-danger">*</span>
+                </label>
+                <input type="month" name="thangGhi" id="thangGhi"
+                       class="form-control"
+                       value="@ViewBag.ThangGhi" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="card border-warning shadow-sm mb-4">
+                <div class="card-header bg-warning text-white font-weight-bold">
+                    <i class="fa fa-bolt mr-2"></i> Chỉ số ĐIỆN
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="font-weight-bold">Chỉ số đầu</label>
+                                <input type="number" name="chiSoDauDien"
+                                       id="chiSoDauDien" class="form-control"
+                                       min="0" step="1" value="0"
+                                       placeholder="VD: 100" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="font-weight-bold">
+                                    Chỉ số cuối <span class="text-danger">*</span>
+                                </label>
+                                <input type="number" name="chiSoCuoiDien"
+                                       id="chiSoCuoiDien" class="form-control"
+                                       min="0" step="1" value="0"
+                                       placeholder="VD: 145" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="font-weight-bold">
+                                    Đơn giá (đ/kWh) <span class="text-danger">*</span>
+                                </label>
+                                <input type="number" name="donGiaDien"
+                                       id="donGiaDien" class="form-control"
+                                       min="0" step="100" value="0"
+                                       placeholder="VD: 3500" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="font-weight-bold">Thành tiền</label>
+                                <div class="form-control bg-light font-weight-bold
+                                            text-success" id="thanhTienDien">
+                                    0 đ
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-0">
+                        <label class="font-weight-bold">
+                            Ảnh đồng hồ điện
+                            <span class="text-muted font-weight-normal">
+                                (không bắt buộc)
+                            </span>
+                        </label>
+                        <input type="file" name="anhDien" id="anhDien"
+                               class="form-control-file" accept="image/*"
+                               onchange="previewAnh(this,'prevDien')" />
+                        <img id="prevDien" src="#" alt=""
+                             style="display:none;width:100%;max-height:120px;
+                                    object-fit:cover;border-radius:6px;
+                                    margin-top:8px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <div class="card border-info shadow-sm mb-4">
+                <div class="card-header bg-info text-white font-weight-bold">
+                    <i class="fa fa-tint mr-2"></i> Chỉ số NƯỚC
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="font-weight-bold">Chỉ số đầu</label>
+                                <input type="number" name="chiSoDauNuoc"
+                                       id="chiSoDauNuoc" class="form-control"
+                                       min="0" step="1" value="0"
+                                       placeholder="VD: 10" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="font-weight-bold">
+                                    Chỉ số cuối <span class="text-danger">*</span>
+                                </label>
+                                <input type="number" name="chiSoCuoiNuoc"
+                                       id="chiSoCuoiNuoc" class="form-control"
+                                       min="0" step="1" value="0"
+                                       placeholder="VD: 13" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="font-weight-bold">
+                                    Đơn giá (đ/m³) <span class="text-danger">*</span>
+                                </label>
+                                <input type="number" name="donGiaNuoc"
+                                       id="donGiaNuoc" class="form-control"
+                                       min="0" step="100" value="0"
+                                       placeholder="VD: 15000" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="font-weight-bold">Thành tiền</label>
+                                <div class="form-control bg-light font-weight-bold
+                                            text-success" id="thanhTienNuoc">
+                                    0 đ
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-0">
+                        <label class="font-weight-bold">
+                            Ảnh đồng hồ nước
+                            <span class="text-muted font-weight-normal">
+                                (không bắt buộc)
+                            </span>
+                        </label>
+                        <input type="file" name="anhNuoc" id="anhNuoc"
+                               class="form-control-file" accept="image/*"
+                               onchange="previewAnh(this,'prevNuoc')" />
+                        <img id="prevNuoc" src="#" alt=""
+                             style="display:none;width:100%;max-height:120px;
+                                    object-fit:cover;border-radius:6px;
+                                    margin-top:8px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card border-success shadow-sm mb-4">
+        <div class="card-header bg-success text-white font-weight-bold">
+            <i class="fa fa-calculator mr-2"></i> Tổng kết
+        </div>
+        <div class="card-body">
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <p class="mb-1 text-muted">Tiêu thụ điện</p>
+                    <h5 id="tieuThuDien" class="text-warning font-weight-bold">
+                        0 kWh
+                    </h5>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-1 text-muted">Tiêu thụ nước</p>
+                    <h5 id="tieuThuNuoc" class="text-info font-weight-bold">
+                        0 m³
+                    </h5>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-1 text-muted">Tổng tiền điện + nước</p>
+                    <h4 id="tongTien" class="text-success font-weight-bold">
+                        0 đ
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        @Html.ActionLink("Trở lại", "DanhSach", null,
+            new { @class = "btn btn-secondary px-4" })
+        <button type="submit" class="btn btn-primary px-4">
+            <i class="fa fa-save mr-1"></i> Lưu chỉ số
+        </button>
+    </div>
+}
+
+@section Scripts {
+    <script>
+    // ── Tự động điền khi chọn hợp đồng ──────────────────────────────
+    $('#selHopDong').on('change', function () {
+        var maHopDong = $(this).val();
+        if (!maHopDong) return;
+
+        $.getJSON('@Url.Action("LayThongTinGhiChiSo","ChuTroChiSo")',
+            { maHopDong: maHopDong },
+            function (data) {
+                if (!data.success) return;
+
+                $('#chiSoDauDien').val(data.chiSoCuoiDien);
+                $('#donGiaDien').val(data.donGiaDien);
+                $('#chiSoDauNuoc').val(data.chiSoCuoiNuoc);
+                $('#donGiaNuoc').val(data.donGiaNuoc);
+
+                tinhToan();
+            });
+    });
+
+    // ── Tính toán real-time ──────────────────────────────────────────
+    function formatTien(so) {
+        return so.toLocaleString('vi-VN') + ' đ';
+    }
+
+    function tinhToan() {
+        var dauDien  = parseFloat($('#chiSoDauDien').val())  || 0;
+        var cuoiDien = parseFloat($('#chiSoCuoiDien').val()) || 0;
+        var giaDien  = parseFloat($('#donGiaDien').val())    || 0;
+
+        var dauNuoc  = parseFloat($('#chiSoDauNuoc').val())  || 0;
+        var cuoiNuoc = parseFloat($('#chiSoCuoiNuoc').val()) || 0;
+        var giaNuoc  = parseFloat($('#donGiaNuoc').val())    || 0;
+
+        var tieuThuDien = Math.max(0, cuoiDien - dauDien);
+        var tieuThuNuoc = Math.max(0, cuoiNuoc - dauNuoc);
+
+        var ttDien = tieuThuDien * giaDien;
+        var ttNuoc = tieuThuNuoc * giaNuoc;
+        var tong   = ttDien + ttNuoc;
+
+        $('#tieuThuDien').text(tieuThuDien.toLocaleString('vi-VN') + ' kWh');
+        $('#tieuThuNuoc').text(tieuThuNuoc.toLocaleString('vi-VN') + ' m³');
+        $('#thanhTienDien').text(formatTien(ttDien));
+        $('#thanhTienNuoc').text(formatTien(ttNuoc));
+        $('#tongTien').text(formatTien(tong));
+    }
+
+    $('#chiSoDauDien, #chiSoCuoiDien, #donGiaDien,\
+       #chiSoDauNuoc, #chiSoCuoiNuoc, #donGiaNuoc')
+        .on('input', tinhToan);
+
+    // ── Preview ảnh
+    function previewAnh(input, previewId) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#' + previewId)
+                    .attr('src', e.target.result)
+                    .show();
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    setTimeout(function () {
+        $('.alert').fadeOut('slow', function () { $(this).remove(); });
+    }, 1500);
+    </script>
+}
