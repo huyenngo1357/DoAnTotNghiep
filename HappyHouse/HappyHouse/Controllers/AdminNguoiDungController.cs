@@ -17,13 +17,15 @@ namespace HappyHouse.Controllers
 
             var dsTrangThai = new[]
             {
-                new { Value = "",     Text = "--- Tất cả ---" },
-                new { Value = "true", Text = "Hoạt động"      },
-                new { Value = "false",Text = "Đã khóa"        },
+                new { Value = "",      Text = "--- Tất cả ---" },
+                new { Value = "true",  Text = "Hoạt động"      },
+                new { Value = "false", Text = "Đã khóa"        },
             };
             ViewBag.DsTrangThai = new SelectList(
                 dsTrangThai, "Value", "Text",
-                trangThai.HasValue ? trangThai.Value.ToString().ToLower() : "");
+                trangThai.HasValue
+                    ? trangThai.Value.ToString().ToLower()
+                    : "");
         }
 
         [HttpGet]
@@ -55,7 +57,8 @@ namespace HappyHouse.Controllers
             if (trangThai == "true") trangThaiFilter = true;
             if (trangThai == "false") trangThaiFilter = false;
 
-            var lst = nguoiDungBusiness.LayDanhSach(tuKhoa, maVaiTro, trangThaiFilter);
+            var lst = nguoiDungBusiness.LayDanhSach(
+                          tuKhoa, maVaiTro, trangThaiFilter);
 
             ViewBag.TuKhoa = tuKhoa;
             ViewBag.MaVaiTro = maVaiTro;
@@ -65,7 +68,7 @@ namespace HappyHouse.Controllers
             return View(lst.ToPagedList(page, pageSize));
         }
 
-        // ── THÊM MỚI 
+        // ── THÊM MỚI ─────────────────────────────────────────────────
 
         [HttpGet]
         public ActionResult ThemMoi()
@@ -77,14 +80,16 @@ namespace HappyHouse.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ThemMoi(NguoiDung obj,
-                                     System.Web.HttpPostedFileBase anhDaiDien,
-                                     string matKhauMoi)
+                                    System.Web.HttpPostedFileBase anhDaiDien,
+                                    string matKhauMoi)
         {
             if (string.IsNullOrWhiteSpace(obj.HoTen))
-                ModelState.AddModelError("HoTen", "Họ tên không được để trống!");
+                ModelState.AddModelError("HoTen",
+                    "Họ tên không được để trống!");
 
             if (string.IsNullOrWhiteSpace(obj.Email))
-                ModelState.AddModelError("Email", "Email không được để trống!");
+                ModelState.AddModelError("Email",
+                    "Email không được để trống!");
 
             if (string.IsNullOrWhiteSpace(obj.SoDienThoai))
                 ModelState.AddModelError("SoDienThoai",
@@ -109,7 +114,6 @@ namespace HappyHouse.Controllers
                 return RedirectToAction("DanhSach");
             }
 
-            // Kiểm tra trùng qua Business thay vì DataProvider trực tiếp
             bool emailTrung = DataProvider.Entities.NguoiDungs
                                   .Any(x => x.Email == obj.Email);
             ModelState.AddModelError(
@@ -122,7 +126,7 @@ namespace HappyHouse.Controllers
             return View(obj);
         }
 
-        // ── SỬA THÔNG TIN (kèm xem chi tiết) ────────────────────────
+        // ── SỬA THÔNG TIN ─────────────────────────────────────────────
 
         [HttpGet]
         public ActionResult SuaThongTin(string maNguoiDung)
@@ -141,10 +145,12 @@ namespace HappyHouse.Controllers
                                         string matKhauMoi)
         {
             if (string.IsNullOrWhiteSpace(obj.HoTen))
-                ModelState.AddModelError("HoTen", "Họ tên không được để trống!");
+                ModelState.AddModelError("HoTen",
+                    "Họ tên không được để trống!");
 
             if (string.IsNullOrWhiteSpace(obj.Email))
-                ModelState.AddModelError("Email", "Email không được để trống!");
+                ModelState.AddModelError("Email",
+                    "Email không được để trống!");
 
             if (string.IsNullOrWhiteSpace(obj.SoDienThoai))
                 ModelState.AddModelError("SoDienThoai",
@@ -160,13 +166,21 @@ namespace HappyHouse.Controllers
                 return View(obj);
             }
 
-            // Truyền mật khẩu mới vào obj để Business xử lý
             obj.MatKhau = matKhauMoi;
-
             bool kq = nguoiDungBusiness.CapNhat(obj, anhDaiDien);
 
             if (kq)
             {
+                // FIX: nếu admin đang sửa chính tài khoản mình
+                // thì cập nhật Session để navbar hiển thị đúng ngay lập tức
+                NguoiDung admin = GetUserOnline();
+                if (admin.MaNguoiDung == obj.MaNguoiDung)
+                {
+                    var userMoi = nguoiDungBusiness.LayChiTiet(obj.MaNguoiDung);
+                    if (userMoi != null)
+                        Session["UserOnline"] = userMoi;
+                }
+
                 TempData["Success"] = "Cập nhật thông tin thành công!";
                 return RedirectToAction("DanhSach");
             }
@@ -175,7 +189,8 @@ namespace HappyHouse.Controllers
                                   .Any(x => x.Email == obj.Email
                                          && x.MaNguoiDung != obj.MaNguoiDung);
             if (emailTrung)
-                ModelState.AddModelError("Email", "Email này đã được sử dụng!");
+                ModelState.AddModelError("Email",
+                    "Email này đã được sử dụng!");
             else
                 ModelState.AddModelError("SoDienThoai",
                     "Số điện thoại này đã được sử dụng!");
@@ -190,7 +205,6 @@ namespace HappyHouse.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DoiTrangThai(string maNguoiDung)
         {
-            // Không cho tự khóa tài khoản đang đăng nhập
             NguoiDung admin = GetUserOnline();
             if (admin.MaNguoiDung == maNguoiDung)
             {

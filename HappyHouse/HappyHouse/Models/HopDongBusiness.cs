@@ -11,8 +11,8 @@ namespace HappyHouse.Models
             return DataProvider.Entities.HopDongs
                        .Include("PhongTro")
                        .Include("PhongTro.ToaNha")
-                       .Include("NguoiDung")    // KhachHang
-                       .Include("NguoiDung1")   // ChuTro
+                       .Include("NguoiDung")    // ChuTro
+                       .Include("NguoiDung1")   // KhachHang
                        .Include("HopDong_DichVu")
                        .Include("HopDong_DichVu.GiaDichVu")
                        .Include("HopDong_DichVu.GiaDichVu.TienIch")
@@ -25,9 +25,9 @@ namespace HappyHouse.Models
         }
 
         public List<HopDong> LayDanhSachChuTro(string maChuTro,
-                                        string tuKhoa,
-                                        string maPhong,
-                                        string trangThai)
+                                                string tuKhoa,
+                                                string maPhong,
+                                                string trangThai)
         {
             var lst = DataProvider.Entities.HopDongs
                           .Include("PhongTro")
@@ -81,7 +81,8 @@ namespace HappyHouse.Models
         // Tìm kiếm khách hàng realtime
         public List<NguoiDung> TimKiemKhachHang(string tuKhoa)
         {
-            if (string.IsNullOrWhiteSpace(tuKhoa)) return new List<NguoiDung>();
+            if (string.IsNullOrWhiteSpace(tuKhoa))
+                return new List<NguoiDung>();
 
             tuKhoa = tuKhoa.Trim();
             return DataProvider.Entities.NguoiDungs
@@ -127,10 +128,15 @@ namespace HappyHouse.Models
 
             var db = DataProvider.Entities;
 
-            bool dangThue = db.HopDongs
-                               .Any(x => x.MaPhong == obj.MaPhong
-                                      && x.TrangThaiHopDong == "DangThue");
-            if (dangThue) return false;
+            // FIX: kiểm tra cả "ChoKy" lẫn "DangThue"
+            // Nếu chỉ check "DangThue" thì có thể tạo nhiều hợp đồng
+            // "ChoKy" cho cùng 1 phòng
+            bool dangBan = db.HopDongs
+                              .Any(x => x.MaPhong == obj.MaPhong
+                                     && (x.TrangThaiHopDong == "DangThue"
+                                      || x.TrangThaiHopDong == "ChoKy")
+                                     && x.TrangThai == true);
+            if (dangBan) return false;
 
             obj.MaHopDong = SinhMa();
             obj.TrangThaiHopDong = "ChoKy";
@@ -260,6 +266,8 @@ namespace HappyHouse.Models
             hopDong.LyDoHuy = lyDo;
             hopDong.NgayCapNhat = DateTime.Now;
 
+            // Chỉ trả phòng về Trong nếu đang thuê
+            // Nếu là ChoKy thì phòng vẫn Trong, không cần đổi
             if (cu == "DangThue")
             {
                 var phong = db.PhongTroes

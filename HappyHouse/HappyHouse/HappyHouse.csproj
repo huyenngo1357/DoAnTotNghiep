@@ -2362,6 +2362,7 @@
     <Content Include="Views\ChuTroDashboard\Index.cshtml" />
     <Content Include="Views\ChuTroChiSo\SuaThongTin.cshtml" />
     <Content Include="Views\ChuTroHoaDon\SuaThongTin.cshtml" />
+    <Content Include="Views\HopDong\YeuCauDangKy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

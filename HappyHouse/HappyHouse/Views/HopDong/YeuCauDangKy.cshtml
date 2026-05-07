@@ -1,0 +1,769 @@
+﻿@using System.Collections.Generic
+@using HappyHouse.Models
+@model HappyHouse.Models.HopDong
+
+@{
+    ViewBag.Title = "Đăng Ký Thuê Phòng";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    ViewBag.ActiveMenu = "PhongTro";
+
+    var user = Session["UserOnline"] as NguoiDung;
+    var phong = ViewBag.Phong as PhongTro;
+    var dsDichVu = ViewBag.DsDichVu as List<GiaDichVu>
+                   ?? new List<GiaDichVu>();
+
+    var dsAnh = phong?.HinhAnhPhongs
+                    ?.Where(x => x.TrangThai).ToList()
+                ?? new List<HinhAnhPhong>();
+    var anhChinh = dsAnh.FirstOrDefault(x => x.LaDaiDien)
+                   ?? dsAnh.FirstOrDefault();
+    string anhUrl = anhChinh != null
+        ? Url.Content("~/Content/images/phongs/" + anhChinh.TenFile)
+        : "/Content/Home/img/properties/property-1.jpg";
+}
+
+<style>
+    .reg-card {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 16px rgba(0,0,0,.07);
+        padding: 28px;
+        margin-bottom: 24px;
+    }
+
+    .reg-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #222;
+        margin: 0 0 20px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #2cbdb8;
+    }
+
+    .reg-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #f5f5f5;
+        font-size: 14px;
+    }
+
+    .reg-label {
+        color: #888;
+    }
+
+    .reg-val {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .dv-card {
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 14px;
+        height: 100%;
+        transition: border-color .2s;
+        cursor: pointer;
+    }
+
+        .dv-card:hover {
+            border-color: #2cbdb8;
+        }
+
+        .dv-card.checked {
+            border-color: #2cbdb8;
+            background: #f0fafa;
+        }
+
+    .step-badge {
+        display: inline-flex;
+        width: 28px;
+        height: 28px;
+        background: #2cbdb8;
+        color: #fff;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+        margin-right: 8px;
+        flex-shrink: 0;
+    }
+
+    .form-ctrl {
+        width: 100%;
+        padding: 9px 13px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        color: #333;
+        outline: none;
+        transition: border-color .2s;
+    }
+
+        .form-ctrl:focus {
+            border-color: #2cbdb8;
+        }
+
+        .form-ctrl[readonly] {
+            background: #f9f9f9;
+            color: #888;
+            cursor: default;
+        }
+
+    .hh-label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+        .hh-label .req {
+            color: #e74a3b;
+        }
+
+    .summary-box {
+        background: linear-gradient(135deg, #f0fafa, #e8faf9);
+        border: 1px solid #c8eeed;
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 7px 0;
+        border-bottom: 1px dashed #d0ecec;
+        font-size: 14px;
+    }
+
+    .summary-total {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0 0;
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    .btn-submit {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        background: #2cbdb8;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background .2s;
+        letter-spacing: .4px;
+    }
+
+        .btn-submit:hover {
+            background: #24a09b;
+        }
+</style>
+
+<section style="padding:36px 0 60px; background:#f7f8fa;">
+    <div class="container">
+
+        @* ── Breadcrumb ── *@
+        <div style="font-size:13px;color:#888;margin-bottom:20px;">
+            <a href="@Url.Action("Index","TrangChu")" style="color:#2cbdb8;">
+                Trang chủ
+            </a>
+            <i class="fa fa-angle-right mx-2"></i>
+            <a href="@Url.Action("DanhSach","PhongTro")" style="color:#2cbdb8;">
+                Phòng trọ
+            </a>
+            <i class="fa fa-angle-right mx-2"></i>
+            @if (phong != null)
+            {
+                <a href="@Url.Action("ChiTiet","PhongTro",
+                           new { maPhong = phong.MaPhong })"
+                   style="color:#2cbdb8;">
+                    Phòng @phong.SoPhong
+                </a>
+                <i class="fa fa-angle-right mx-2"></i>
+            }
+            <span style="color:#555;font-weight:600;">Đăng Ký Thuê Phòng</span>
+        </div>
+
+        @* ── Thông báo ── *@
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show">
+                <i class="fa fa-exclamation-circle mr-2"></i>@TempData["Error"]
+                <button type="button" class="close" data-dismiss="alert">
+                    <span>&times;</span>
+                </button>
+            </div>
+        }
+
+        @using (Html.BeginForm("YeuCauDangKy", "HopDong", FormMethod.Post,
+                                new { id = "frmDangKy" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="MaPhong"
+                   value="@(phong?.MaPhong ?? "")" />
+
+            <div class="row">
+
+                @* ══ CỘT TRÁI: FORM ══ *@
+                <div class="col-lg-8">
+
+                    @* ── Bước 1: Thông tin phòng ── *@
+                    <div class="reg-card">
+                        <h5 class="reg-title">
+                            <span class="step-badge">1</span>
+                            Thông Tin Phòng
+                        </h5>
+                        @if (phong != null)
+                        {
+                            <div class="row align-items-center
+                                        mb-3 pb-3"
+                                 style="border-bottom:1px solid #f0f0f0;">
+                                <div class="col-md-3">
+                                    <img src="@anhUrl" alt=""
+                                         style="width:100%;height:85px;
+                                                object-fit:cover;
+                                                border-radius:8px;" />
+                                </div>
+                                <div class="col-md-9">
+                                    <h5 style="font-weight:800;
+                                               margin:0 0 4px;color:#222;">
+                                        Phòng @phong.SoPhong
+                                        <span style="font-weight:400;
+                                                     color:#888;font-size:15px;">
+                                            — @phong.ToaNha.TenToaNha
+                                        </span>
+                                    </h5>
+                                    <div style="color:#888;font-size:13px;">
+                                        <i class="fa fa-map-marker mr-1"
+                                           style="color:#2cbdb8;"></i>
+                                        @phong.ToaNha.DiaChi,
+                                        @phong.ToaNha.TinhThanh
+                                    </div>
+                                    <div style="font-size:18px;font-weight:800;
+                                                color:#2cbdb8;margin-top:6px;">
+                                        @String.Format("{0:N0}", phong.GiaThue)đ
+                                        <span style="font-size:12px;color:#aaa;
+                                                     font-weight:400;">/tháng</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="reg-row">
+                                        <span class="reg-label">Diện tích</span>
+                                        <span class="reg-val">
+                                            @(phong.DienTich.HasValue
+                                                ? phong.DienTich.Value + " m²"
+                                                : "—")
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="reg-row">
+                                        <span class="reg-label">Tầng</span>
+                                        <span class="reg-val">
+                                            Tầng @phong.Tang
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="reg-row">
+                                        <span class="reg-label">Sức chứa</span>
+                                        <span class="reg-val">
+                                            @phong.SoNguoiToiDa người
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="reg-row">
+                                        <span class="reg-label">Tiền cọc</span>
+                                        <span class="reg-val">
+                                            @(phong.TienCoc.HasValue
+                                                ? String.Format("{0:N0}",
+                                                    phong.TienCoc) + "đ"
+                                                : "Không cọc")
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="reg-row">
+                                        <span class="reg-label">Giá thuê</span>
+                                        <span class="reg-val"
+                                              style="color:#2cbdb8;">
+                                            @String.Format("{0:N0}",
+                                                     phong.GiaThue)đ/tháng
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    @* ── Bước 2: Thông tin người thuê ── *@
+                    <div class="reg-card">
+                        <h5 class="reg-title">
+                            <span class="step-badge">2</span>
+                            Thông Tin Người Thuê
+                        </h5>
+                        @if (user != null)
+                        {
+                            <div class="row">
+                                <div class="col-md-4"
+                                     style="margin-bottom:16px;">
+                                    <label class="hh-label">Họ tên</label>
+                                    <input class="form-ctrl" type="text"
+                                           value="@user.HoTen" readonly />
+                                </div>
+                                <div class="col-md-4"
+                                     style="margin-bottom:16px;">
+                                    <label class="hh-label">
+                                        Số điện thoại
+                                    </label>
+                                    <input class="form-ctrl" type="text"
+                                           value="@user.SoDienThoai"
+                                           readonly />
+                                </div>
+                                <div class="col-md-4"
+                                     style="margin-bottom:16px;">
+                                    <label class="hh-label">Email</label>
+                                    <input class="form-ctrl" type="text"
+                                           value="@user.Email" readonly />
+                                </div>
+                            </div>
+                            <div style="padding:10px 14px;background:#fff8e1;
+                                        border:1px solid #ffe082;
+                                        border-radius:6px;font-size:13px;
+                                        color:#856404;">
+                                <i class="fa fa-info-circle mr-1"></i>
+                                Thông tin được lấy từ tài khoản của bạn.
+                                <a href="@Url.Action("ThongTin","TaiKhoan")"
+                                   style="color:#856404;font-weight:700;">
+                                    Cập nhật tại đây
+                                </a>
+                                nếu cần thay đổi.
+                            </div>
+                        }
+                    </div>
+
+                    @* ── Bước 3: Thời gian thuê ── *@
+                    <div class="reg-card">
+                        <h5 class="reg-title">
+                            <span class="step-badge">3</span>
+                            Thời Gian Thuê
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-4" style="margin-bottom:16px;">
+                                <label class="hh-label">
+                                    Ngày bắt đầu
+                                    <span class="req">*</span>
+                                </label>
+                                <input class="form-ctrl" type="date"
+                                       id="ngayBatDau"
+                                       name="NgayBatDau"
+                                       value="@Model.NgayBatDau
+                                                    .ToString(" yyyy-MM-dd")"
+                                       min="@DateTime.Today
+                                                 .ToString(" yyyy-MM-dd")" />
+                            </div>
+                            <div class="col-md-4" style="margin-bottom:16px;">
+                                <label class="hh-label">
+                                    Ngày kết thúc
+                                    <span class="req">*</span>
+                                </label>
+                                <input class="form-ctrl" type="date"
+                                       id="ngayKetThuc"
+                                       name="NgayKetThuc"
+                                       value="@Model.NgayKetThuc
+                                                    .ToString(" yyyy-MM-dd")"
+                                       min="@DateTime.Today.AddDays(1)
+                                                 .ToString(" yyyy-MM-dd")" />
+                                <small id="lblSoThang"
+                                       style="color:#2cbdb8;font-weight:600;">
+                                </small>
+                            </div>
+                            <div class="col-md-4" style="margin-bottom:16px;">
+                                <label class="hh-label">
+                                    Ngày TT hàng tháng
+                                    <span class="req">*</span>
+                                </label>
+                                <input class="form-ctrl" type="number"
+                                       name="NgayThanhToanHangThang"
+                                       value="@Model.NgayThanhToanHangThang"
+                                       min="1" max="28" />
+                                <small style="color:#aaa;">
+                                    Ngày 1 đến 28 hàng tháng
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* ── Bước 4: Dịch vụ kèm theo ── *@
+                    @if (dsDichVu.Any())
+                    {
+                        <div class="reg-card">
+                            <h5 class="reg-title">
+                                <span class="step-badge">4</span>
+                                Dịch Vụ Kèm Theo
+                                <span style="font-size:13px;font-weight:400;
+                                             color:#aaa;margin-left:8px;">
+                                    (không bắt buộc)
+                                </span>
+                            </h5>
+                            <div class="row" id="dsDichVuWrap">
+                                @foreach (var dv in dsDichVu)
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="dv-card"
+                                             id="dvCard_@dv.MaGiaDichVu"
+                                             onclick="toggleDichVu(
+                                                 '@dv.MaGiaDichVu',
+                                                 @dv.DonGia,
+                                                 '@(dv.TienIch?.TenTienIch
+                                                    ?? dv.TenDichVu)')">
+                                            <div style="display:flex;
+                                                        justify-content:space-between;
+                                                        align-items:flex-start;">
+                                                <div>
+                                                    <i class="fa @(dv.TienIch
+                                                        ?.BieuTuong ?? "fa-cog")
+                                                       mr-2"
+                                                       style="color:#f5a623;
+                                                              font-size:16px;">
+                                                    </i>
+                                                    <strong style="font-size:14px;">
+                                                        @(dv.TienIch?.TenTienIch
+                                                          ?? dv.TenDichVu)
+                                                    </strong>
+                                                    <br />
+                                                    <small style="color:#888;">
+                                                        @String.Format("{0:N0}",
+                                                                 dv.DonGia)đ
+                                                        /@(dv.DonVi ?? "tháng")
+                                                    </small>
+                                                </div>
+                                                <div id="chkIcon_@dv.MaGiaDichVu"
+                                                     style="width:22px;height:22px;
+                                                            border-radius:50%;
+                                                            border:2px solid #ddd;
+                                                            display:flex;
+                                                            align-items:center;
+                                                            justify-content:center;
+                                                            flex-shrink:0;">
+                                                </div>
+                                            </div>
+
+                                            @* Ô số lượng *@
+                                            <div id="slWrap_@dv.MaGiaDichVu"
+                                                 style="display:none;
+                                                        margin-top:10px;">
+                                                <label style="font-size:12px;
+                                                              font-weight:600;
+                                                              color:#555;">
+                                                    Số lượng:
+                                                </label>
+                                                <div style="display:flex;
+                                                            align-items:center;
+                                                            gap:8px;
+                                                            margin-top:4px;">
+                                                    <button type="button"
+                                                            onclick="event.stopPropagation();
+                                                                     doiSoLuong(
+                                                                '@dv.MaGiaDichVu',
+                                                                 @dv.DonGia, -1)"
+                                                            style="width:28px;
+                                                                   height:28px;
+                                                                   border-radius:50%;
+                                                                   border:1px solid #ddd;
+                                                                   background:#fff;
+                                                                   cursor:pointer;
+                                                                   font-weight:700;">
+                                                        −
+                                                    </button>
+                                                    <span id="slText_@dv.MaGiaDichVu"
+                                                          style="font-weight:700;
+                                                                 min-width:20px;
+                                                                 text-align:center;">
+                                                        1
+                                                    </span>
+                                                    <button type="button"
+                                                            onclick="event.stopPropagation();
+                                                                     doiSoLuong(
+                                                                '@dv.MaGiaDichVu',
+                                                                 @dv.DonGia, 1)"
+                                                            style="width:28px;
+                                                                   height:28px;
+                                                                   border-radius:50%;
+                                                                   border:1px solid #ddd;
+                                                                   background:#fff;
+                                                                   cursor:pointer;
+                                                                   font-weight:700;">
+                                                        +
+                                                    </button>
+                                                    <span id="ttDV_@dv.MaGiaDichVu"
+                                                          style="color:#2cbdb8;
+                                                                 font-weight:700;
+                                                                 font-size:13px;">
+                                                        @String.Format("{0:N0}",
+                                                                 dv.DonGia)đ
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            @* Hidden inputs được inject bởi JS *@
+                        </div>
+                    }
+
+                    @* ── Bước 5: Ghi chú ── *@
+                    <div class="reg-card">
+                        <h5 class="reg-title">
+                            <span class="step-badge">
+                                @(dsDichVu.Any() ? "5" : "4")
+                            </span>
+                            Điều Khoản / Ghi Chú
+                            <span style="font-size:13px;font-weight:400;
+                                         color:#aaa;margin-left:8px;">
+                                (không bắt buộc)
+                            </span>
+                        </h5>
+                        <textarea name="DieuKhoan"
+                                  class="form-ctrl"
+                                  rows="4"
+                                  placeholder="Nhập yêu cầu đặc biệt hoặc điều khoản bổ sung...">@Model.DieuKhoan</textarea>
+                    </div>
+
+                </div>
+
+                @* ══ CỘT PHẢI: TỔNG KẾT & NỘP ══ *@
+                <div class="col-lg-4">
+
+                    <div style="position:sticky;top:20px;">
+
+                        @* ── Tổng chi phí ── *@
+                        <div class="reg-card">
+                            <h5 class="reg-title" style="margin-bottom:16px;">
+                                <i class="fa fa-calculator mr-2"
+                                   style="color:#2cbdb8;"></i>
+                                Tổng Chi Phí
+                            </h5>
+
+                            <div class="summary-box">
+                                <div class="summary-row">
+                                    <span style="color:#666;">
+                                        Tiền phòng/tháng
+                                    </span>
+                                    <strong style="color:#2cbdb8;">
+                                        @String.Format("{0:N0}",
+                                                 phong?.GiaThue ?? 0)đ
+                                    </strong>
+                                </div>
+                                <div class="summary-row">
+                                    <span style="color:#666;">
+                                        Dịch vụ/tháng
+                                    </span>
+                                    <strong id="sumDV" style="color:#f5a623;">
+                                        0đ
+                                    </strong>
+                                </div>
+                                <div class="summary-row">
+                                    <span style="color:#666;">
+                                        Tiền cọc (1 lần)
+                                    </span>
+                                    <strong style="color:#888;">
+                                        @(phong?.TienCoc.HasValue == true
+                                            ? String.Format("{0:N0}",
+                                                phong.TienCoc) + "đ"
+                                            : "Không cọc")
+                                    </strong>
+                                </div>
+                                <div class="summary-total">
+                                    <span>Tổng/tháng</span>
+                                    <span id="sumTong"
+                                          style="color:#e74a3b;">
+                                        @String.Format("{0:N0}",
+                                                 phong?.GiaThue ?? 0)đ
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* ── Lưu ý ── *@
+                        <div class="reg-card"
+                             style="background:#fffbf0;
+                                    border:1px solid #ffe082;">
+                            <div style="font-size:13px;color:#856404;
+                                        line-height:1.8;">
+                                <i class="fa fa-lightbulb-o mr-2"
+                                   style="color:#f5a623;"></i>
+                                <strong>Lưu ý quan trọng:</strong>
+                                <ul style="margin:8px 0 0 16px;padding:0;">
+                                    <li>
+                                        Yêu cầu của bạn sẽ được gửi đến
+                                        chủ trọ xem xét
+                                    </li>
+                                    <li>
+                                        Hợp đồng chính thức có hiệu lực
+                                        khi chủ trọ <strong>ký xác nhận</strong>
+                                    </li>
+                                    <li>
+                                        Bạn sẽ nhận thông báo khi hợp đồng
+                                        được ký
+                                    </li>
+                                    <li>
+                                        Giá thuê được giữ nguyên theo
+                                        niêm yết
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        @* ── Nút Submit ── *@
+                        <button type="submit" class="btn-submit"
+                                id="btnSubmit"
+                                onclick="return xacNhanGui()">
+                            <i class="fa fa-paper-plane mr-2"></i>
+                            Gửi Yêu Cầu Đăng Ký
+                        </button>
+
+                        <a href="@Url.Action("ChiTiet","PhongTro",
+                                   new { maPhong = phong?.MaPhong })"
+                           style="display:block;text-align:center;
+                                  margin-top:12px;color:#888;font-size:13px;
+                                  text-decoration:none;">
+                            <i class="fa fa-arrow-left mr-1"></i>
+                            Quay lại trang phòng
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+var giaPhong = @(phong?.GiaThue ?? 0);
+var dsDichVuChon = {}; // { maGiaDichVu: { gia, soLuong } }
+
+// ── Toggle chọn dịch vụ ──────────────────────────────────────
+function toggleDichVu(ma, gia, ten) {
+    if (dsDichVuChon[ma]) {
+        // Bỏ chọn
+        delete dsDichVuChon[ma];
+        $('#dvCard_' + ma).removeClass('checked');
+        $('#chkIcon_' + ma)
+            .css({ background: '', borderColor: '#ddd' })
+            .html('');
+        $('#slWrap_' + ma).hide();
+        $('[name="dsMaGiaDichVu"][value="' + ma + '"]').remove();
+        $('[id="hidden_sl_' + ma + '"]').remove();
+    } else {
+        // Chọn
+        dsDichVuChon[ma] = { gia: gia, soLuong: 1 };
+        $('#dvCard_' + ma).addClass('checked');
+        $('#chkIcon_' + ma)
+            .css({ background: '#2cbdb8', borderColor: '#2cbdb8' })
+            .html('<i class="fa fa-check" style="color:#fff;font-size:11px;"></i>');
+        $('#slWrap_' + ma).show();
+
+        // Thêm hidden inputs
+        $('<input>').attr({
+            type: 'hidden', name: 'dsMaGiaDichVu', value: ma
+        }).appendTo('#frmDangKy');
+        $('<input>').attr({
+            type: 'hidden', name: 'dsSoLuong',
+            id: 'hidden_sl_' + ma, value: 1
+        }).appendTo('#frmDangKy');
+    }
+    capNhatTong();
+}
+
+// ── Đổi số lượng ─────────────────────────────────────────────
+function doiSoLuong(ma, gia, delta) {
+    if (!dsDichVuChon[ma]) return;
+    var sl = dsDichVuChon[ma].soLuong + delta;
+    if (sl < 1) sl = 1;
+    if (sl > 99) sl = 99;
+
+    dsDichVuChon[ma].soLuong = sl;
+    $('#slText_' + ma).text(sl);
+    $('#hidden_sl_' + ma).val(sl);
+    $('#ttDV_' + ma).text(formatSo(gia * sl) + 'đ');
+    capNhatTong();
+}
+
+// ── Tính tổng ────────────────────────────────────────────────
+function capNhatTong() {
+    var tongDV = 0;
+    $.each(dsDichVuChon, function (ma, v) {
+        tongDV += v.gia * v.soLuong;
+    });
+    $('#sumDV').text(formatSo(tongDV) + 'đ');
+    $('#sumTong').text(formatSo(giaPhong + tongDV) + 'đ');
+}
+
+// ── Tính số tháng ────────────────────────────────────────────
+function tinhSoThang() {
+    var bd = new Date($('#ngayBatDau').val());
+    var kt = new Date($('#ngayKetThuc').val());
+    if (!bd || !kt || kt <= bd) {
+        $('#lblSoThang').text('');
+        return;
+    }
+    var months = (kt.getFullYear() - bd.getFullYear()) * 12
+               + (kt.getMonth()   - bd.getMonth());
+    if (months < 1) months = 1;
+    $('#lblSoThang').text('≈ ' + months + ' tháng');
+}
+
+$('#ngayBatDau, #ngayKetThuc').on('change', function () {
+    // Ngày kết thúc min = ngày bắt đầu + 1
+    var bd = $('#ngayBatDau').val();
+    if (bd) {
+        var minKT = new Date(bd);
+        minKT.setDate(minKT.getDate() + 1);
+        $('#ngayKetThuc').attr('min',
+            minKT.toISOString().split('T')[0]);
+    }
+    tinhSoThang();
+});
+
+// ── Xác nhận trước khi gửi ───────────────────────────────────
+function xacNhanGui() {
+    var bd = $('#ngayBatDau').val();
+    var kt = $('#ngayKetThuc').val();
+
+    if (!bd || !kt) {
+        alert('Vui lòng chọn ngày bắt đầu và ngày kết thúc!');
+        return false;
+    }
+    if (new Date(kt) <= new Date(bd)) {
+        alert('Ngày kết thúc phải sau ngày bắt đầu!');
+        return false;
+    }
+    return confirm(
+        'Xác nhận gửi yêu cầu đăng ký thuê phòng?\n'
+      + 'Yêu cầu sẽ được chuyển đến chủ trọ xem xét và ký hợp đồng.');
+}
+
+function formatSo(n) {
+    return parseFloat(n).toLocaleString('vi-VN');
+}
+
+// Tính số tháng khi load
+$(function () { tinhSoThang(); });
+    </script>
+}

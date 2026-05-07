@@ -22,16 +22,19 @@ namespace HappyHouse.Controllers
                 return RedirectToAction("DangNhap", "TaiKhoan",
                     new { returnUrl = "/DanhGia/DanhSach" });
 
+            // FIX: "DaKetThuc" không tồn tại trong DB
+            // CHECK constraint chỉ có: ChoKy, DangThue, HetHan, DaHuy
+            // Cho phép đánh giá khi hợp đồng HetHan hoặc DaHuy
             var dsHopDong = DataProvider.Entities.HopDongs
                                 .Include("PhongTro")
                                 .Include("PhongTro.ToaNha")
                                 .Include("PhongTro.HinhAnhPhongs")
                                 .Where(x => x.MaKhachHang == user.MaNguoiDung
-                                         && x.TrangThaiHopDong == "DaKetThuc")
+                                         && (x.TrangThaiHopDong == "HetHan"
+                                          || x.TrangThaiHopDong == "DaHuy"))
                                 .OrderByDescending(x => x.NgayKetThuc)
                                 .ToList();
 
-            // Sửa: MaNguoiDung thay vì MaKhachHang
             var daMaDanhGia = DataProvider.Entities.DanhGiaPhongs
                                   .Where(x => x.MaKhachHang == user.MaNguoiDung)
                                   .Select(x => x.MaHopDong)
@@ -48,19 +51,18 @@ namespace HappyHouse.Controllers
             if (user == null)
                 return RedirectToAction("DangNhap", "TaiKhoan");
 
+            // FIX: "DaKetThuc" → "HetHan" hoặc "DaHuy"
             var hopDong = DataProvider.Entities.HopDongs
                               .Include("PhongTro")
                               .Include("PhongTro.ToaNha")
                               .Include("PhongTro.HinhAnhPhongs")
                               .FirstOrDefault(x => x.MaHopDong == maHopDong
-                                                && x.MaKhachHang
-                                                   == user.MaNguoiDung
-                                                && x.TrangThaiHopDong
-                                                   == "DaKetThuc");
+                                                && x.MaKhachHang == user.MaNguoiDung
+                                                && (x.TrangThaiHopDong == "HetHan"
+                                                 || x.TrangThaiHopDong == "DaHuy"));
 
             if (hopDong == null) return HttpNotFound();
 
-            // Sửa: MaNguoiDung
             bool daDanhGia = DataProvider.Entities.DanhGiaPhongs
                                  .Any(x => x.MaHopDong == maHopDong
                                         && x.MaKhachHang == user.MaNguoiDung);
@@ -83,15 +85,14 @@ namespace HappyHouse.Controllers
             if (user == null)
                 return RedirectToAction("DangNhap", "TaiKhoan");
 
+            // FIX: "DaKetThuc" → "HetHan" hoặc "DaHuy"
             var hopDong = DataProvider.Entities.HopDongs
                               .FirstOrDefault(x => x.MaHopDong == maHopDong
-                                                && x.MaKhachHang
-                                                   == user.MaNguoiDung
-                                                && x.TrangThaiHopDong
-                                                   == "DaKetThuc");
+                                                && x.MaKhachHang == user.MaNguoiDung
+                                                && (x.TrangThaiHopDong == "HetHan"
+                                                 || x.TrangThaiHopDong == "DaHuy"));
             if (hopDong == null) return HttpNotFound();
 
-            // Sửa: MaNguoiDung
             bool daDanhGia = DataProvider.Entities.DanhGiaPhongs
                                  .Any(x => x.MaHopDong == maHopDong
                                         && x.MaKhachHang == user.MaNguoiDung);
@@ -117,7 +118,7 @@ namespace HappyHouse.Controllers
             {
                 MaDanhGia = "DG" + DateTime.Now.ToString("yyyyMMddHHmmss"),
                 MaHopDong = maHopDong,
-                MaKhachHang = user.MaNguoiDung,   // ← sửa
+                MaKhachHang = user.MaNguoiDung,
                 MaPhong = hopDong.MaPhong,
                 NhanXet = nhanXet.Trim(),
                 DiemDanhGia = diemDanhGia,
@@ -131,8 +132,7 @@ namespace HappyHouse.Controllers
             try { db.SaveChanges(); }
             finally { db.Configuration.ValidateOnSaveEnabled = true; }
 
-            TempData["Success"] = "Cảm ơn bạn đã đánh giá! "
-                                + "Đánh giá đã được ghi nhận.";
+            TempData["Success"] = "Cảm ơn bạn đã đánh giá! Đánh giá đã được ghi nhận.";
             return RedirectToAction("DanhSach");
         }
     }

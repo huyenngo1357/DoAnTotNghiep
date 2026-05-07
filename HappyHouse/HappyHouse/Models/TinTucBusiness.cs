@@ -19,7 +19,6 @@ namespace HappyHouse.Models
                           .AsQueryable();
 
             if (!string.IsNullOrEmpty(tuKhoa))
-                // ✅ Check null TomTat
                 lst = lst.Where(x =>
                     x.TieuDe.Contains(tuKhoa)
                  || (x.TomTat != null
@@ -29,11 +28,9 @@ namespace HappyHouse.Models
                 lst = lst.Where(x => x.MaChuDe == maChuDe);
 
             if (!string.IsNullOrEmpty(trangThaiDang))
-                lst = lst.Where(x =>
-                    x.TrangThaiDang == trangThaiDang);
+                lst = lst.Where(x => x.TrangThaiDang == trangThaiDang);
 
-            return lst.OrderByDescending(x => x.NgayTao)
-                      .ToList();
+            return lst.OrderByDescending(x => x.NgayTao).ToList();
         }
 
         public TinTuc LayChiTiet(string maTinTuc)
@@ -46,10 +43,10 @@ namespace HappyHouse.Models
                         && x.TrangThai == true);
         }
 
+        // FIX: đổi prefix "TT" → "TIN" để tránh trùng với ThanhToanBusiness ("TT...")
         public string SinhMa()
         {
-            return "TT" + DateTime.Now
-                              .ToString("yyyyMMddHHmmss");
+            return "TIN" + DateTime.Now.ToString("yyyyMMddHHmmss");
         }
 
         public bool ThemMoi(TinTuc obj,
@@ -57,7 +54,6 @@ namespace HappyHouse.Models
         {
             if (obj == null) return false;
 
-            // ✅ Dùng 1 instance
             var db = DataProvider.Entities;
 
             obj.MaTinTuc = SinhMa();
@@ -66,24 +62,18 @@ namespace HappyHouse.Models
             obj.LuotXem = 0;
             obj.NgayTao = DateTime.Now;
 
-            if (anhDaiDien != null
-             && anhDaiDien.ContentLength > 0)
+            if (anhDaiDien != null && anhDaiDien.ContentLength > 0)
                 obj.AnhDaiDien = LuuAnh(anhDaiDien);
 
             db.TinTucs.Add(obj);
             db.Configuration.ValidateOnSaveEnabled = false;
             try { return db.SaveChanges() > 0; }
-            finally
-            {
-                db.Configuration.ValidateOnSaveEnabled
-                    = true;
-            }
+            finally { db.Configuration.ValidateOnSaveEnabled = true; }
         }
 
         public bool CapNhat(TinTuc obj,
                              HttpPostedFileBase anhDaiDien)
         {
-            // ✅ Dùng 1 instance
             var db = DataProvider.Entities;
             var objDb = db.TinTucs
                            .FirstOrDefault(x =>
@@ -97,8 +87,7 @@ namespace HappyHouse.Models
             objDb.TomTat = obj.TomTat;
             objDb.NgayCapNhat = DateTime.Now;
 
-            if (anhDaiDien != null
-             && anhDaiDien.ContentLength > 0)
+            if (anhDaiDien != null && anhDaiDien.ContentLength > 0)
             {
                 if (!string.IsNullOrEmpty(objDb.AnhDaiDien))
                     XoaAnhVatLy(objDb.AnhDaiDien);
@@ -107,11 +96,7 @@ namespace HappyHouse.Models
 
             db.Configuration.ValidateOnSaveEnabled = false;
             try { return db.SaveChanges() > 0; }
-            finally
-            {
-                db.Configuration.ValidateOnSaveEnabled
-                    = true;
-            }
+            finally { db.Configuration.ValidateOnSaveEnabled = true; }
         }
 
         public bool DangBai(string maTinTuc)
@@ -130,11 +115,7 @@ namespace HappyHouse.Models
 
             db.Configuration.ValidateOnSaveEnabled = false;
             try { return db.SaveChanges() > 0; }
-            finally
-            {
-                db.Configuration.ValidateOnSaveEnabled
-                    = true;
-            }
+            finally { db.Configuration.ValidateOnSaveEnabled = true; }
         }
 
         public bool TamAn(string maTinTuc)
@@ -152,19 +133,14 @@ namespace HappyHouse.Models
 
             db.Configuration.ValidateOnSaveEnabled = false;
             try { return db.SaveChanges() > 0; }
-            finally
-            {
-                db.Configuration.ValidateOnSaveEnabled
-                    = true;
-            }
+            finally { db.Configuration.ValidateOnSaveEnabled = true; }
         }
 
         public bool Xoa(string maTinTuc)
         {
             var db = DataProvider.Entities;
             var obj = db.TinTucs
-                         .FirstOrDefault(x =>
-                             x.MaTinTuc == maTinTuc);
+                         .FirstOrDefault(x => x.MaTinTuc == maTinTuc);
             if (obj == null) return false;
 
             obj.TrangThai = false;
@@ -172,11 +148,7 @@ namespace HappyHouse.Models
 
             db.Configuration.ValidateOnSaveEnabled = false;
             try { return db.SaveChanges() > 0; }
-            finally
-            {
-                db.Configuration.ValidateOnSaveEnabled
-                    = true;
-            }
+            finally { db.Configuration.ValidateOnSaveEnabled = true; }
         }
 
         // ── PRIVATE ──────────────────────────────────────────

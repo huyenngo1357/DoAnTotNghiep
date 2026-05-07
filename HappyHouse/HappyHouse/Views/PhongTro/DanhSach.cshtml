@@ -8,19 +8,13 @@
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
     ViewBag.ActiveMenu = "PhongTro";
 
-    var dsTinhThanh = ViewBag.DsTinhThanh as List<string>
-                       ?? new List<string>();
-    var dsPhuongXa = ViewBag.DsPhuongXa as List<string>
-                       ?? new List<string>();
-    var dsNoiBat = ViewBag.DsPhongNoiBat as List<PhongTro>
-                       ?? new List<PhongTro>();
-
+    var dsTinhThanh = ViewBag.DsTinhThanh as List<string> ?? new List<string>();
+    var dsNoiBat = ViewBag.DsPhongNoiBat as List<PhongTro> ?? new List<PhongTro>();
     string tinhDangChon = ViewBag.TinhThanh as string ?? "";
     string phuongDangChon = ViewBag.PhuongXa as string ?? "";
 }
 
 <style>
-    /* ── Search bar ── */
     .hh-search-wrap {
         background: linear-gradient(135deg,#1a1a2e 0%,#2d2d44 100%);
         padding: 28px 0;
@@ -31,7 +25,7 @@
         font-weight: 700;
         color: #2cbdb8;
         text-transform: uppercase;
-        letter-spacing: 0.8px;
+        letter-spacing: .8px;
         margin-bottom: 5px;
         display: block;
     }
@@ -94,7 +88,6 @@
             text-decoration: none;
         }
 
-    /* ── Card phòng ── */
     .room-card {
         background: #fff;
         border-radius: 10px;
@@ -214,7 +207,6 @@
             text-decoration: none;
         }
 
-    /* ── Sidebar ── */
     .hh-sidebar-card {
         background: #fff;
         border-radius: 10px;
@@ -232,7 +224,6 @@
         border-bottom: 2px solid #2cbdb8;
     }
 
-    /* ── Phân trang ── */
     .hh-pager {
         display: flex;
         justify-content: center;
@@ -291,8 +282,7 @@
                         <option value="">-- Tất cả --</option>
                         @foreach (var t in dsTinhThanh)
                         {
-                            <option value="@t"
-                                    @(tinhDangChon == t ? "selected" : "")>
+                            <option value="@t" @(tinhDangChon == t ? "selected" : "")>
                                 @t
                             </option>
                         }
@@ -303,26 +293,17 @@
                     <label class="hh-search-label">
                         <i class="fa fa-map-o mr-1"></i>Phường / Xã
                     </label>
+                    @* FIX: Bỏ server-render disabled/options, JS quản lý toàn bộ *@
                     <select class="hh-search-input" name="phuongXa"
                             id="selPhuongXa"
-                            @(string.IsNullOrEmpty(tinhDangChon) ? "disabled" : "")
-                            style="cursor:@(string.IsNullOrEmpty(tinhDangChon)
-                                ? "not-allowed" : "pointer");">
-                        <option value="">-- Tất cả --</option>
-                        @foreach (var px in dsPhuongXa)
-                        {
-                            <option value="@px"
-                                    @(phuongDangChon == px ? "selected" : "")>
-                                @px
-                            </option>
-                        }
+                            style="cursor:not-allowed;background:#e0e0e0;">
+                        <option value="">-- Chọn tỉnh trước --</option>
                     </select>
                 </div>
 
                 <div class="col-lg-2 col-md-6 d-flex align-items-end"
                      style="margin-bottom:8px;">
-                    <button type="submit" class="hh-btn-search"
-                            style="font-size:15px;">
+                    <button type="submit" class="hh-btn-search" style="font-size:15px;">
                         <i class="fa fa-search mr-2"></i>Tìm Kiếm
                     </button>
                 </div>
@@ -337,8 +318,7 @@
                     </label>
                     <input class="hh-search-input" type="number"
                            name="giaMin" min="0" step="100000"
-                           value="@ViewBag.GiaMin"
-                           placeholder="VD: 1.000.000" />
+                           value="@ViewBag.GiaMin" placeholder="VD: 1.000.000" />
                 </div>
 
                 <div class="col-lg-3 col-md-6" style="margin-bottom:8px;">
@@ -347,8 +327,7 @@
                     </label>
                     <input class="hh-search-input" type="number"
                            name="giaMax" min="0" step="100000"
-                           value="@ViewBag.GiaMax"
-                           placeholder="VD: 5.000.000" />
+                           value="@ViewBag.GiaMax" placeholder="VD: 5.000.000" />
                 </div>
 
                 <div class="col-lg-2 col-md-6" style="margin-bottom:8px;">
@@ -357,8 +336,7 @@
                     </label>
                     <input class="hh-search-input" type="number"
                            name="dienTichMin" min="0" step="1"
-                           value="@ViewBag.DienTichMin"
-                           placeholder="VD: 15" />
+                           value="@ViewBag.DienTichMin" placeholder="VD: 15" />
                 </div>
 
                 <div class="col-lg-2 col-md-6" style="margin-bottom:8px;">
@@ -367,8 +345,7 @@
                     </label>
                     <input class="hh-search-input" type="number"
                            name="soNguoi" min="1" step="1"
-                           value="@ViewBag.SoNguoi"
-                           placeholder="VD: 2" />
+                           value="@ViewBag.SoNguoi" placeholder="VD: 2" />
                 </div>
 
                 <div class="col-lg-2 col-md-6 d-flex align-items-end"
@@ -380,20 +357,17 @@
                 </div>
 
             </div>
-
         </form>
     </div>
 </div>
 
 @* ── Kết quả ── *@
-@* ── Kết quả ── *@
 <section style="padding:36px 0 60px;background:#f7f8fa;">
     <div class="container-fluid" style="max-width:1400px;">
+
         <div style="font-size:13px;color:#888;margin-bottom:20px;">
             <a href="@Url.Action("Index","TrangChu")"
-               style="color:#2cbdb8;text-decoration:none;">
-                Trang chủ
-            </a>
+               style="color:#2cbdb8;text-decoration:none;">Trang chủ</a>
             <i class="fa fa-angle-right mx-2"></i>
             <span style="color:#555;font-weight:600;">Phòng trọ</span>
             @if (!string.IsNullOrEmpty(tinhDangChon))
@@ -409,18 +383,15 @@
             @if (!string.IsNullOrEmpty(ViewBag.TuKhoa as string))
             {
                 <i class="fa fa-angle-right mx-2"></i>
-                <span style="color:#555;">
-                    "@ViewBag.TuKhoa"
-                </span>
+                <span style="color:#555;">"@ViewBag.TuKhoa"</span>
             }
         </div>
 
         <div class="row">
-            @* ── Danh sách (9 cột) ── *@
-            <div class="col-lg-9">
 
-                <div class="d-flex justify-content-between align-items-center
-                             mb-3">
+            @* ── Danh sách ── *@
+            <div class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 style="font-weight:700;margin:0;color:#222;">
                         Phòng trọ
                         @if (!string.IsNullOrEmpty(tinhDangChon))
@@ -429,9 +400,7 @@
                         }
                     </h5>
                     <span style="font-size:13px;color:#888;">
-                        <strong style="color:#2cbdb8;">
-                            @ViewBag.TongKetQua
-                        </strong> kết quả
+                        <strong style="color:#2cbdb8;">@ViewBag.TongKetQua</strong> kết quả
                     </span>
                 </div>
 
@@ -442,13 +411,9 @@
                         <i class="fa fa-home"
                            style="font-size:60px;color:#ddd;
                                   display:block;margin-bottom:20px;"></i>
-                        <h5 style="color:#999;">
-                            Không tìm thấy phòng nào phù hợp.
-                        </h5>
+                        <h5 style="color:#999;">Không tìm thấy phòng nào phù hợp.</h5>
                         <a href="@Url.Action("DanhSach","PhongTro")"
-                           style="color:#2cbdb8;">
-                            Xem tất cả phòng
-                        </a>
+                           style="color:#2cbdb8;">Xem tất cả phòng</a>
                     </div>
                 }
                 else
@@ -457,32 +422,26 @@
                         @foreach (var phong in Model)
                         {
                             var dsAnh = phong.HinhAnhPhongs.ToList();
-                            var anh = dsAnh.FirstOrDefault(
-                                            x => x.LaDaiDien && x.TrangThai)
+                            var anh = dsAnh.FirstOrDefault(x => x.LaDaiDien && x.TrangThai)
                                         ?? dsAnh.FirstOrDefault(x => x.TrangThai);
                             string anhUrl = anh != null
-                                ? Url.Content("~/Content/images/phongs/"
-                                              + anh.TenFile)
+                                ? Url.Content("~/Content/images/phongs/" + anh.TenFile)
                                 : "/Content/Home/img/properties/property-1.jpg";
 
                             <div class="col-lg-6 col-md-6">
                                 <div class="room-card">
                                     <a href="@Url.Action("ChiTiet","PhongTro",
                                                new { maPhong = phong.MaPhong })">
-                                        <img class="room-card-img"
-                                             src="@anhUrl"
+                                        <img class="room-card-img" src="@anhUrl"
                                              alt="Phòng @phong.SoPhong" />
                                     </a>
                                     <div class="room-card-body">
-                                        <span class="room-card-tag">
-                                            Còn trống
-                                        </span>
+                                        <span class="room-card-tag">Còn trống</span>
                                         <div class="room-card-title">
                                             Phòng @phong.SoPhong
                                             @if (phong.ToaNha != null)
                                             {
-                                                <span style="font-weight:400;
-                                                             color:#888;">
+                                                <span style="font-weight:400;color:#888;">
                                                     — @phong.ToaNha.TenToaNha
                                                 </span>
                                             }
@@ -491,8 +450,7 @@
                                             <i class="fa fa-map-marker mr-1"
                                                style="color:#2cbdb8;"></i>
                                             @(phong.ToaNha != null
-                                                ? phong.ToaNha.DiaChi + ", "
-                                                  + phong.ToaNha.TinhThanh
+                                                ? phong.ToaNha.DiaChi + ", " + phong.ToaNha.TinhThanh
                                                 : "—")
                                         </div>
                                         <div class="room-card-price">
@@ -502,9 +460,7 @@
                                         <div class="room-card-meta">
                                             <span>
                                                 <i class="fa fa-expand"></i>
-                                                @(phong.DienTich.HasValue
-                                                    ? phong.DienTich.Value + " m²"
-                                                    : "—")
+                                                @(phong.DienTich.HasValue ? phong.DienTich.Value + " m²" : "—")
                                             </span>
                                             <span>
                                                 <i class="fa fa-users"></i>
@@ -517,25 +473,20 @@
                                             <span>
                                                 <i class="fa fa-money"></i>
                                                 @(phong.TienCoc.HasValue
-                                                    ? "Cọc " + String.Format(
-                                                        "{0:N0}", phong.TienCoc) + "đ"
+                                                    ? "Cọc " + String.Format("{0:N0}", phong.TienCoc) + "đ"
                                                     : "Không cọc")
                                             </span>
                                         </div>
-                                        @if (phong.TienIches != null
-                                          && phong.TienIches.Any())
+                                        @if (phong.TienIches != null && phong.TienIches.Any())
                                         {
                                             <div class="room-card-ti">
-                                                @foreach (var ti in
-                                                    phong.TienIches.Take(4))
+                                                @foreach (var ti in phong.TienIches.Take(4))
                                                 {
                                                     <span>@ti.TenTienIch</span>
                                                 }
                                                 @if (phong.TienIches.Count > 4)
                                                 {
-                                                    <span>
-                                                        +@(phong.TienIches.Count - 4)
-                                                    </span>
+                                                    <span>+@(phong.TienIches.Count - 4)</span>
                                                 }
                                             </div>
                                         }
@@ -551,21 +502,16 @@
                         }
                     </div>
 
-                    @* Phân trang *@
                     if (Model.PageCount > 1)
                     {
                         <div class="hh-pager">
                             @if (Model.HasPreviousPage)
                             {
                                 <a href="@Url.Action("DanhSach", new {
-                                    page        = Model.PageNumber - 1,
-                                    tuKhoa      = ViewBag.TuKhoa,
-                                    tinhThanh   = ViewBag.TinhThanh,
-                                    phuongXa    = ViewBag.PhuongXa,
-                                    giaMin      = ViewBag.GiaMin,
-                                    giaMax      = ViewBag.GiaMax,
-                                    dienTichMin = ViewBag.DienTichMin,
-                                    soNguoi     = ViewBag.SoNguoi })">
+                                    page=Model.PageNumber-1, tuKhoa=ViewBag.TuKhoa,
+                                    tinhThanh=ViewBag.TinhThanh, phuongXa=ViewBag.PhuongXa,
+                                    giaMin=ViewBag.GiaMin, giaMax=ViewBag.GiaMax,
+                                    dienTichMin=ViewBag.DienTichMin, soNguoi=ViewBag.SoNguoi })">
                                     <i class="fa fa-angle-left"></i>
                                 </a>
                             }
@@ -573,29 +519,21 @@
                             {
                                 <a class="@(i == Model.PageNumber ? "active" : "")"
                                    href="@(i == Model.PageNumber ? "#" :
-                                    Url.Action("DanhSach", new {
-                                        page        = i,
-                                        tuKhoa      = ViewBag.TuKhoa,
-                                        tinhThanh   = ViewBag.TinhThanh,
-                                        phuongXa    = ViewBag.PhuongXa,
-                                        giaMin      = ViewBag.GiaMin,
-                                        giaMax      = ViewBag.GiaMax,
-                                        dienTichMin = ViewBag.DienTichMin,
-                                        soNguoi     = ViewBag.SoNguoi }))">
+                                       Url.Action("DanhSach", new {
+                                           page=i, tuKhoa=ViewBag.TuKhoa,
+                                           tinhThanh=ViewBag.TinhThanh, phuongXa=ViewBag.PhuongXa,
+                                           giaMin=ViewBag.GiaMin, giaMax=ViewBag.GiaMax,
+                                           dienTichMin=ViewBag.DienTichMin, soNguoi=ViewBag.SoNguoi }))">
                                     @i
                                 </a>
                             }
                             @if (Model.HasNextPage)
                             {
                                 <a href="@Url.Action("DanhSach", new {
-                                    page        = Model.PageNumber + 1,
-                                    tuKhoa      = ViewBag.TuKhoa,
-                                    tinhThanh   = ViewBag.TinhThanh,
-                                    phuongXa    = ViewBag.PhuongXa,
-                                    giaMin      = ViewBag.GiaMin,
-                                    giaMax      = ViewBag.GiaMax,
-                                    dienTichMin = ViewBag.DienTichMin,
-                                    soNguoi     = ViewBag.SoNguoi })">
+                                    page=Model.PageNumber+1, tuKhoa=ViewBag.TuKhoa,
+                                    tinhThanh=ViewBag.TinhThanh, phuongXa=ViewBag.PhuongXa,
+                                    giaMin=ViewBag.GiaMin, giaMax=ViewBag.GiaMax,
+                                    dienTichMin=ViewBag.DienTichMin, soNguoi=ViewBag.SoNguoi })">
                                     <i class="fa fa-angle-right"></i>
                                 </a>
                             }
@@ -604,53 +542,42 @@
                 }
             </div>
 
-            @* ── Sidebar (3 cột) ── *@
+            @* ── Sidebar ── *@
             <div class="col-lg-3">
-
                 <div class="hh-sidebar-card">
                     <h5 class="hh-sidebar-title">
-                        <i class="fa fa-star mr-2"
-                           style="color:#2cbdb8;"></i>Phòng Nổi Bật
+                        <i class="fa fa-star mr-2" style="color:#2cbdb8;"></i>Phòng Nổi Bật
                     </h5>
                     @foreach (var p in dsNoiBat)
                     {
                         var dsAnhP = p.HinhAnhPhongs.ToList();
-                        var anhP = dsAnhP.FirstOrDefault(
-                                         x => x.LaDaiDien && x.TrangThai)
+                        var anhP = dsAnhP.FirstOrDefault(x => x.LaDaiDien && x.TrangThai)
                                      ?? dsAnhP.FirstOrDefault(x => x.TrangThai);
                         string anhPUrl = anhP != null
-                            ? Url.Content("~/Content/images/phongs/"
-                                          + anhP.TenFile)
+                            ? Url.Content("~/Content/images/phongs/" + anhP.TenFile)
                             : "/Content/Home/img/properties/best-agent-1.jpg";
 
-                        <a href="@Url.Action("ChiTiet","PhongTro",
-                                   new { maPhong = p.MaPhong })"
+                        <a href="@Url.Action("ChiTiet","PhongTro", new { maPhong=p.MaPhong })"
                            style="display:flex;gap:12px;margin-bottom:14px;
-                                  padding-bottom:14px;
-                                  border-bottom:1px solid #f0f0f0;
+                                  padding-bottom:14px;border-bottom:1px solid #f0f0f0;
                                   text-decoration:none;">
                             <img src="@anhPUrl" alt=""
-                                 style="width:72px;height:60px;
-                                        object-fit:cover;border-radius:6px;
-                                        flex-shrink:0;" />
+                                 style="width:72px;height:60px;object-fit:cover;
+                                        border-radius:6px;flex-shrink:0;" />
                             <div>
-                                <div style="font-size:13px;font-weight:700;
-                                            color:#222;margin-bottom:2px;">
+                                <div style="font-size:13px;font-weight:700;color:#222;margin-bottom:2px;">
                                     Phòng @p.SoPhong
                                 </div>
-                                <div style="font-size:11px;color:#888;
-                                            margin-bottom:4px;">
+                                <div style="font-size:11px;color:#888;margin-bottom:4px;">
                                     @(p.ToaNha?.TenToaNha ?? "")
                                 </div>
-                                <div style="font-size:13px;font-weight:700;
-                                            color:#2cbdb8;">
+                                <div style="font-size:13px;font-weight:700;color:#2cbdb8;">
                                     @String.Format("{0:N0}", p.GiaThue)đ
                                 </div>
                             </div>
                         </a>
                     }
                 </div>
-
             </div>
 
         </div>
@@ -659,60 +586,74 @@
 
 @section Scripts {
     <script>
-var urlPhuongXa = '@Url.Action("LayPhuongXa","PhongTro")';
+// ── Cấu hình ────────────────────────────────────────────────
+var _urlPX     = '@Url.Action("LayPhuongXa","PhongTro")';
+var _tinh      = '@Html.Raw((ViewBag.TinhThanh ?? "").ToString().Replace("'","\\\'"))';
+var _phuong    = '@Html.Raw((ViewBag.PhuongXa  ?? "").ToString().Replace("'","\\\'"))';
 
+var selTinh   = document.getElementById('selTinhThanh');
+var selPhuong = document.getElementById('selPhuongXa');
+
+// ── Hàm tải phường/xã ────────────────────────────────────────
 function loadPhuongXa(tinh, phuongChon) {
-    var selPX = $('#selPhuongXa');
-
     if (!tinh) {
-        selPX.prop('disabled', true)
-             .css({ background: '#e0e0e0', cursor: 'not-allowed' })
-             .html('<option value="">-- Tất cả --</option>');
+        selPhuong.disabled          = true;
+        selPhuong.style.cursor      = 'not-allowed';
+        selPhuong.style.background  = '#e0e0e0';
+        selPhuong.innerHTML         = '<option value="">-- Chọn tỉnh trước --</option>';
         return;
     }
 
-    selPX.html('<option value="">Đang tải...</option>')
-         .prop('disabled', true);
+    selPhuong.disabled         = true;
+    selPhuong.style.cursor     = 'wait';
+    selPhuong.style.background = '#f0f0f0';
+    selPhuong.innerHTML        = '<option value="">Đang tải...</option>';
 
-    $.getJSON(urlPhuongXa, { tinhThanh: tinh },
-        function (ds) {
-            var opts = '<option value="">-- Tất cả --</option>';
-            if (ds && ds.length > 0) {
-                $.each(ds, function (i, px) {
-                    var sel = (px === phuongChon)
-                        ? ' selected="selected"' : '';
-                    opts += '<option value="' + px + '"'
-                          + sel + '>' + px + '</option>';
-                });
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', _urlPX + '?tinhThanh=' + encodeURIComponent(tinh), true);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            try {
+                var ds   = JSON.parse(xhr.responseText);
+                var html = '<option value="">-- Tất cả --</option>';
+                for (var i = 0; i < ds.length; i++) {
+                    var sel = ds[i] === phuongChon ? ' selected' : '';
+                    html += '<option value="' + ds[i] + '"' + sel + '>' + ds[i] + '</option>';
+                }
+                selPhuong.innerHTML        = html;
+                selPhuong.disabled         = false;
+                selPhuong.style.cursor     = 'pointer';
+                selPhuong.style.background = '#fff';
+            } catch (e) {
+                fallback();
             }
-            selPX.html(opts)
-                 .prop('disabled', false)
-                 .css({ background: '#fff', cursor: 'pointer' });
+        } else {
+            fallback();
         }
-    ).fail(function () {
-        selPX.html('<option value="">-- Tất cả --</option>')
-             .prop('disabled', false)
-             .css({ background: '#fff', cursor: 'pointer' });
-    });
+    };
+
+    xhr.onerror = fallback;
+    xhr.send();
+
+    function fallback() {
+        selPhuong.innerHTML        = '<option value="">-- Tất cả --</option>';
+        selPhuong.disabled         = false;
+        selPhuong.style.cursor     = 'pointer';
+        selPhuong.style.background = '#fff';
+    }
 }
 
-// ✅ Chạy ngay khi DOM sẵn sàng
-$(function () {
-    // Lấy giá trị tỉnh/phường từ Razor (server-side)
-    var tinhHienTai   = '@Html.Raw(ViewBag.TinhThanh ?? "")';
-    var phuongHienTai = '@Html.Raw(ViewBag.PhuongXa ?? "")';
+// ── Khởi tạo khi trang load ─────────────────────────────────
+if (_tinh) {
+    selTinh.value = _tinh;
+    loadPhuongXa(_tinh, _phuong);
+}
 
-    // ✅ Set lại selected cho select tỉnh (phòng trường hợp bị reset)
-    if (tinhHienTai) {
-        $('#selTinhThanh').val(tinhHienTai);
-        // Load phường/xã ngay lập tức
-        loadPhuongXa(tinhHienTai, phuongHienTai);
-    }
-});
-
-// Khi đổi tỉnh
-$('#selTinhThanh').on('change', function () {
-    loadPhuongXa($(this).val(), '');
+// ── Lắng nghe sự kiện đổi tỉnh ──────────────────────────────
+selTinh.addEventListener('change', function () {
+    loadPhuongXa(this.value, '');
 });
     </script>
 }

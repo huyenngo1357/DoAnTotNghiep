@@ -1,26 +1,53 @@
-﻿@using PagedList.Mvc
+﻿@using System.Collections.Generic
+@using System.Linq
+@using HappyHouse.Models
+@using PagedList.Mvc
 @model PagedList.IPagedList<HappyHouse.Models.ChiSoDienNuoc>
 
 @{
-    ViewBag.Title = "Chi so dien nuoc";
+    ViewBag.Title = "Chỉ số điện nước";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    // Gộp Điện + Nước cùng tháng + cùng hợp đồng vào 1 nhóm
+    var nhomTheoThang = Model
+        .GroupBy(x => new { x.MaHopDong, x.ThangGhi.Year, x.ThangGhi.Month })
+        .OrderByDescending(g => g.Key.Year)
+        .ThenByDescending(g => g.Key.Month)
+        .ThenBy(g => g.Key.MaHopDong)
+        .ToList();
 }
 
 @section breadTitle {
-    <h2 style="font-weight:bold;color:black">
-        Chỉ số điện nước
-    </h2>
+    <h2 style="font-weight:bold;color:black">Chỉ số điện nước</h2>
 }
 @section breadLink {
     <a href="#">Danh sách chỉ số</a>
 }
 
-@using (Html.BeginForm("DanhSach", "ChuTroChiSo",
-    FormMethod.Post))
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        <i class="fa fa-check-circle mr-2"></i>@TempData["Success"]
+        <button type="button" class="close" data-dismiss="alert">
+            <span>&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">
+        <i class="fa fa-exclamation-circle mr-2"></i>@TempData["Error"]
+        <button type="button" class="close" data-dismiss="alert">
+            <span>&times;</span>
+        </button>
+    </div>
+}
+
+@* ── Bộ lọc ── *@
+@using (Html.BeginForm("DanhSach", "ChuTroChiSo", FormMethod.Post))
 {
     <fieldset class="border p-3 shadow-sm mb-3">
-        <legend class="w-auto px-2"
-                style="font-weight:bold;color:black">
+        <legend class="w-auto px-2" style="font-weight:bold;color:black">
             Tìm kiếm
         </legend>
         <div class="row">
@@ -44,196 +71,407 @@
                     new { @class = "form-control" })
             </div>
             <div class="col-md-3 d-flex align-items-center">
-                <input type="submit"
-                       class="btn btn-primary"
-                       value="Tìm kiếm"
-                       style="margin-right:8px" />
+                <input type="submit" class="btn btn-primary"
+                       value="Tìm kiếm" style="margin-right:8px" />
                 <a href="@Url.Action("DanhSach","ChuTroChiSo")"
-                   class="btn btn-secondary">
-                    Làm mới
-                </a>
+                   class="btn btn-secondary">Làm mới</a>
             </div>
         </div>
     </fieldset>
 }
 
-<p style="text-align:right;margin:10px">
-    @Html.ActionLink("+ Ghi chỉ số tháng mới",
-        "GhiChiSo", null,
-        new { @class = "btn btn-primary" })
-</p>
+<div style="display:flex;justify-content:space-between;
+            align-items:center;margin-bottom:12px;">
+    <span class="text-muted" style="font-size:13px;">
+        <i class="fa fa-info-circle mr-1"></i>
+        Hiển thị <strong>@nhomTheoThang.Count</strong> tháng
+        (tổng @Model.Count bản ghi)
+    </span>
+    @Html.ActionLink("+ Ghi chỉ số tháng mới", "GhiChiSo", null,
+        new { @class = "btn btn-primary btn-sm" })
+</div>
 
-<table class="table table-bordered table-striped"
-       width="100%">
-    <thead>
-        <tr style="text-align:center;color:black">
-            <th>Tháng ghi</th>
-            <th>Phòng — Tòa nhà</th>
-            <th>Khách hàng</th>
-            <th>Loại</th>
-            <th>Chỉ số đầu</th>
-            <th>Chỉ số cuối</th>
-            <th>Tiêu thụ</th>
-            <th>Đơn giá</th>
-            <th>Thành tiền</th>
-            <th>Ảnh</th>
-            <th style="width:110px">Thao tác</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (!Model.Any())
-        {
-            <tr>
-                <td colspan="11">
-                    <div style="text-align:center;
-                                padding:40px 20px;">
-                        <i class="fas fa-tachometer-alt"
-                           style="font-size:48px;color:#b0b8c9;
-                                  display:block;
-                                  margin-bottom:12px;"></i>
-                        <p style="color:#9aa0ac;
-                                  font-size:15px;margin:0;">
-                            Chưa có chỉ số nào.
-                        </p>
-                    </div>
-                </td>
+@* ── Bảng chính ── *@
+<div class="table-responsive">
+    <table class="table table-bordered mb-0"
+           style="font-size:13px;min-width:900px;">
+        <thead>
+            <tr style="text-align:center;vertical-align:middle;
+                       background:#f8f9fc;">
+                <th rowspan="2" style="vertical-align:middle;
+                                       min-width:80px;">
+                    Tháng
+                </th>
+                <th rowspan="2" style="vertical-align:middle;
+                                       min-width:140px;">
+                    Phòng — Tòa nhà
+                </th>
+                <th rowspan="2" style="vertical-align:middle;
+                                       min-width:120px;">
+                    Khách hàng
+                </th>
+
+                @* ── Header Điện ── *@
+                <th colspan="4"
+                    style="background:#fff8e1;color:#e65100;
+                           border-bottom:2px solid #ffcc80;">
+                    <i class="fa fa-bolt mr-1"></i> Điện
+                </th>
+
+                @* ── Header Nước ── *@
+                <th colspan="4"
+                    style="background:#e3f2fd;color:#0277bd;
+                           border-bottom:2px solid #90caf9;">
+                    <i class="fa fa-tint mr-1"></i> Nước
+                </th>
+
+                <th rowspan="2"
+                    style="vertical-align:middle;min-width:80px;">
+                    Ảnh
+                </th>
+                <th rowspan="2"
+                    style="vertical-align:middle;min-width:130px;">
+                    Thao tác
+                </th>
             </tr>
-        }
-        else
-        {
-            foreach (var item in Model)
+            <tr style="text-align:center;font-size:11px;
+                       background:#f8f9fc;">
+                <th style="background:#fff8e1;color:#888;">
+                    Đầu → Cuối
+                </th>
+                <th style="background:#fff8e1;color:#888;">kWh</th>
+                <th style="background:#fff8e1;color:#888;">Đơn giá</th>
+                <th style="background:#fff8e1;color:#e65100;
+                           font-weight:700;">
+                    Thành tiền
+                </th>
+
+                <th style="background:#e3f2fd;color:#888;">
+                    Đầu → Cuối
+                </th>
+                <th style="background:#e3f2fd;color:#888;">m³</th>
+                <th style="background:#e3f2fd;color:#888;">Đơn giá</th>
+                <th style="background:#e3f2fd;color:#0277bd;
+                           font-weight:700;">
+                    Thành tiền
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!nhomTheoThang.Any())
             {
-                bool laDien = item.LoaiDichVu == "Dien";
-
-                var khach = item.HopDong?.NguoiDung1;
-
-                <tr style="vertical-align:middle">
-                    <td style="text-align:center;
-                               font-weight:bold">
-                        @item.ThangGhi.ToString("MM/yyyy")
-                    </td>
-                    <td>
-                        @if (item.HopDong?.PhongTro != null)
-                        {
-                            <strong>
-                                @item.HopDong.PhongTro.SoPhong
-                            </strong>
-                            <br />
-                            <small class="text-muted">
-                                @item.HopDong.PhongTro.ToaNha.TenToaNha
-                            </small>
-                        }
-                    </td>
-                    <td>
-                        @if (khach != null)
-                        {
-                            <span>@khach.HoTen</span>
-                            <br />
-                            <small class="text-muted">
-                                @khach.SoDienThoai
-                            </small>
-                        }
-                        else
-                        {
-                            <span class="text-muted">—</span>
-                        }
-                    </td>
-                    <td style="text-align:center">
-                        @if (laDien)
-                        {
-                            <span class="badge badge-warning
-                                         px-2 py-1">
-                                <i class="fa fa-bolt mr-1"></i>
-                                Điện
-                            </span>
-                        }
-                        else
-                        {
-                            <span class="badge badge-info
-                                         px-2 py-1">
-                                <i class="fa fa-tint mr-1"></i>
-                                Nước
-                            </span>
-                        }
-                    </td>
-                    <td style="text-align:right">
-                        @String.Format("{0:N0}",
-                            item.ChiSoDau)
-                    </td>
-                    <td style="text-align:right">
-                        @String.Format("{0:N0}",
-                            item.ChiSoCuoi)
-                    </td>
-                    <td style="text-align:right;
-                               font-weight:bold">
-                        @(item.SoTieuThu.HasValue
-                            ? String.Format("{0:N0}",
-                                item.SoTieuThu.Value)
-                            : "—")
-                        <small class="text-muted">
-                            @(laDien ? "kWh" : "m³")
-                        </small>
-                    </td>
-                    <td style="text-align:right">
-                        @String.Format("{0:N0}",
-                            item.DonGia)đ
-                    </td>
-                    <td style="text-align:right;
-                               color:#1cc88a;
-                               font-weight:bold">
-                        @(item.ThanhTien.HasValue
-                            ? String.Format("{0:N0}",
-                                item.ThanhTien.Value) + "đ"
-                            : "—")
-                    </td>
-                    <td style="text-align:center">
-                        @if (!string.IsNullOrEmpty(
-                            item.AnhDongHo))
-                        {
-                            <a href="~/Content/images/dongho/@item.AnhDongHo"
-                               target="_blank">
-                                <img src="~/Content/images/dongho/@item.AnhDongHo"
-                                     style="width:45px;height:45px;
-                                            object-fit:cover;
-                                            border-radius:4px;" />
-                            </a>
-                        }
-                        else
-                        {
-                            <span class="text-muted">—</span>
-                        }
-                    </td>
-                    <td style="text-align:center">
-                        @Html.ActionLink("Sửa", "SuaThongTin",
-                            new { maChiSo = item.MaChiSo },
-                            new
-                                 {
-                                     @class =
-                                "btn btn-warning btn-sm mb-1"
-                                 })
-
-                        @using (Html.BeginForm("Xoa",
-                            "ChuTroChiSo", FormMethod.Post,
-                            new { style = "display:inline" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <input type="hidden"
-                                   name="maChiSo"
-                                   value="@item.MaChiSo" />
-                            <button type="submit"
-                                    class="btn btn-danger
-                                           btn-sm mb-1"
-                                    onclick="return confirm(
-                                        'Xóa chỉ số này?')">
-                                Xóa
-                            </button>
-                        }
+                <tr>
+                    <td colspan="12">
+                        <div style="text-align:center;padding:48px 0;">
+                            <i class="fas fa-tachometer-alt"
+                               style="font-size:48px;color:#ddd;
+                                      display:block;margin-bottom:12px;"></i>
+                            <p style="color:#aaa;font-size:15px;margin:0;">
+                                Chưa có chỉ số nào.
+                            </p>
+                        </div>
                     </td>
                 </tr>
             }
-        }
-    </tbody>
-</table>
+            else
+            {
+                foreach (var nhom in nhomTheoThang)
+                {
+                    var dien = nhom.FirstOrDefault(x => x.LoaiDichVu == "Dien");
+                    var nuoc = nhom.FirstOrDefault(x => x.LoaiDichVu == "Nuoc");
+
+                    // Lấy thông tin phòng/khách từ bản ghi đầu tiên trong nhóm
+                    var first = nhom.First();
+                    var phong = first.HopDong?.PhongTro;
+                    var khach = first.HopDong?.NguoiDung1;
+                    var thang = new DateTime(nhom.Key.Year, nhom.Key.Month, 1);
+
+                    // Tổng tiền điện + nước
+                    decimal tongDienNuoc = (dien?.ThanhTien ?? 0)
+                                         + (nuoc?.ThanhTien ?? 0);
+
+                    <tr style="vertical-align:middle;">
+
+                        @* ── Tháng ── *@
+                        <td style="text-align:center;font-weight:700;
+                                   font-size:14px;">
+                            <div style="color:#333;">
+                                T@(thang.Month.ToString("D2"))
+                            </div>
+                            <div style="font-size:11px;color:#aaa;
+                                        font-weight:400;">
+                                @thang.Year
+                            </div>
+                        </td>
+
+                        @* ── Phòng ── *@
+                        <td>
+                            @if (phong != null)
+                            {
+                                <strong>Phòng @phong.SoPhong</strong>
+                                <br />
+                                <small class="text-muted">
+                                    @phong.ToaNha.TenToaNha
+                                </small>
+                            }
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                        </td>
+
+                        @* ── Khách hàng ── *@
+                        <td>
+                            @if (khach != null)
+                            {
+                                <span>@khach.HoTen</span>
+                                <br />
+                                <small class="text-muted">@khach.SoDienThoai</small>
+                            }
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                        </td>
+
+                        @* ── Điện: Đầu → Cuối ── *@
+                        <td style="text-align:center;background:#fffef7;">
+                            @if (dien != null)
+                            {
+                                <span style="color:#555;">
+                                    @String.Format("{0:N0}", dien.ChiSoDau)
+                                    <i class="fa fa-arrow-right mx-1"
+                                       style="font-size:10px;color:#ccc;"></i>
+                                    @String.Format("{0:N0}", dien.ChiSoCuoi)
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                        </td>
+
+                        @* ── Điện: kWh ── *@
+                        <td style="text-align:center;background:#fffef7;
+                                   font-weight:700;color:#e65100;">
+                            @if (dien?.SoTieuThu.HasValue == true)
+                            {
+                                @String.Format("{0:N0}", dien.SoTieuThu.Value)
+                                <small style="font-weight:400;color:#aaa;
+                                              font-size:10px;">kWh</small>
+                            }
+                            else
+                            { <span class="text-muted">—</span>}
+                        </td>
+
+                        @* ── Điện: Đơn giá ── *@
+                        <td style="text-align:right;background:#fffef7;
+                                   font-size:12px;color:#888;">
+                            @if (dien != null)
+                            {
+                                @String.Format("{0:N0}", dien.DonGia)<text>đ</text>
+                            }
+                            else
+                            { <span class="text-muted">—</span>}
+                        </td>
+
+                        @* ── Điện: Thành tiền ── *@
+                        <td style="text-align:right;background:#fff8e1;
+                                   font-weight:700;color:#e65100;">
+                            @if (dien?.ThanhTien.HasValue == true)
+                            {
+                                @String.Format("{0:N0}", dien.ThanhTien.Value)<text>đ</text>
+                            }
+                            else
+                            { <span class="text-muted">—</span>}
+                        </td>
+
+                        @* ── Nước: Đầu → Cuối ── *@
+                        <td style="text-align:center;background:#f5fbff;">
+                            @if (nuoc != null)
+                            {
+                                <span style="color:#555;">
+                                    @String.Format("{0:N0}", nuoc.ChiSoDau)
+                                    <i class="fa fa-arrow-right mx-1"
+                                       style="font-size:10px;color:#ccc;"></i>
+                                    @String.Format("{0:N0}", nuoc.ChiSoCuoi)
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                        </td>
+
+                        @* ── Nước: m³ ── *@
+                        <td style="text-align:center;background:#f5fbff;
+                                   font-weight:700;color:#0277bd;">
+                            @if (nuoc?.SoTieuThu.HasValue == true)
+                            {
+                                @String.Format("{0:N0}", nuoc.SoTieuThu.Value)
+                                <small style="font-weight:400;color:#aaa;
+                                              font-size:10px;">m³</small>
+                            }
+                            else
+                            { <span class="text-muted">—</span>}
+                        </td>
+
+                        @* ── Nước: Đơn giá ── *@
+                        <td style="text-align:right;background:#f5fbff;
+                                   font-size:12px;color:#888;">
+                            @if (nuoc != null)
+                            {
+                                @String.Format("{0:N0}", nuoc.DonGia)<text>đ</text>
+                            }
+                            else
+                            { <span class="text-muted">—</span>}
+                        </td>
+
+                        @* ── Nước: Thành tiền ── *@
+                        <td style="text-align:right;background:#e3f2fd;
+                                   font-weight:700;color:#0277bd;">
+                            @if (nuoc?.ThanhTien.HasValue == true)
+                            {
+                                @String.Format("{0:N0}", nuoc.ThanhTien.Value)<text>đ</text>
+                            }
+                            else
+                            { <span class="text-muted">—</span>}
+                        </td>
+
+                        @* ── Ảnh đồng hồ ── *@
+                        <td style="text-align:center;">
+                            <div style="display:flex;gap:4px;justify-content:center;">
+                                @if (dien != null && !string.IsNullOrEmpty(dien.AnhDongHo))
+                                {
+                                    <a href="~/Content/images/dongho/@dien.AnhDongHo"
+                                       target="_blank"
+                                       title="Ảnh đồng hồ điện">
+                                        <img src="~/Content/images/dongho/@dien.AnhDongHo"
+                                             style="width:36px;height:36px;
+                                                    object-fit:cover;border-radius:4px;
+                                                    border:2px solid #ffcc80;" />
+                                    </a>
+                                }
+                                @if (nuoc != null && !string.IsNullOrEmpty(nuoc.AnhDongHo))
+                                {
+                                    <a href="~/Content/images/dongho/@nuoc.AnhDongHo"
+                                       target="_blank"
+                                       title="Ảnh đồng hồ nước">
+                                        <img src="~/Content/images/dongho/@nuoc.AnhDongHo"
+                                             style="width:36px;height:36px;
+                                                    object-fit:cover;border-radius:4px;
+                                                    border:2px solid #90caf9;" />
+                                    </a>
+                                }
+                                @if ((dien == null || string.IsNullOrEmpty(dien.AnhDongHo))
+                                  && (nuoc == null || string.IsNullOrEmpty(nuoc.AnhDongHo)))
+                                {
+                                    <span class="text-muted">—</span>
+                                }
+                            </div>
+                        </td>
+
+                        @* ── Thao tác ── *@
+                        <td style="text-align:center;">
+                            <div style="display:flex;flex-direction:column;gap:3px;">
+
+                                @* Điện *@
+                                @if (dien != null)
+                                {
+                                    <div style="display:flex;gap:3px;
+                                                justify-content:center;">
+                                        @Html.ActionLink("✏ Điện", "SuaThongTin",
+                                            new { maChiSo = dien.MaChiSo },
+                                            new
+                                                 {
+                                                     @class = "btn btn-warning btn-xs",
+                                                  style = "font-size:11px;padding:2px 7px;"
+                                                 })
+
+                                        @using (Html.BeginForm("Xoa", "ChuTroChiSo",
+                                            FormMethod.Post,
+                                            new { style = "display:inline" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="maChiSo"
+                                                   value="@dien.MaChiSo" />
+                                            <button type="submit"
+                                                    class="btn btn-danger btn-xs"
+                                                    style="font-size:11px;padding:2px 7px;"
+                                                    onclick="return confirm('Xóa chỉ số điện tháng @(new DateTime(nhom.Key.Year, nhom.Key.Month, 1).ToString("MM/yyyy"))?')">
+                                                🗑 Điện
+                                            </button>
+                                        }
+                                    </div>
+                                }
+
+                                @* Nước *@
+                                @if (nuoc != null)
+                                {
+                                    <div style="display:flex;gap:3px;
+                                                justify-content:center;">
+                                        @Html.ActionLink("✏ Nước", "SuaThongTin",
+                                            new { maChiSo = nuoc.MaChiSo },
+                                            new
+                                                 {
+                                                     @class = "btn btn-info btn-xs",
+                                                  style = "font-size:11px;padding:2px 7px;color:#fff;"
+                                                 })
+
+                                        @using (Html.BeginForm("Xoa", "ChuTroChiSo",
+                                            FormMethod.Post,
+                                            new { style = "display:inline" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="maChiSo"
+                                                   value="@nuoc.MaChiSo" />
+                                            <button type="submit"
+                                                    class="btn btn-danger btn-xs"
+                                                    style="font-size:11px;padding:2px 7px;"
+                                                    onclick="return confirm('Xóa chỉ số nước tháng @(new DateTime(nhom.Key.Year, nhom.Key.Month, 1).ToString("MM/yyyy"))?')">
+                                                🗑 Nước
+                                            </button>
+                                        }
+                                    </div>
+                                }
+
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    @* ── Dòng tổng kết cuối mỗi nhóm ── *@
+                    if (tongDienNuoc > 0)
+                    {
+                        <tr style="background:#f8fffe;font-size:12px;">
+                            <td colspan="6"
+                                style="text-align:right;color:#888;
+                                       border-top:none;padding:4px 12px;">
+                                Tổng điện + nước tháng
+                                @(new DateTime(nhom.Key.Year,
+                                    nhom.Key.Month, 1).ToString("MM/yyyy")):
+                            </td>
+                            <td colspan="4"
+                                style="text-align:right;font-weight:700;
+                                       font-size:14px;color:#1cc88a;
+                                       border-top:none;padding:4px 12px;">
+                                @String.Format("{0:N0}", tongDienNuoc)đ
+                            </td>
+                            <td colspan="2"
+                                style="border-top:none;"></td>
+                        </tr>
+                        <tr style="height:8px;background:#f7f8fa;">
+                            <td colspan="12"
+                                style="padding:0;border:none;
+                                       border-bottom:2px solid #eef0f5;">
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
 
 @if (Model.PageCount > 1)
 {
@@ -247,19 +485,16 @@
             }),
             new PagedListRenderOptions
             {
-                UlElementClasses = new[]
-                {
-                    "pagination", "justify-content-center"
-                },
+                UlElementClasses = new[] { "pagination", "justify-content-center" },
                 LiElementClasses = new[] { "page-item" }
             })
     </div>
 }
 
-<script>
-    setTimeout(function () {
-        $('.alert').fadeOut('slow', function () {
-            $(this).remove();
-        });
-    }, 1500);
-</script>
+@section Scripts {
+    <script>
+        setTimeout(function () {
+            $('.alert').fadeOut('slow', function () { $(this).remove(); });
+        }, 3000);
+    </script>
+}
