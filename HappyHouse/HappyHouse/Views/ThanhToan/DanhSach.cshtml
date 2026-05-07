@@ -58,7 +58,7 @@
 
     .hd-card {
         background: #fff;
-        border-radius: 10px;
+        border-radius: 12px;
         box-shadow: 0 2px 14px rgba(0,0,0,.07);
         margin-bottom: 16px;
         overflow: hidden;
@@ -66,7 +66,7 @@
     }
 
         .hd-card:hover {
-            box-shadow: 0 4px 22px rgba(0,0,0,.11);
+            box-shadow: 0 6px 24px rgba(0,0,0,.11);
         }
 
     .hd-card-header {
@@ -75,7 +75,6 @@
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid #f0f0f0;
-        background: #f8fffe;
     }
 
     .hd-card-body {
@@ -86,6 +85,38 @@
         padding: 12px 20px;
         background: #fafafa;
         border-top: 1px solid #f0f0f0;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    .hd-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 13px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: .3px;
+        white-space: nowrap;
+    }
+
+    .chip {
+        display: inline-block;
+        font-size: 12px;
+        padding: 3px 9px;
+        border-radius: 4px;
+    }
+
+    /* Card đặc biệt cho tiền cọc */
+    .hd-card-coc .hd-card-header {
+        background: #f5f0ff;
+    }
+
+    .hd-card-coc .hd-card-body {
+        background: #fdfbff;
     }
 </style>
 
@@ -93,8 +124,7 @@
     <div class="container">
 
         <div style="font-size:13px;color:#888;margin-bottom:20px;">
-            <a href="@Url.Action("Index","TrangChu")"
-               style="color:#2cbdb8;">Trang chủ</a>
+            <a href="@Url.Action("Index","TrangChu")" style="color:#2cbdb8;">Trang chủ</a>
             <i class="fa fa-angle-right mx-2"></i>
             <span style="color:#555;font-weight:600;">Hóa Đơn</span>
         </div>
@@ -109,22 +139,19 @@
                     @if (user != null)
                     {
                         <div style="padding:20px;text-align:center;
-                                    background:#f0fafa;
-                                    border-bottom:1px solid #c8eeed;">
+                                    background:#f0fafa;border-bottom:1px solid #c8eeed;">
                             @if (!string.IsNullOrEmpty(user.AnhDaiDien))
                             {
                                 <img src="~/Content/images/avatars/@user.AnhDaiDien"
                                      style="width:60px;height:60px;border-radius:50%;
-                                            object-fit:cover;
-                                            border:2px solid #2cbdb8;
+                                            object-fit:cover;border:2px solid #2cbdb8;
                                             margin-bottom:10px;" />
                             }
                             else
                             {
                                 <div style="width:60px;height:60px;border-radius:50%;
                                             background:#2cbdb8;color:#fff;font-size:24px;
-                                            font-weight:700;line-height:60px;
-                                            margin:0 auto 10px;">
+                                            font-weight:700;line-height:60px;margin:0 auto 10px;">
                                     @user.HoTen.Substring(0, 1).ToUpper()
                                 </div>
                             }
@@ -139,15 +166,19 @@
                         <a href="@Url.Action("DanhSach","HopDong")">
                             <i class="fa fa-file-text-o mr-2"></i>Hợp Đồng
                         </a>
-                        <a href="@Url.Action("DanhSach","ThanhToan")"
-                           class="active">
+                        <a href="@Url.Action("DanhSach","ThanhToan")" class="active">
                             <i class="fa fa-money mr-2"></i>Hóa Đơn
-                            @if ((int)(ViewBag.SoChuaThanhToan ?? 0) > 0)
+                            @{
+                                int soChuaTT = (int)(ViewBag.SoChuaThanhToan ?? 0);
+                                int soCocChuaNop = (int)(ViewBag.SoCocChuaNop ?? 0);
+                                int tongBadge = soChuaTT + soCocChuaNop;
+                            }
+                            @if (tongBadge > 0)
                             {
                                 <span style="background:#dc3545;color:#fff;
                                              border-radius:50%;padding:1px 6px;
                                              font-size:11px;margin-left:5px;">
-                                    @ViewBag.SoChuaThanhToan
+                                    @tongBadge
                                 </span>
                             }
                         </a>
@@ -164,59 +195,49 @@
 
             @* ── Nội dung ── *@
             <div class="col-lg-9">
-
                 <div style="background:#fff;border-radius:10px;
-                            box-shadow:0 2px 15px rgba(0,0,0,.07);
-                            padding:24px;">
+                            box-shadow:0 2px 15px rgba(0,0,0,.07);padding:24px;">
 
+                    @* Tiêu đề *@
                     <div style="display:flex;justify-content:space-between;
                                 align-items:center;margin-bottom:20px;
-                                padding-bottom:14px;
-                                border-bottom:2px solid #2cbdb8;
+                                padding-bottom:14px;border-bottom:2px solid #2cbdb8;
                                 flex-wrap:wrap;gap:10px;">
                         <h5 style="font-weight:700;color:#222;margin:0;">
-                            <i class="fa fa-money mr-2"
-                               style="color:#2cbdb8;"></i>
+                            <i class="fa fa-money mr-2" style="color:#2cbdb8;"></i>
                             Hóa Đơn Của Tôi
-                            <span style="font-size:13px;color:#999;
-                                         font-weight:400;margin-left:8px;">
+                            <span style="font-size:13px;color:#999;font-weight:400;margin-left:8px;">
                                 (@Model.Count hóa đơn)
                             </span>
                         </h5>
-                        @if ((int)(ViewBag.SoChuaThanhToan ?? 0) > 0)
+                        @if (tongBadge > 0)
                         {
                             <span style="background:#dc3545;color:#fff;
                                          padding:5px 14px;border-radius:20px;
                                          font-size:12px;font-weight:700;">
                                 <i class="fa fa-bell mr-1"></i>
-                                @ViewBag.SoChuaThanhToan cần thanh toán
+                                @tongBadge cần thanh toán
                             </span>
                         }
                     </div>
 
+                    @* Bộ lọc *@
                     <div style="margin-bottom:20px;">
                         @{
                             var ttHienTai = ViewBag.TrangThai as string ?? "";
                             var dsFilter = new[]
                             {
-                                new { Val="",              Label="Tất Cả",
-                                      Icon="fa-list" },
-                                new { Val="ChuaThanhToan", Label="Chưa TT",
-                                      Icon="fa-clock-o" },
-                                new { Val="ChoDuyet",      Label="Chờ Duyệt",
-                                      Icon="fa-hourglass-half" },
-                                new { Val="DaThanhToan",   Label="Đã TT",
-                                      Icon="fa-check-circle" },
-                                new { Val="QuaHan",        Label="Quá Hạn",
-                                      Icon="fa-exclamation-circle" },
+                                new { Val="",              Label="Tất Cả",       Icon="fa-list" },
+                                new { Val="ChuaThanhToan", Label="Chưa TT",      Icon="fa-clock-o" },
+                                new { Val="ChoDuyet",      Label="Chờ Xác Nhận", Icon="fa-hourglass-half" },
+                                new { Val="DaThanhToan",   Label="Đã TT",        Icon="fa-check-circle" },
+                                new { Val="QuaHan",        Label="Quá Hạn",      Icon="fa-exclamation-circle" },
                             };
                         }
                         @foreach (var f in dsFilter)
                         {
-                            <a href="@Url.Action("DanhSach",
-                                       new { trangThai = f.Val })"
-                               class="filter-btn @(ttHienTai == f.Val
-                                   ? "active" : "")">
+                            <a href="@Url.Action("DanhSach", new { trangThai = f.Val })"
+                               class="filter-btn @(ttHienTai == f.Val ? "active" : "")">
                                 <i class="fa @f.Icon mr-1"></i>@f.Label
                             </a>
                         }
@@ -224,22 +245,18 @@
 
                     @if (TempData["Success"] != null)
                     {
-                        <div class="alert alert-success alert-dismissible
-                                    fade show">
-                            @TempData["Success"]
-                            <button type="button" class="close"
-                                    data-dismiss="alert">
+                        <div class="alert alert-success alert-dismissible fade show">
+                            <i class="fa fa-check-circle mr-2"></i>@TempData["Success"]
+                            <button type="button" class="close" data-dismiss="alert">
                                 <span>&times;</span>
                             </button>
                         </div>
                     }
                     @if (TempData["Error"] != null)
                     {
-                        <div class="alert alert-danger alert-dismissible
-                                    fade show">
-                            @TempData["Error"]
-                            <button type="button" class="close"
-                                    data-dismiss="alert">
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="fa fa-exclamation-circle mr-2"></i>@TempData["Error"]
+                            <button type="button" class="close" data-dismiss="alert">
                                 <span>&times;</span>
                             </button>
                         </div>
@@ -258,185 +275,307 @@
                     {
                         foreach (var item in Model)
                         {
-                            string bc, bt;
-                            switch (item.TrangThaiHoaDon)
+                            // ── Nhận biết hóa đơn cọc bằng prefix "COC" ─────────
+                            bool laCoc = item.MaHoaDon != null
+                                      && item.MaHoaDon.StartsWith("COC");
+
+                            // ── Badge trạng thái ─────────────────────────────────
+                            string bc, bt, iconBadge;
+                            if (laCoc)
                             {
-                                case "ChuaThanhToan":
-                                    bc = "#dc3545"; bt = "Chưa Thanh Toán"; break;
-                                case "ChoDuyet":
-                                    bc = "#ffc107"; bt = "Chờ Duyệt"; break;
-                                case "DaThanhToan":
-                                    bc = "#28a745"; bt = "Đã Thanh Toán"; break;
-                                case "QuaHan":
-                                    bc = "#dc3545"; bt = "Quá Hạn"; break;
-                                default:
-                                    bc = "#6c757d";
-                                    bt = item.TrangThaiHoaDon ?? "—"; break;
+                                // Hóa đơn cọc — màu tím
+                                switch (item.TrangThaiHoaDon)
+                                {
+                                    case "DaThanhToan":
+                                        bc = "#6f42c1"; bt = "Cọc Đã Nộp";
+                                        iconBadge = "fa-check-circle"; break;
+                                    case "ChoDuyet":
+                                        bc = "#6f42c1"; bt = "Cọc Chờ Xác Nhận";
+                                        iconBadge = "fa-hourglass-half"; break;
+                                    case "QuaHan":
+                                        bc = "#dc3545"; bt = "Cọc Quá Hạn";
+                                        iconBadge = "fa-exclamation-circle"; break;
+                                    default:
+                                        bc = "#6f42c1"; bt = "Chưa Nộp Cọc";
+                                        iconBadge = "fa-shield"; break;
+                                }
+                            }
+                            else
+                            {
+                                // Hóa đơn thường
+                                switch (item.TrangThaiHoaDon)
+                                {
+                                    case "ChuaThanhToan":
+                                        bc = "#dc3545"; bt = "Chưa Thanh Toán";
+                                        iconBadge = "fa-clock-o"; break;
+                                    case "ChoDuyet":
+                                        bc = "#17a2b8"; bt = "Chờ Xác Nhận";
+                                        iconBadge = "fa-hourglass-half"; break;
+                                    case "DaThanhToan":
+                                        bc = "#28a745"; bt = "Đã Thanh Toán";
+                                        iconBadge = "fa-check-circle"; break;
+                                    case "QuaHan":
+                                        bc = "#dc3545"; bt = "Quá Hạn";
+                                        iconBadge = "fa-exclamation-circle"; break;
+                                    default:
+                                        bc = "#6c757d";
+                                        bt = item.TrangThaiHoaDon ?? "—";
+                                        iconBadge = "fa-question-circle"; break;
+                                }
                             }
 
-                            bool sapQuaHan = item.TrangThaiHoaDon == "ChuaThanhToan"
-                                          && item.HanThanhToan
-                                             <= DateTime.Today.AddDays(3);
-
-                            bool dangChoXN = item.ThanhToans != null
-                                          && item.ThanhToans.Any(
-                                              x => x.TrangThaiXacNhan == "ChoXacNhan"
-                                                && x.TrangThai == true);
+                            bool sapQuaHan = !laCoc
+                                          && item.TrangThaiHoaDon == "ChuaThanhToan"
+                                          && item.HanThanhToan <= DateTime.Today.AddDays(3);
 
                             var phong = item.HopDong?.PhongTro;
                             var toaNha = phong?.ToaNha;
 
-                            <div class="hd-card"
-                                 style="@(sapQuaHan
-                                     ? "border-left:3px solid #ffc107;" : "")
-                                        @(item.TrangThaiHoaDon == "QuaHan"
-                                     ? "border-left:3px solid #dc3545;" : "")">
+                            // ── Border trái ──────────────────────────────────────
+                            string borderStyle = laCoc
+                                ? "border-left:4px solid #6f42c1;"
+                                : sapQuaHan
+                                    ? "border-left:4px solid #ffc107;"
+                                    : item.TrangThaiHoaDon == "QuaHan"
+                                        ? "border-left:4px solid #dc3545;"
+                                        : item.TrangThaiHoaDon == "ChoDuyet"
+                                            ? "border-left:4px solid #17a2b8;"
+                                            : "";
 
+                            string cardExtraClass = laCoc ? "hd-card-coc" : "";
+
+                            <div class="hd-card @cardExtraClass" style="@borderStyle">
+
+                                @* ── Header ─────────────────────────────────── *@
                                 <div class="hd-card-header">
-                                    <div style="font-weight:700;font-size:14px;">
-                                        Tháng @item.ThangHoaDon.ToString("MM/yyyy")
-                                        <span style="color:#aaa;font-size:12px;
-                                                     font-weight:400;margin-left:6px;">
-                                            <code>@item.MaHoaDon</code>
-                                        </span>
-                                    </div>
-                                    <div style="display:flex;gap:6px;
-                                                align-items:center;">
-                                        @if (dangChoXN)
+                                    <div style="font-weight:700;font-size:14px;
+                                                display:flex;align-items:center;gap:8px;">
+                                        @if (laCoc)
                                         {
-                                            <span style="background:#17a2b8;
-                                                         color:#fff;padding:3px 10px;
-                                                         border-radius:20px;
-                                                         font-size:11px;
-                                                         font-weight:700;">
-                                                <i class="fa fa-clock-o mr-1"></i>
-                                                Chờ xác nhận
+                                            @* Hóa đơn cọc: icon shield + label tím *@
+                                            <span style="width:32px;height:32px;border-radius:50%;
+                                                         background:#6f42c1;color:#fff;
+                                                         display:inline-flex;align-items:center;
+                                                         justify-content:center;font-size:14px;
+                                                         flex-shrink:0;">
+                                                <i class="fa fa-shield"></i>
                                             </span>
+                                            <span style="color:#6f42c1;">Tiền Đặt Cọc</span>
                                         }
-                                        <span style="background:@bc;color:#fff;
-                                                     padding:3px 10px;
-                                                     border-radius:20px;
-                                                     font-size:11px;
-                                                     font-weight:700;">
-                                            @bt
-                                        </span>
+                                        else
+                                        {
+                                            @* Hóa đơn thường: icon calendar + tháng *@
+                                            <span style="width:32px;height:32px;border-radius:50%;
+                                                         background:#2cbdb8;color:#fff;
+                                                         display:inline-flex;align-items:center;
+                                                         justify-content:center;font-size:14px;
+                                                         flex-shrink:0;">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                            <span>Tháng @item.ThangHoaDon.ToString("MM/yyyy")</span>
+                                        }
+                                        <code style="color:#aaa;font-size:11px;
+                                                     font-weight:400;margin-left:4px;">
+                                            @item.MaHoaDon
+                                        </code>
                                     </div>
+
+                                    <span class="hd-badge" style="background:@bc;">
+                                        <i class="fa @iconBadge"></i>
+                                        @bt
+                                    </span>
                                 </div>
 
+                                @* ── Body ───────────────────────────────────── *@
                                 <div class="hd-card-body">
                                     <div class="row align-items-center">
                                         <div class="col-md-7">
+
                                             <h6 style="font-weight:700;margin:0 0 5px;">
-                                                @(phong != null
-                                                    ? "Phòng " + phong.SoPhong : "—")
+                                                @(phong != null ? "Phòng " + phong.SoPhong : "—")
                                                 @if (toaNha != null)
                                                 {
-                                                    <span style="font-weight:400;
-                                                                 color:#888;
-                                                                 font-size:13px;">
+                                                    <span style="font-weight:400;color:#888;font-size:13px;">
                                                         — @toaNha.TenToaNha
                                                     </span>
                                                 }
                                             </h6>
-                                            <p style="color:#888;font-size:13px;
-                                                      margin:0 0 3px;">
+
+                                            <p style="color:#888;font-size:13px;margin:0 0 3px;">
                                                 <i class="fa fa-map-marker mr-1"
                                                    style="color:#2cbdb8;"></i>
                                                 @(toaNha != null
-                                                    ? toaNha.DiaChi + ", "
-                                                      + toaNha.TinhThanh : "—")
+                                                    ? toaNha.DiaChi + ", " + toaNha.TinhThanh
+                                                    : "—")
                                             </p>
-                                            <p style="color:#888;font-size:13px;
-                                                      margin:0;">
+
+                                            <p style="color:#888;font-size:13px;margin:0 0 6px;">
                                                 <i class="fa fa-clock-o mr-1"
-                                                   style="color:#2cbdb8;"></i>
-                                                Hạn TT:
-                                                <span style="@(sapQuaHan || item.TrangThaiHoaDon == "QuaHan"
-                                                    ? "color:#dc3545;font-weight:700;"
-                                                    : "")">
-                                                    @(item.HanThanhToan.ToString("dd/MM/yyyy"))
-                                                </span>
+                                                   style="color:@(laCoc ? "#6f42c1" : "#2cbdb8");"></i>
+                                                Hạn @(laCoc ? "nộp cọc" : "thanh toán"):
+                                                <strong style="@(sapQuaHan || item.TrangThaiHoaDon == "QuaHan"
+                                                    ? "color:#dc3545;"
+                                                    : laCoc ? "color:#6f42c1;" : "color:#333;")">
+                                                    @item.HanThanhToan.ToString("dd/MM/yyyy")
+                                                </strong>
                                             </p>
+
+                                            @* Cảnh báo sắp hạn *@
                                             @if (sapQuaHan)
                                             {
-                                                <div style="margin-top:8px;
-                                                            padding:5px 10px;
-                                                            background:#fff3cd;
-                                                            border-radius:4px;
-                                                            font-size:12px;
-                                                            color:#856404;
-                                                            display:inline-block;">
-                                                    <i class="fa fa-exclamation-triangle mr-1"></i>
+                                                <div style="margin-bottom:8px;padding:4px 10px;
+                                                            background:#fff3cd;border-radius:4px;
+                                                            font-size:12px;color:#856404;
+                                                            display:inline-flex;align-items:center;gap:5px;">
+                                                    <i class="fa fa-exclamation-triangle"></i>
                                                     Sắp đến hạn!
                                                 </div>
                                             }
+
+                                            @* Thông tin chờ duyệt *@
+                                            @if (item.TrangThaiHoaDon == "ChoDuyet")
+                                            {
+                                                <div style="margin-bottom:8px;padding:4px 10px;
+                                                            background:@(laCoc ? "#f3eeff" : "#e8f7f8");
+                                                            border:1px solid @(laCoc ? "#d4b8ff" : "#bee5eb");
+                                                            border-radius:4px;font-size:12px;
+                                                            color:@(laCoc ? "#6f42c1" : "#17a2b8");
+                                                            display:inline-flex;align-items:center;gap:5px;">
+                                                    <i class="fa fa-info-circle"></i>
+                                                    @(laCoc
+                                                        ? "Biên lai cọc đang chờ chủ trọ xác nhận"
+                                                        : "Biên lai đang chờ chủ trọ xác nhận")
+                                                </div>
+                                            }
+
+                                            @* Chi tiết tiền *@
+                                            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+                                                @if (laCoc)
+                                                {
+                                                    @* Hóa đơn cọc: chỉ hiện 1 chip *@
+                                                    <span class="chip"
+                                                          style="color:#6f42c1;background:#f3eeff;
+                                                                 border:1px solid #d4b8ff;">
+                                                        <i class="fa fa-shield mr-1"></i>
+                                                        Cọc: @String.Format("{0:N0}", item.TienPhong)đ
+                                                    </span>
+                                                    <span class="chip"
+                                                          style="color:#888;background:#f5f5f5;">
+                                                        Được hoàn khi kết thúc HĐ
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    @* Hóa đơn thường: hiện từng khoản *@
+                                                    <span class="chip"
+                                                          style="color:#888;background:#f5f5f5;">
+                                                        Phòng: @String.Format("{0:N0}", item.TienPhong)đ
+                                                    </span>
+                                                    if (item.TienDien > 0)
+                                                    {
+                                                        <span class="chip"
+                                                              style="color:#e65100;background:#fff8e1;">
+                                                            <i class="fa fa-bolt mr-1"></i>
+                                                            Điện: @String.Format("{0:N0}", item.TienDien)đ
+                                                        </span>
+                                                    }
+                                                    if (item.TienNuoc > 0)
+                                                    {
+                                                        <span class="chip"
+                                                              style="color:#0277bd;background:#e3f2fd;">
+                                                            <i class="fa fa-tint mr-1"></i>
+                                                            Nước: @String.Format("{0:N0}", item.TienNuoc)đ
+                                                        </span>
+                                                    }
+                                                    if (item.TienDichVu > 0)
+                                                    {
+                                                        <span class="chip"
+                                                              style="color:#555;background:#f5f5f5;">
+                                                            DV: @String.Format("{0:N0}", item.TienDichVu)đ
+                                                        </span>
+                                                    }
+                                                }
+                                            </div>
+
                                         </div>
+
+                                        @* Số tiền *@
                                         <div class="col-md-5 text-right">
-                                            <div style="font-size:22px;
-                                                        font-weight:800;
-                                                        color:#2cbdb8;">
-                                                @String.Format("{0:N0}",
-                                                    item.TongTien)đ
+                                            <div style="font-size:26px;font-weight:800;
+                                                        color:@(laCoc ? "#6f42c1" : "#2cbdb8");">
+                                                @String.Format("{0:N0}", item.TongTien)đ
                                             </div>
                                             <div style="font-size:12px;color:#aaa;">
-                                                Tổng tiền phải trả
+                                                @(laCoc ? "Tiền đặt cọc" : "Tổng tiền phải trả")
                                             </div>
+                                            @if (item.TrangThaiHoaDon == "DaThanhToan"
+                                              && item.NgayThanhToan.HasValue)
+                                            {
+                                                <div style="font-size:12px;margin-top:4px;
+                                                            color:@(laCoc ? "#6f42c1" : "#28a745");">
+                                                    <i class="fa fa-check-circle mr-1"></i>
+                                                    @item.NgayThanhToan.Value.ToString("dd/MM/yyyy")
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="hd-card-footer"
-                                     style="display:flex;justify-content:flex-end;
-                                            gap:8px;">
+                                @* ── Footer: nút hành động ───────────────────── *@
+                                <div class="hd-card-footer">
                                     @if (item.TrangThaiHoaDon == "ChuaThanhToan"
                                       || item.TrangThaiHoaDon == "QuaHan")
                                     {
-                                        if (dangChoXN)
+                                        if (laCoc)
                                         {
+                                            @* Nộp cọc: màu tím *@
                                             <a href="@Url.Action("ThanhToan",
-                                                       new { maHoaDon =
-                                                             item.MaHoaDon })"
-                                               style="padding:8px 18px;
-                                                      background:#17a2b8;
+                                                       new { maHoaDon = item.MaHoaDon })"
+                                               style="padding:8px 20px;background:#6f42c1;
                                                       color:#fff;border-radius:6px;
                                                       text-decoration:none;
-                                                      font-size:13px;
-                                                      font-weight:600;">
-                                                <i class="fa fa-clock-o mr-1"></i>
-                                                Xem biên lai
+                                                      font-size:13px;font-weight:700;">
+                                                <i class="fa fa-shield mr-1"></i>
+                                                Nộp Tiền Cọc
                                             </a>
                                         }
                                         else
                                         {
+                                            @* Thanh toán thường *@
                                             <a href="@Url.Action("ThanhToan",
-                                                       new { maHoaDon =
-                                                             item.MaHoaDon })"
-                                               style="padding:8px 18px;
-                                                      background:#2cbdb8;
+                                                       new { maHoaDon = item.MaHoaDon })"
+                                               style="padding:8px 20px;background:#2cbdb8;
                                                       color:#fff;border-radius:6px;
                                                       text-decoration:none;
-                                                      font-size:13px;
-                                                      font-weight:700;">
+                                                      font-size:13px;font-weight:700;">
                                                 <i class="fa fa-credit-card mr-1"></i>
                                                 Thanh Toán Ngay
                                             </a>
                                         }
                                     }
+                                    else if (item.TrangThaiHoaDon == "ChoDuyet")
+                                    {
+                                        <a href="@Url.Action("ThanhToan",
+                                                   new { maHoaDon = item.MaHoaDon })"
+                                           style="padding:8px 20px;
+                                                  background:@(laCoc ? "#f3eeff" : "#e8f7f8");
+                                                  color:@(laCoc ? "#6f42c1" : "#17a2b8");
+                                                  border:1px solid @(laCoc ? "#d4b8ff" : "#bee5eb");
+                                                  border-radius:6px;text-decoration:none;
+                                                  font-size:13px;font-weight:600;">
+                                            <i class="fa fa-eye mr-1"></i>
+                                            Xem Biên Lai
+                                        </a>
+                                    }
                                     else if (item.TrangThaiHoaDon == "DaThanhToan")
                                     {
                                         <span style="padding:8px 18px;
-                                                     background:#f0fafa;
-                                                     color:#2cbdb8;border-radius:6px;
-                                                     font-size:13px;font-weight:600;
-                                                     border:1px solid #c8eeed;">
+                                                     background:@(laCoc ? "#f3eeff" : "#f0fafa");
+                                                     color:@(laCoc ? "#6f42c1" : "#2cbdb8");
+                                                     border:1px solid @(laCoc ? "#d4b8ff" : "#c8eeed");
+                                                     border-radius:6px;font-size:13px;font-weight:600;">
                                             <i class="fa fa-check-circle mr-1"></i>
-                                            Đã thanh toán
-                                            @if (item.NgayThanhToan.HasValue)
-                                            {
-                                                <span style="font-size:11px; color:#888;">
-                                                    @(item.NgayThanhToan?.ToString("dd/MM/yyyy"))
-                                                </span>
-                                            }
+                                            @(laCoc ? "Đã nộp cọc" : "Đã thanh toán")
                                         </span>
                                     }
                                 </div>
@@ -444,6 +583,7 @@
                             </div>
                         }
                     }
+
                 </div>
             </div>
 

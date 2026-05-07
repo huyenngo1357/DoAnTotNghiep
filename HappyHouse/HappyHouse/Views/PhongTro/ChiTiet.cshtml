@@ -779,15 +779,12 @@
 
 @section Scripts {
     <script>
-// ── Gallery ─────────────────────────────────────────────────
 function switchImg(el, url) {
     document.getElementById('imgMain').src = url;
     document.querySelectorAll('.gallery-thumb')
             .forEach(function (t) { t.classList.remove('active'); });
     el.classList.add('active');
 }
-
-// ── Tabs ─────────────────────────────────────────────────────
 function switchTab(btn, id) {
     document.querySelectorAll('.hh-tab')
             .forEach(function (b) { b.classList.remove('active'); });
@@ -797,58 +794,44 @@ function switchTab(btn, id) {
     });
 }
 
-// ── Phường/Xã — FIX: vanilla JS + XMLHttpRequest ─────────────
-var _urlPX2  = '@Url.Action("LayPhuongXa","PhongTro")';
-var selTinh2   = document.getElementById('selTinhThanh');
-var selPhuong2 = document.getElementById('selPhuongXa');
+$(function () {
+    var urlPX = '@Url.Action("LayPhuongXa","PhongTro")';
 
-function loadPhuongXa2(tinh, phuongChon) {
-    if (!tinh) {
-        selPhuong2.disabled         = true;
-        selPhuong2.style.cursor     = 'not-allowed';
-        selPhuong2.style.background = '#e0e0e0';
-        selPhuong2.innerHTML        = '<option value="">-- Chọn tỉnh trước --</option>';
-        return;
-    }
+    // ── Xóa Nice Select khỏi dropdown ──────────────────────────
+    try {
+        $('#selTinhThanh').niceSelect('destroy');
+        $('#selPhuongXa').niceSelect('destroy');
+    } catch (e) {}
 
-    selPhuong2.disabled         = true;
-    selPhuong2.style.cursor     = 'wait';
-    selPhuong2.style.background = '#f0f0f0';
-    selPhuong2.innerHTML        = '<option value="">Đang tải...</option>';
+    $('#selTinhThanh').on('change', function () {
+        var tinh = $(this).val();
+        var $sel = $('#selPhuongXa');
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', _urlPX2 + '?tinhThanh=' + encodeURIComponent(tinh), true);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-    xhr.onload = function () {
-        var html = '<option value="">-- Tất cả --</option>';
-        if (xhr.status === 200) {
-            try {
-                var ds = JSON.parse(xhr.responseText);
-                for (var i = 0; i < ds.length; i++) {
-                    var sel = ds[i] === phuongChon ? ' selected' : '';
-                    html += '<option value="' + ds[i] + '"' + sel + '>' + ds[i] + '</option>';
-                }
-            } catch (e) { /* fallback với -- Tất cả -- */ }
+        if (!tinh) {
+            $sel.prop('disabled', true)
+                .css({ background: '#e0e0e0', cursor: 'not-allowed' })
+                .html('<option value="">-- Chọn tỉnh trước --</option>');
+            return;
         }
-        selPhuong2.innerHTML        = html;
-        selPhuong2.disabled         = false;
-        selPhuong2.style.cursor     = 'pointer';
-        selPhuong2.style.background = '#fff';
-    };
 
-    xhr.onerror = function () {
-        selPhuong2.innerHTML        = '<option value="">-- Tất cả --</option>';
-        selPhuong2.disabled         = false;
-        selPhuong2.style.cursor     = 'pointer';
-        selPhuong2.style.background = '#fff';
-    };
+        $sel.prop('disabled', true)
+            .css({ background: '#f0f0f0', cursor: 'wait' })
+            .html('<option value="">Đang tải...</option>');
 
-    xhr.send();
-}
-
-selTinh2.addEventListener('change', function () {
-    loadPhuongXa2(this.value, '');
+        $.getJSON(urlPX, { tinhThanh: tinh }, function (ds) {
+            var html = '<option value="">-- Tất cả --</option>';
+            $.each(ds, function (i, px) {
+                html += '<option value="' + px + '">' + px + '</option>';
+            });
+            $sel.html(html)
+                .prop('disabled', false)
+                .css({ background: '#fff', cursor: 'pointer' });
+        }).fail(function () {
+            $sel.html('<option value="">-- Tất cả --</option>')
+                .prop('disabled', false)
+                .css({ background: '#fff', cursor: 'pointer' });
+        });
+    });
 });
     </script>
 }

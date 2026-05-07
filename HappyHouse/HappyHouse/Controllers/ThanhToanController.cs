@@ -36,12 +36,20 @@ namespace HappyHouse.Controllers
             if (!string.IsNullOrEmpty(trangThai))
                 lst = lst.Where(x => x.TrangThaiHoaDon == trangThai);
 
-            // Badge: đếm cả ChuaThanhToan + QuaHan (chưa upload biên lai)
+            // Badge hóa đơn THƯỜNG chưa thanh toán (không tính cọc)
             ViewBag.SoChuaThanhToan = DataProvider.Entities.HoaDons
                 .Count(x => x.HopDong.MaKhachHang == user.MaNguoiDung
                          && x.TrangThai == true
+                         && !x.MaHoaDon.StartsWith("COC")
                          && (x.TrangThaiHoaDon == "ChuaThanhToan"
                           || x.TrangThaiHoaDon == "QuaHan"));
+
+            // Badge hóa đơn CỌC chưa nộp
+            ViewBag.SoCocChuaNop = DataProvider.Entities.HoaDons
+                .Count(x => x.HopDong.MaKhachHang == user.MaNguoiDung
+                         && x.TrangThai == true
+                         && x.MaHoaDon.StartsWith("COC")
+                         && x.TrangThaiHoaDon == "ChuaThanhToan");
 
             ViewBag.TrangThai = trangThai;
 

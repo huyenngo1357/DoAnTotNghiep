@@ -230,21 +230,72 @@ namespace HappyHouse.Models
         public bool KyHopDong(string maHopDong)
         {
             var db = DataProvider.Entities;
-            var hopDong = db.HopDongs
-                             .FirstOrDefault(x => x.MaHopDong == maHopDong);
-            if (hopDong == null) return false;
-            if (hopDong.TrangThaiHopDong != "ChoKy") return false;
+            var hd = db.HopDongs
+                        .Include("PhongTro")
+                        .FirstOrDefault(x => x.MaHopDong == maHopDong);
 
-            hopDong.TrangThaiHopDong = "DangThue";
-            hopDong.NgayCapNhat = DateTime.Now;
+            if (hd == null || hd.TrangThaiHopDong != "ChoKy")
+                return false;
 
-            var phong = db.PhongTroes
-                           .FirstOrDefault(x => x.MaPhong == hopDong.MaPhong);
-            if (phong != null)
+            // 1. Ký hợp đồng
+            hd.TrangThaiHopDong = "DangThue";
+            hd.NgayCapNhat = DateTime.Now;
+
+            // 2. Cập nhật phòng → DaThue
+            if (hd.PhongTro != null)
+                hd.PhongTro.TrangThaiPhong = "DaThue";
+
+            // 3. AUTO SINH HÓA ĐƠN CỌC — không cần sửa DB
+            if (hd.TienCoc.HasValue && hd.TienCoc.Value > 0)
             {
-                phong.TrangThaiPhong = "DaThue";
-                phong.NgayCapNhat = DateTime.Now;
+                // Kiểm tra chưa tồn tại hóa đơn cọc
+                bool daCo = db.HoaDons
+                               .Any(x => x.MaHopDong == maHopDong
+                                       && x.MaHoaDon.StartsWith("COC")
+                                       && x.TrangThai == true);
+                if (!daCo)
+                {
+                    db.HoaDons.Add(new HoaDon
+                    {
+                        // Prefix "COC" = dấu hiệu nhận biết hóa đơn cọc
+                        MaHoaDon = "COC" + DateTime.Now.ToString("yyyyMMddHHmmss"),
+                        MaHopDong = maHopDong,
+
+                        // Tháng = NgayBatDau - 1 tháng
+                        // → tránh xung đột UNIQUE INDEX (MaHopDong, ThangHoaDon)
+                        ThangHoaDon = hd.NgayBatDau.AddMonths(-1),
+
+                        // Toàn bộ số tiền dồn vào TienPhong
+                        TienPhong = hd.TienCoc.Value,
+                        TienDien = 0,
+                        TienNuoc = 0,
+                        TienDichVu = 0,
+                        TongTien = hd.TienCoc.Value,
+
+                        HanThanhToan = hd.NgayBatDau.AddDays(7),
+                        GhiChu = "Tiền đặt cọc",
+                        TrangThaiHoaDon = "ChuaThanhToan",
+                        TrangThai = true,
+                        NgayTao = DateTime.Now
+                    });
+                }
             }
+
+            // 4. Thông báo khách
+            db.ThongBaos.Add(new ThongBao
+            {
+                MaNguoiDung = hd.MaKhachHang,
+                TieuDe = "Hợp đồng đã được ký xác nhận",
+                NoiDung = hd.TienCoc > 0
+                    ? $"Hợp đồng đã ký. Vui lòng thanh toán tiền cọc "
+                      + $"{hd.TienCoc.Value:N0}đ trước "
+                      + $"{hd.NgayBatDau.AddDays(7):dd/MM/yyyy}."
+                    : "Hợp đồng của bạn đã được ký.",
+                LoaiThongBao = "HopDong",
+                DuongDan = "/ThanhToan/DanhSach",
+                DaDoc = false,
+                NgayTao = DateTime.Now
+            });
 
             db.Configuration.ValidateOnSaveEnabled = false;
             try { return db.SaveChanges() > 0; }

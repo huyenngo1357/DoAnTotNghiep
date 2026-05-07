@@ -236,6 +236,31 @@ namespace HappyHouse.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult XuatPdf(string maHopDong)
+        {
+            var user = Session["UserOnline"] as NguoiDung;
+            if (user == null)
+                return RedirectToAction("DangNhap", "TaiKhoan",
+                    new { returnUrl = "/HopDong/XuatPdf?maHopDong=" + maHopDong });
+
+            var hopDong = DataProvider.Entities.HopDongs
+                             .Include("PhongTro")
+                             .Include("PhongTro.ToaNha")
+                             .Include("PhongTro.ToaNha.NguoiDung")
+                             .Include("NguoiDung")
+                             .Include("NguoiDung1")
+                             .Include("HopDong_DichVu")
+                             .Include("HopDong_DichVu.GiaDichVu")
+                             .Include("HopDong_DichVu.GiaDichVu.TienIch")
+                             .FirstOrDefault(x => x.MaHopDong == maHopDong
+                                               && x.MaKhachHang == user.MaNguoiDung);
+
+            if (hopDong == null) return HttpNotFound();
+
+            byte[] pdf = HopDongPdfHelper.TaoHopDongPdf(hopDong);
+            return File(pdf, "application/pdf", "HopDong_" + maHopDong + ".pdf");
+        }
+
         // ── PRIVATE ─────────────────────────────────────────────────
 
         private List<GiaDichVu> LayDichVuTheoToaNha(string maToaNha)

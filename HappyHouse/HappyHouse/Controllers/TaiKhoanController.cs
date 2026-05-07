@@ -254,6 +254,7 @@ namespace HappyHouse.Controllers
 
             userDb.HoTen = obj.HoTen;
             userDb.SoDienThoai = obj.SoDienThoai;
+            userDb.ZaloPhone = obj.ZaloPhone;
             userDb.DiaChi = obj.DiaChi;
             userDb.NgaySinh = obj.NgaySinh;
             userDb.GioiTinh = obj.GioiTinh;

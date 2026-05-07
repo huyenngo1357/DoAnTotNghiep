@@ -7,32 +7,20 @@
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|d:\\datn\\doantotnghiep\\happyhouse\\happyhouse\\views\\phongtro\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\phongtro\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\phongtro\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\phongtro\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\controllers\\phongtrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\phongtrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\chutrochiso\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\chutrochiso\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|d:\\datn\\doantotnghiep\\happyhouse\\happyhouse\\views\\hopdong\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\hopdong\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\hopdong\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\hopdong\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\hopdong\\yeucaudangky.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\hopdong\\yeucaudangky.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\controllers\\hopdongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\hopdongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\controllers\\taikhoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\taikhoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\controllers\\trangchucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\trangchucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\trangchu\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -43,16 +31,72 @@
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\trangchu\\danhsachtintuc.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\hopdong\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\hopdong\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\taikhoan\\thongtin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\taikhoan\\thongtin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\controllers\\hopdongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\hopdongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\controllers\\taikhoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\taikhoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\controllers\\thanhtoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\thanhtoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\thanhtoan\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\thanhtoan\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\thanhtoan\\thanhtoan.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\thanhtoan\\thanhtoan.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\models\\hopdongbusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\models\\hopdongbusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\models\\thanhtoanbusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\models\\thanhtoanbusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\phongtro\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\phongtro\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\phongtro\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\phongtro\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\shared\\_layouthome.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\shared\\_layouthome.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\controllers\\chutrohopdongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\chutrohopdongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\chutrohopdong\\themmoi.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\chutrohopdong\\themmoi.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\controllers\\phongtrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\phongtrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\models\\phongtrobusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\models\\phongtrobusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\chutrohoadon\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\chutrohoadon\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\chutrochiso\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\chutrochiso\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\hopdong\\yeucaudangky.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\hopdong\\yeucaudangky.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\chutrohopdong\\suathongtin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -79,10 +123,6 @@
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\models\\tintucbusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\models\\hopdongbusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\models\\hopdongbusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\controllers\\danhgiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\danhgiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -103,20 +143,12 @@
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\chutrohoadon\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\chutrohoadon\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\chutrohoadon\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\controllers\\chutrohoadoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\chutrohoadoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\models\\hoadonbusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\models\\hoadonbusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\models\\thanhtoanbusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\models\\thanhtoanbusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\hoadon\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -167,20 +199,12 @@
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\adminchudetintuc\\themmoi.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\taikhoan\\thongtin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\taikhoan\\thongtin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\admintintuc\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\admintintuc\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\models\\hopdongpdfhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\models\\hopdongpdfhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\controllers\\chutrohopdongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\chutrohopdongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\admintintuc\\themmoi.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -243,24 +267,8 @@
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\hoadoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\thanhtoan\\thanhtoan.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\thanhtoan\\thanhtoan.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\thanhtoan\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\thanhtoan\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\shared\\_headerlayouthome.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\shared\\_headerlayouthome.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\controllers\\trangchucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\trangchucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\shared\\_layouthome.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\shared\\_layouthome.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\shared\\_footerlayouthome.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -289,10 +297,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\trangchu\\chitiettintuc.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\views\\trangchu\\chitiettintuc.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\controllers\\thanhtoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\thanhtoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\views\\danhgia\\danhsach.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -403,10 +407,6 @@
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\controllers\\chutrophongtrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\models\\phongtrobusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\models\\phongtrobusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|D:\\DATN\\DoAnTotNghiep\\HappyHouse\\happyhouse\\models\\common.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FEDFF26F-5910-4B9B-8924-7A981D2E9A1C}|HappyHouse\\HappyHouse.csproj|solutionrelative:happyhouse\\models\\common.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -438,117 +438,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "YeuCauDangKy.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HopDong\\YeuCauDangKy.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\HopDong\\YeuCauDangKy.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HopDong\\YeuCauDangKy.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\HopDong\\YeuCauDangKy.cshtml",
-              "ViewState": "AgIAAOUAAAAAAAAAAAAQwPcAAAA/AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-07T05:50:09.989Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\TrangChu\\Index.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\TrangChu\\Index.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\TrangChu\\Index.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\TrangChu\\Index.cshtml",
-              "ViewState": "AgIAAAkBAAAAAAAAAAAAwBIBAAA/AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-27T03:46:17.027Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "TaiKhoanController.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\TaiKhoanController.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\TaiKhoanController.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\TaiKhoanController.cs",
-              "RelativeToolTip": "HappyHouse\\Controllers\\TaiKhoanController.cs",
-              "ViewState": "AgIAABsBAAAAAAAAAAAAACkBAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T14:46:23.954Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DanhSach.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\PhongTro\\DanhSach.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\PhongTro\\DanhSach.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\PhongTro\\DanhSach.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\PhongTro\\DanhSach.cshtml",
-              "ViewState": "AgIAABYCAAAAAAAAAAAAAPcBAAAAAAAAAAAAAA==",
+              "Title": "ThongTin.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\TaiKhoan\\ThongTin.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\TaiKhoan\\ThongTin.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\TaiKhoan\\ThongTin.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\TaiKhoan\\ThongTin.cshtml",
+              "ViewState": "AgIAAMkBAAAAAAAAAAAQwOEBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-27T06:06:11.274Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-27T08:52:29.857Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "DanhSach.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HopDong\\DanhSach.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\HopDong\\DanhSach.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HopDong\\DanhSach.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\HopDong\\DanhSach.cshtml",
-              "ViewState": "AgIAACICAAAAAAAAAAAQwDoCAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-27T08:57:49.641Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "DanhSach.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroChiSo\\DanhSach.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroChiSo\\DanhSach.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroChiSo\\DanhSach.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\ChuTroChiSo\\DanhSach.cshtml",
-              "ViewState": "AgIAAM0AAAAAAAAAAAAQwNUAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-04T07:10:07.486Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Web.config",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Web.config",
-              "RelativeDocumentMoniker": "HappyHouse\\Web.config",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Web.config",
-              "RelativeToolTip": "HappyHouse\\Web.config",
-              "ViewState": "AgIAADIAAAAAAAAAAAAQwEUAAAAVAQAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2026-05-04T19:19:30.416Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PhongTroController.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\PhongTroController.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\PhongTroController.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\PhongTroController.cs",
-              "RelativeToolTip": "HappyHouse\\Controllers\\PhongTroController.cs",
-              "ViewState": "AgIAALwAAAAAAAAAAAAUwNMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-27T06:03:22.356Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ChiTiet.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\PhongTro\\ChiTiet.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\PhongTro\\ChiTiet.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\PhongTro\\ChiTiet.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\PhongTro\\ChiTiet.cshtml",
-              "ViewState": "AgIAAOgCAAAAAAAAAAAAAFUDAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-27T06:06:45.888Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 6,
               "Title": "DanhSachTinTuc.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\TrangChu\\DanhSachTinTuc.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\TrangChu\\DanhSachTinTuc.cshtml",
@@ -560,607 +462,117 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 4,
+              "Title": "TrangChuController.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\TrangChuController.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\TrangChuController.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\TrangChuController.cs",
+              "RelativeToolTip": "HappyHouse\\Controllers\\TrangChuController.cs",
+              "ViewState": "AgIAAKQAAAAAAAAAAAAAAJAAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-27T03:45:43.174Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\TrangChu\\Index.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\TrangChu\\Index.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\TrangChu\\Index.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\TrangChu\\Index.cshtml",
+              "ViewState": "AgIAABACAAAAAAAAAAAQwCgCAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-27T03:46:17.027Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DanhSach.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HopDong\\DanhSach.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\HopDong\\DanhSach.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HopDong\\DanhSach.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\HopDong\\DanhSach.cshtml",
+              "ViewState": "AgIAACICAAAAAAAAAAAQwDECAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-27T08:57:49.641Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "ChiTiet.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HopDong\\ChiTiet.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\HopDong\\ChiTiet.cshtml",
               "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HopDong\\ChiTiet.cshtml",
               "RelativeToolTip": "HappyHouse\\Views\\HopDong\\ChiTiet.cshtml",
-              "ViewState": "AgIAAFICAAAAAAAAAAAQwGoCAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAFYCAAAAAAAAAAAQwG4CAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-27T08:58:46.452Z"
+              "WhenOpened": "2026-04-27T08:58:46.452Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "ThemMoi.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\ThemMoi.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHopDong\\ThemMoi.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\ThemMoi.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHopDong\\ThemMoi.cshtml",
-              "ViewState": "AgIAAN8BAAAAAAAAAAAQwPcBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T19:44:04.239Z"
+              "DocumentIndex": 0,
+              "Title": "Web.config",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Web.config",
+              "RelativeDocumentMoniker": "HappyHouse\\Web.config",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Web.config",
+              "RelativeToolTip": "HappyHouse\\Web.config",
+              "ViewState": "AgIAADgAAAAAAAAAAAAQwEUAAAAVAQAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2026-05-04T19:19:30.416Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "SuaThongTin.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\SuaThongTin.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHopDong\\SuaThongTin.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\SuaThongTin.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHopDong\\SuaThongTin.cshtml",
-              "ViewState": "AgIAAF4BAAAAAAAAAAAQwHYBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-07T05:26:16.595Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Huy.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\Huy.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHopDong\\Huy.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\Huy.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHopDong\\Huy.cshtml",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAQwFkAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-07T05:26:12.028Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 3,
               "Title": "HopDongController.cs",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\HopDongController.cs",
               "RelativeDocumentMoniker": "HappyHouse\\Controllers\\HopDongController.cs",
               "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\HopDongController.cs",
               "RelativeToolTip": "HappyHouse\\Controllers\\HopDongController.cs",
-              "ViewState": "AgIAAAEBAAAAAAAAAAAUwBgBAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAO4AAAAAAAAAAAA0wAUBAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-27T08:57:10.453Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "AdminNguoiDungController.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminNguoiDungController.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\AdminNguoiDungController.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminNguoiDungController.cs",
-              "RelativeToolTip": "HappyHouse\\Controllers\\AdminNguoiDungController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "TaiKhoanController.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\TaiKhoanController.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\TaiKhoanController.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\TaiKhoanController.cs",
+              "RelativeToolTip": "HappyHouse\\Controllers\\TaiKhoanController.cs",
+              "ViewState": "AgIAAPoAAAAAAAAAAAAwwAABAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T15:02:56.277Z"
+              "WhenOpened": "2026-04-26T14:46:23.954Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "TinTucBusiness.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\TinTucBusiness.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Models\\TinTucBusiness.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\TinTucBusiness.cs",
-              "RelativeToolTip": "HappyHouse\\Models\\TinTucBusiness.cs",
-              "ViewState": "AgIAAHsAAAAAAAAAAAAAAK8AAAABAAAAAAAAAA==",
+              "DocumentIndex": 9,
+              "Title": "ThanhToanController.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ThanhToanController.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\ThanhToanController.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ThanhToanController.cs",
+              "RelativeToolTip": "HappyHouse\\Controllers\\ThanhToanController.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAUwDgAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T20:11:21.554Z"
+              "WhenOpened": "2026-05-03T13:45:52.984Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 10,
               "Title": "DanhSach.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\DanhSach.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHopDong\\DanhSach.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\DanhSach.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHopDong\\DanhSach.cshtml",
-              "ViewState": "AgIAAAUBAAAAAAAAAAAQwB0BAAABAAAAAAAAAA==",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ThanhToan\\DanhSach.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\ThanhToan\\DanhSach.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ThanhToan\\DanhSach.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\ThanhToan\\DanhSach.cshtml",
+              "ViewState": "AgIAAM8BAAAAAAAAAAAAANkBAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T19:43:32.898Z"
+              "WhenOpened": "2026-05-03T13:47:18.484Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "ChiTiet.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\ChiTiet.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHopDong\\ChiTiet.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\ChiTiet.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHopDong\\ChiTiet.cshtml",
-              "ViewState": "AgIAAIwBAAAAAAAAAAAQwKQBAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T19:45:08.826Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "HopDongBusiness.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\HopDongBusiness.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Models\\HopDongBusiness.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\HopDongBusiness.cs",
-              "RelativeToolTip": "HappyHouse\\Models\\HopDongBusiness.cs",
-              "ViewState": "AgIAAB8BAAAAAAAAAAAUwDYBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T19:39:01.562Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "DanhGiaController.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\DanhGiaController.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\DanhGiaController.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\DanhGiaController.cs",
-              "RelativeToolTip": "HappyHouse\\Controllers\\DanhGiaController.cs",
-              "ViewState": "AgIAAFIAAAAAAAAAAAAAAF8AAABAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-27T09:39:52.001Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "DanhSach.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\DanhSach.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHoaDon\\DanhSach.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\DanhSach.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHoaDon\\DanhSach.cshtml",
-              "ViewState": "AgIAACcBAAAAAAAAAAAQwD8BAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T20:02:38.493Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "ChiTiet.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\ChiTiet.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHoaDon\\ChiTiet.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\ChiTiet.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHoaDon\\ChiTiet.cshtml",
-              "ViewState": "AgIAABMCAAAAAAAAAAAQwCsCAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T20:04:04.926Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "DanhSach.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroThanhToan\\DanhSach.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroThanhToan\\DanhSach.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroThanhToan\\DanhSach.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\ChuTroThanhToan\\DanhSach.cshtml",
-              "ViewState": "AgIAAMMAAAAAAAAAAAAAAM4AAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-03T13:48:35.596Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "SuaThongTin.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\SuaThongTin.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHoaDon\\SuaThongTin.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\SuaThongTin.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHoaDon\\SuaThongTin.cshtml",
-              "ViewState": "AgIAADwBAAAAAAAAAAAQwEMBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-05T07:51:48.027Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "ChuTroHoaDonController.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroHoaDonController.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\ChuTroHoaDonController.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroHoaDonController.cs",
-              "RelativeToolTip": "HappyHouse\\Controllers\\ChuTroHoaDonController.cs",
-              "ViewState": "AgIAAGgBAAAAAAAAAAAUwH8BAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T20:00:35.97Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "HoaDonBusiness.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\HoaDonBusiness.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Models\\HoaDonBusiness.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\HoaDonBusiness.cs",
-              "RelativeToolTip": "HappyHouse\\Models\\HoaDonBusiness.cs",
-              "ViewState": "AgIAABwBAAAAAAAAAAAAwCoBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T19:52:44.303Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "ThemMoi.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\ThemMoi.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHoaDon\\ThemMoi.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\ThemMoi.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHoaDon\\ThemMoi.cshtml",
-              "ViewState": "AgIAAGoBAAAAAAAAAAAQwIIBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T20:03:11.791Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "DanhSach.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HoaDon\\DanhSach.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\HoaDon\\DanhSach.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HoaDon\\DanhSach.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\HoaDon\\DanhSach.cshtml",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAAwIMAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-27T09:03:43.172Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "ChiTiet.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HoaDon\\ChiTiet.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\HoaDon\\ChiTiet.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HoaDon\\ChiTiet.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\HoaDon\\ChiTiet.cshtml",
-              "ViewState": "AgIAAIwAAAAAAAAAAAAAwJUAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-27T09:04:10.089Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "ThanhToanBusiness.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\ThanhToanBusiness.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Models\\ThanhToanBusiness.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\ThanhToanBusiness.cs",
-              "RelativeToolTip": "HappyHouse\\Models\\ThanhToanBusiness.cs",
-              "ViewState": "AgIAAHoAAAAAAAAAAAAIwIcAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-03T13:41:53.81Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "ChuTroThanhToanController.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroThanhToanController.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\ChuTroThanhToanController.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroThanhToanController.cs",
-              "RelativeToolTip": "HappyHouse\\Controllers\\ChuTroThanhToanController.cs",
-              "ViewState": "AgIAAEAAAAAAAAAAAAAIwFYAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-03T13:42:46.249Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "AdminBaseController.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminBaseController.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\AdminBaseController.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminBaseController.cs",
-              "RelativeToolTip": "HappyHouse\\Controllers\\AdminBaseController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T14:03:13.873Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
-              "Title": "SuaThongTin.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTinTuc\\SuaThongTin.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminTinTuc\\SuaThongTin.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTinTuc\\SuaThongTin.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\AdminTinTuc\\SuaThongTin.cshtml",
-              "ViewState": "AgIAACgAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T20:18:18.598Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 37,
-              "Title": "DanhSach.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminChuDeTinTuc\\DanhSach.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminChuDeTinTuc\\DanhSach.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminChuDeTinTuc\\DanhSach.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\AdminChuDeTinTuc\\DanhSach.cshtml",
-              "ViewState": "AgIAANIAAAAAAAAAAAAQwOoAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T20:15:47.034Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 35,
-              "Title": "AdminChuDeTinTucController.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminChuDeTinTucController.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\AdminChuDeTinTucController.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminChuDeTinTucController.cs",
-              "RelativeToolTip": "HappyHouse\\Controllers\\AdminChuDeTinTucController.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAA5wJEAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T20:14:48.332Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 38,
-              "Title": "ChuDeTinTucBusiness.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\ChuDeTinTucBusiness.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Models\\ChuDeTinTucBusiness.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\ChuDeTinTucBusiness.cs",
-              "RelativeToolTip": "HappyHouse\\Models\\ChuDeTinTucBusiness.cs",
-              "ViewState": "AgIAAHkAAAAAAAAAAAAIwJIAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T20:10:56.603Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 34,
-              "Title": "SuaThongTin.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminChuDeTinTuc\\SuaThongTin.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminChuDeTinTuc\\SuaThongTin.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminChuDeTinTuc\\SuaThongTin.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\AdminChuDeTinTuc\\SuaThongTin.cshtml",
-              "ViewState": "AgIAAJMAAAAAAAAAAAAQwKsAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T20:16:48.637Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 36,
-              "Title": "SuaThongTin.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroChiSo\\SuaThongTin.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroChiSo\\SuaThongTin.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroChiSo\\SuaThongTin.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\ChuTroChiSo\\SuaThongTin.cshtml",
-              "ViewState": "AgIAANUAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-05T04:14:17.729Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 39,
-              "Title": "Web.config",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\Web.config",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\Web.config",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\Web.config",
-              "RelativeToolTip": "HappyHouse\\Views\\Web.config",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2026-05-05T06:30:25.895Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 40,
-              "Title": "ThemMoi.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminChuDeTinTuc\\ThemMoi.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminChuDeTinTuc\\ThemMoi.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminChuDeTinTuc\\ThemMoi.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\AdminChuDeTinTuc\\ThemMoi.cshtml",
-              "ViewState": "AgIAACsAAAAAAAAAAAAQwEMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T20:16:23.262Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 41,
-              "Title": "ThongTin.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\TaiKhoan\\ThongTin.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\TaiKhoan\\ThongTin.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\TaiKhoan\\ThongTin.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\TaiKhoan\\ThongTin.cshtml",
-              "ViewState": "AgIAAEkBAAAAAAAAAAAQwFkBAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-27T08:52:29.857Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 44,
-              "Title": "ChuTroHopDongController.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroHopDongController.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\ChuTroHopDongController.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroHopDongController.cs",
-              "RelativeToolTip": "HappyHouse\\Controllers\\ChuTroHopDongController.cs",
-              "ViewState": "AgIAAFABAAAAAAAAAAAIwFkBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T19:40:11.891Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 43,
-              "Title": "HopDongPdfHelper.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\HopDongPdfHelper.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Models\\HopDongPdfHelper.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\HopDongPdfHelper.cs",
-              "RelativeToolTip": "HappyHouse\\Models\\HopDongPdfHelper.cs",
-              "ViewState": "AgIAAIECAAAAAAAAAAAUwJYCAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T18:52:25.896Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 45,
-              "Title": "ThemMoi.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTinTuc\\ThemMoi.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminTinTuc\\ThemMoi.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTinTuc\\ThemMoi.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\AdminTinTuc\\ThemMoi.cshtml",
-              "ViewState": "AgIAAJMAAAAAAAAAAAAQwKsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T20:17:34.785Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 42,
-              "Title": "DanhSach.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTinTuc\\DanhSach.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminTinTuc\\DanhSach.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTinTuc\\DanhSach.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\AdminTinTuc\\DanhSach.cshtml",
-              "ViewState": "AgIAADAAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T20:17:17.658Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 46,
-              "Title": "AdminTinTucController.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminTinTucController.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\AdminTinTucController.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminTinTucController.cs",
-              "RelativeToolTip": "HappyHouse\\Controllers\\AdminTinTucController.cs",
-              "ViewState": "AgIAANkAAAAAAAAAAAAAANsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T20:15:12.781Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 47,
-              "Title": "SuaThongTin.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminNguoiDung\\SuaThongTin.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminNguoiDung\\SuaThongTin.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminNguoiDung\\SuaThongTin.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\AdminNguoiDung\\SuaThongTin.cshtml",
-              "ViewState": "AgIAAGUBAAAAAAAAAAAQwH0BAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T15:05:05.051Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 48,
-              "Title": "NguoiDungBusiness.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\NguoiDungBusiness.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Models\\NguoiDungBusiness.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\NguoiDungBusiness.cs",
-              "RelativeToolTip": "HappyHouse\\Models\\NguoiDungBusiness.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAwwIwAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T15:02:32.825Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 49,
-              "Title": "ThemMoi.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminNguoiDung\\ThemMoi.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminNguoiDung\\ThemMoi.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminNguoiDung\\ThemMoi.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\AdminNguoiDung\\ThemMoi.cshtml",
-              "ViewState": "AgIAAAIBAAAAAAAAAAAYwBoBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T15:04:35.733Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 50,
-              "Title": "DanhSach.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminNguoiDung\\DanhSach.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminNguoiDung\\DanhSach.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminNguoiDung\\DanhSach.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\AdminNguoiDung\\DanhSach.cshtml",
-              "ViewState": "AgIAAK8AAAAAAAAAAAAQwMcAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T15:03:55.264Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 51,
-              "Title": "SuaThongTin.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTienIch\\SuaThongTin.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminTienIch\\SuaThongTin.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTienIch\\SuaThongTin.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\AdminTienIch\\SuaThongTin.cshtml",
-              "ViewState": "AgIAAHsAAAAAAAAAAAAQwI0AAAA7AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-04T06:47:29.714Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 52,
-              "Title": "ThemMoi.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTienIch\\ThemMoi.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminTienIch\\ThemMoi.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTienIch\\ThemMoi.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\AdminTienIch\\ThemMoi.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-04T06:47:08.078Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 53,
-              "Title": "AdminTienIchController.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminTienIchController.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\AdminTienIchController.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminTienIchController.cs",
-              "RelativeToolTip": "HappyHouse\\Controllers\\AdminTienIchController.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAAwAwAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T06:46:09.09Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 54,
-              "Title": "ChuTroChiSoController.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroChiSoController.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\ChuTroChiSoController.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroChiSoController.cs",
-              "RelativeToolTip": "HappyHouse\\Controllers\\ChuTroChiSoController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T20:01:03.152Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 55,
-              "Title": "DanhSach.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTienIch\\DanhSach.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminTienIch\\DanhSach.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTienIch\\DanhSach.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\AdminTienIch\\DanhSach.cshtml",
-              "ViewState": "AgIAALMAAAAAAAAAAAAQwMsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-04T06:46:37.718Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 56,
-              "Title": "TienIchBusiness.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\TienIchBusiness.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Models\\TienIchBusiness.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\TienIchBusiness.cs",
-              "RelativeToolTip": "HappyHouse\\Models\\TienIchBusiness.cs",
-              "ViewState": "AgIAAJAAAAAAAAAAAADwv6UAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T06:45:07.431Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 57,
-              "Title": "GhiChiSo.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroChiSo\\GhiChiSo.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroChiSo\\GhiChiSo.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroChiSo\\GhiChiSo.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\ChuTroChiSo\\GhiChiSo.cshtml",
-              "ViewState": "AgIAAA8BAAAAAAAAAAAQwCEBAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-02T10:24:13.164Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 58,
-              "Title": "ChiSoDienNuocBusiness.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\ChiSoDienNuocBusiness.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Models\\ChiSoDienNuocBusiness.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\ChiSoDienNuocBusiness.cs",
-              "RelativeToolTip": "HappyHouse\\Models\\ChiSoDienNuocBusiness.cs",
-              "ViewState": "AgIAAKYAAAAAAAAAAAAUwL0AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T19:59:43.687Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 59,
-              "Title": "HoaDonController.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\HoaDonController.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\HoaDonController.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\HoaDonController.cs",
-              "RelativeToolTip": "HappyHouse\\Controllers\\HoaDonController.cs",
-              "ViewState": "AgIAAI8AAAAAAAAAAAAUwKYAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-27T09:01:51.982Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 11,
               "Title": "ThanhToan.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ThanhToan\\ThanhToan.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\ThanhToan\\ThanhToan.cshtml",
@@ -1172,19 +584,655 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "HopDongBusiness.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\HopDongBusiness.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Models\\HopDongBusiness.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\HopDongBusiness.cs",
+              "RelativeToolTip": "HappyHouse\\Models\\HopDongBusiness.cs",
+              "ViewState": "AgIAAA4BAAAAAAAAAAAUwBoBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T19:39:01.562Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ThanhToanBusiness.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\ThanhToanBusiness.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Models\\ThanhToanBusiness.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\ThanhToanBusiness.cs",
+              "RelativeToolTip": "HappyHouse\\Models\\ThanhToanBusiness.cs",
+              "ViewState": "AgIAAOgAAAAAAAAAAAAIwP4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-03T13:41:53.81Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DanhSach.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\PhongTro\\DanhSach.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\PhongTro\\DanhSach.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\PhongTro\\DanhSach.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\PhongTro\\DanhSach.cshtml",
+              "ViewState": "AgIAAEcCAAAAAAAAAAAAAFgCAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-27T06:06:11.274Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ChiTiet.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\PhongTro\\ChiTiet.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\PhongTro\\ChiTiet.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\PhongTro\\ChiTiet.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\PhongTro\\ChiTiet.cshtml",
+              "ViewState": "AgIAACwDAAAAAAAAAAAQwEQDAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-27T06:06:45.888Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "_LayoutHome.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\Shared\\_LayoutHome.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\Shared\\_LayoutHome.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\Shared\\_LayoutHome.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\Shared\\_LayoutHome.cshtml",
+              "ViewState": "AgIAADsAAAAAAAAAAAAYwFMAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T15:09:55.428Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ChuTroHopDongController.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroHopDongController.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\ChuTroHopDongController.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroHopDongController.cs",
+              "RelativeToolTip": "HappyHouse\\Controllers\\ChuTroHopDongController.cs",
+              "ViewState": "AgIAAFsBAAAAAAAAAAAUwHIBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T19:40:11.891Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ThemMoi.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\ThemMoi.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHopDong\\ThemMoi.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\ThemMoi.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHopDong\\ThemMoi.cshtml",
+              "ViewState": "AgIAAN8BAAAAAAAAAAAQwPcBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T19:44:04.239Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "PhongTroController.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\PhongTroController.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\PhongTroController.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\PhongTroController.cs",
+              "RelativeToolTip": "HappyHouse\\Controllers\\PhongTroController.cs",
+              "ViewState": "AgIAALQAAAAAAAAAAAAIwNMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-27T06:03:22.356Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "PhongTroBusiness.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\PhongTroBusiness.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Models\\PhongTroBusiness.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\PhongTroBusiness.cs",
+              "RelativeToolTip": "HappyHouse\\Models\\PhongTroBusiness.cs",
+              "ViewState": "AgIAAN0AAAAAAAAAAADwv/sAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T19:15:44.184Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "ChiTiet.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\ChiTiet.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHoaDon\\ChiTiet.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\ChiTiet.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHoaDon\\ChiTiet.cshtml",
+              "ViewState": "AgIAACICAAAAAAAAAAAQwCgCAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T20:04:04.926Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "DanhSach.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroChiSo\\DanhSach.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroChiSo\\DanhSach.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroChiSo\\DanhSach.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\ChuTroChiSo\\DanhSach.cshtml",
+              "ViewState": "AgIAAM0AAAAAAAAAAAAQwNUAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-04T07:10:07.486Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "YeuCauDangKy.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HopDong\\YeuCauDangKy.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\HopDong\\YeuCauDangKy.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HopDong\\YeuCauDangKy.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\HopDong\\YeuCauDangKy.cshtml",
+              "ViewState": "AgIAAOUAAAAAAAAAAAAQwPcAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-07T05:50:09.989Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "SuaThongTin.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\SuaThongTin.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHopDong\\SuaThongTin.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\SuaThongTin.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHopDong\\SuaThongTin.cshtml",
+              "ViewState": "AgIAAF4BAAAAAAAAAAAQwHYBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-07T05:26:16.595Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Huy.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\Huy.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHopDong\\Huy.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\Huy.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHopDong\\Huy.cshtml",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAQwFkAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-07T05:26:12.028Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "AdminNguoiDungController.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminNguoiDungController.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\AdminNguoiDungController.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminNguoiDungController.cs",
+              "RelativeToolTip": "HappyHouse\\Controllers\\AdminNguoiDungController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T15:02:56.277Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "TinTucBusiness.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\TinTucBusiness.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Models\\TinTucBusiness.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\TinTucBusiness.cs",
+              "RelativeToolTip": "HappyHouse\\Models\\TinTucBusiness.cs",
+              "ViewState": "AgIAAHsAAAAAAAAAAAAAAK8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T20:11:21.554Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "DanhSach.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\DanhSach.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHopDong\\DanhSach.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\DanhSach.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHopDong\\DanhSach.cshtml",
+              "ViewState": "AgIAAAUBAAAAAAAAAAAQwB0BAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T19:43:32.898Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "ChiTiet.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\ChiTiet.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHopDong\\ChiTiet.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHopDong\\ChiTiet.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHopDong\\ChiTiet.cshtml",
+              "ViewState": "AgIAAIwBAAAAAAAAAAAQwKQBAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T19:45:08.826Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "DanhGiaController.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\DanhGiaController.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\DanhGiaController.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\DanhGiaController.cs",
+              "RelativeToolTip": "HappyHouse\\Controllers\\DanhGiaController.cs",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAAAF8AAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-27T09:39:52.001Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "DanhSach.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\DanhSach.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHoaDon\\DanhSach.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\DanhSach.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHoaDon\\DanhSach.cshtml",
+              "ViewState": "AgIAACcBAAAAAAAAAAAQwD8BAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T20:02:38.493Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "DanhSach.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroThanhToan\\DanhSach.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroThanhToan\\DanhSach.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroThanhToan\\DanhSach.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\ChuTroThanhToan\\DanhSach.cshtml",
+              "ViewState": "AgIAAMMAAAAAAAAAAAAAAM4AAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-03T13:48:35.596Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "SuaThongTin.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\SuaThongTin.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHoaDon\\SuaThongTin.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\SuaThongTin.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHoaDon\\SuaThongTin.cshtml",
+              "ViewState": "AgIAADwBAAAAAAAAAAAQwEMBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T07:51:48.027Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "ChuTroHoaDonController.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroHoaDonController.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\ChuTroHoaDonController.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroHoaDonController.cs",
+              "RelativeToolTip": "HappyHouse\\Controllers\\ChuTroHoaDonController.cs",
+              "ViewState": "AgIAAGgBAAAAAAAAAAAUwH8BAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T20:00:35.97Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "HoaDonBusiness.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\HoaDonBusiness.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Models\\HoaDonBusiness.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\HoaDonBusiness.cs",
+              "RelativeToolTip": "HappyHouse\\Models\\HoaDonBusiness.cs",
+              "ViewState": "AgIAABwBAAAAAAAAAAAAwCoBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T19:52:44.303Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "ThemMoi.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\ThemMoi.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroHoaDon\\ThemMoi.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroHoaDon\\ThemMoi.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\ChuTroHoaDon\\ThemMoi.cshtml",
+              "ViewState": "AgIAAGoBAAAAAAAAAAAQwIIBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T20:03:11.791Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "DanhSach.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HoaDon\\DanhSach.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\HoaDon\\DanhSach.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HoaDon\\DanhSach.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\HoaDon\\DanhSach.cshtml",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAAwIMAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-27T09:03:43.172Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "ChiTiet.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HoaDon\\ChiTiet.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\HoaDon\\ChiTiet.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\HoaDon\\ChiTiet.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\HoaDon\\ChiTiet.cshtml",
+              "ViewState": "AgIAAIwAAAAAAAAAAAAAwJUAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-27T09:04:10.089Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "ChuTroThanhToanController.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroThanhToanController.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\ChuTroThanhToanController.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroThanhToanController.cs",
+              "RelativeToolTip": "HappyHouse\\Controllers\\ChuTroThanhToanController.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAIwFYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-03T13:42:46.249Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "AdminBaseController.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminBaseController.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\AdminBaseController.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminBaseController.cs",
+              "RelativeToolTip": "HappyHouse\\Controllers\\AdminBaseController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T14:03:13.873Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "SuaThongTin.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTinTuc\\SuaThongTin.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminTinTuc\\SuaThongTin.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTinTuc\\SuaThongTin.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\AdminTinTuc\\SuaThongTin.cshtml",
+              "ViewState": "AgIAACgAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T20:18:18.598Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "DanhSach.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminChuDeTinTuc\\DanhSach.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminChuDeTinTuc\\DanhSach.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminChuDeTinTuc\\DanhSach.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\AdminChuDeTinTuc\\DanhSach.cshtml",
+              "ViewState": "AgIAANIAAAAAAAAAAAAQwOoAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T20:15:47.034Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "AdminChuDeTinTucController.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminChuDeTinTucController.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\AdminChuDeTinTucController.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminChuDeTinTucController.cs",
+              "RelativeToolTip": "HappyHouse\\Controllers\\AdminChuDeTinTucController.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAA5wJEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T20:14:48.332Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "ChuDeTinTucBusiness.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\ChuDeTinTucBusiness.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Models\\ChuDeTinTucBusiness.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\ChuDeTinTucBusiness.cs",
+              "RelativeToolTip": "HappyHouse\\Models\\ChuDeTinTucBusiness.cs",
+              "ViewState": "AgIAAHkAAAAAAAAAAAAIwJIAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T20:10:56.603Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "SuaThongTin.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminChuDeTinTuc\\SuaThongTin.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminChuDeTinTuc\\SuaThongTin.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminChuDeTinTuc\\SuaThongTin.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\AdminChuDeTinTuc\\SuaThongTin.cshtml",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAQwKsAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T20:16:48.637Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "SuaThongTin.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroChiSo\\SuaThongTin.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroChiSo\\SuaThongTin.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroChiSo\\SuaThongTin.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\ChuTroChiSo\\SuaThongTin.cshtml",
+              "ViewState": "AgIAANUAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-05T04:14:17.729Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "Web.config",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\Web.config",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\Web.config",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\Web.config",
+              "RelativeToolTip": "HappyHouse\\Views\\Web.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2026-05-05T06:30:25.895Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "ThemMoi.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminChuDeTinTuc\\ThemMoi.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminChuDeTinTuc\\ThemMoi.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminChuDeTinTuc\\ThemMoi.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\AdminChuDeTinTuc\\ThemMoi.cshtml",
+              "ViewState": "AgIAACsAAAAAAAAAAAAQwEMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T20:16:23.262Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "HopDongPdfHelper.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\HopDongPdfHelper.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Models\\HopDongPdfHelper.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\HopDongPdfHelper.cs",
+              "RelativeToolTip": "HappyHouse\\Models\\HopDongPdfHelper.cs",
+              "ViewState": "AgIAAIECAAAAAAAAAAAUwJYCAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T18:52:25.896Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "ThemMoi.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTinTuc\\ThemMoi.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminTinTuc\\ThemMoi.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTinTuc\\ThemMoi.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\AdminTinTuc\\ThemMoi.cshtml",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAQwKsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T20:17:34.785Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "DanhSach.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTinTuc\\DanhSach.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminTinTuc\\DanhSach.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTinTuc\\DanhSach.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\AdminTinTuc\\DanhSach.cshtml",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T20:17:17.658Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "AdminTinTucController.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminTinTucController.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\AdminTinTucController.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminTinTucController.cs",
+              "RelativeToolTip": "HappyHouse\\Controllers\\AdminTinTucController.cs",
+              "ViewState": "AgIAANkAAAAAAAAAAAAAANsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T20:15:12.781Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "SuaThongTin.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminNguoiDung\\SuaThongTin.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminNguoiDung\\SuaThongTin.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminNguoiDung\\SuaThongTin.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\AdminNguoiDung\\SuaThongTin.cshtml",
+              "ViewState": "AgIAAGUBAAAAAAAAAAAQwH0BAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T15:05:05.051Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
+              "Title": "NguoiDungBusiness.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\NguoiDungBusiness.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Models\\NguoiDungBusiness.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\NguoiDungBusiness.cs",
+              "RelativeToolTip": "HappyHouse\\Models\\NguoiDungBusiness.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAwwIwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T15:02:32.825Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "ThemMoi.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminNguoiDung\\ThemMoi.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminNguoiDung\\ThemMoi.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminNguoiDung\\ThemMoi.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\AdminNguoiDung\\ThemMoi.cshtml",
+              "ViewState": "AgIAAAIBAAAAAAAAAAAYwBoBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T15:04:35.733Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "DanhSach.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminNguoiDung\\DanhSach.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminNguoiDung\\DanhSach.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminNguoiDung\\DanhSach.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\AdminNguoiDung\\DanhSach.cshtml",
+              "ViewState": "AgIAAK8AAAAAAAAAAAAQwMcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-26T15:03:55.264Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "SuaThongTin.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTienIch\\SuaThongTin.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminTienIch\\SuaThongTin.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTienIch\\SuaThongTin.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\AdminTienIch\\SuaThongTin.cshtml",
+              "ViewState": "AgIAAHsAAAAAAAAAAAAQwI0AAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-04T06:47:29.714Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "ThemMoi.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTienIch\\ThemMoi.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminTienIch\\ThemMoi.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTienIch\\ThemMoi.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\AdminTienIch\\ThemMoi.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-04T06:47:08.078Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 59,
+              "Title": "AdminTienIchController.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminTienIchController.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\AdminTienIchController.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminTienIchController.cs",
+              "RelativeToolTip": "HappyHouse\\Controllers\\AdminTienIchController.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAAwAwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T06:46:09.09Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 60,
+              "Title": "ChuTroChiSoController.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroChiSoController.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\ChuTroChiSoController.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroChiSoController.cs",
+              "RelativeToolTip": "HappyHouse\\Controllers\\ChuTroChiSoController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T20:01:03.152Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 61,
               "Title": "DanhSach.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ThanhToan\\DanhSach.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\ThanhToan\\DanhSach.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ThanhToan\\DanhSach.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\ThanhToan\\DanhSach.cshtml",
-              "ViewState": "AgIAAIEBAAAAAAAAAAAQwJcBAAApAAAAAAAAAA==",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTienIch\\DanhSach.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminTienIch\\DanhSach.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminTienIch\\DanhSach.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\AdminTienIch\\DanhSach.cshtml",
+              "ViewState": "AgIAALMAAAAAAAAAAAAQwMsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-03T13:47:18.484Z"
+              "WhenOpened": "2026-05-04T06:46:37.718Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 62,
+              "Title": "TienIchBusiness.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\TienIchBusiness.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Models\\TienIchBusiness.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\TienIchBusiness.cs",
+              "RelativeToolTip": "HappyHouse\\Models\\TienIchBusiness.cs",
+              "ViewState": "AgIAAJAAAAAAAAAAAADwv6UAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-04T06:45:07.431Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 63,
+              "Title": "GhiChiSo.cshtml",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroChiSo\\GhiChiSo.cshtml",
+              "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroChiSo\\GhiChiSo.cshtml",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroChiSo\\GhiChiSo.cshtml",
+              "RelativeToolTip": "HappyHouse\\Views\\ChuTroChiSo\\GhiChiSo.cshtml",
+              "ViewState": "AgIAAA8BAAAAAAAAAAAQwCEBAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-02T10:24:13.164Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 64,
+              "Title": "ChiSoDienNuocBusiness.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\ChiSoDienNuocBusiness.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Models\\ChiSoDienNuocBusiness.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\ChiSoDienNuocBusiness.cs",
+              "RelativeToolTip": "HappyHouse\\Models\\ChiSoDienNuocBusiness.cs",
+              "ViewState": "AgIAAKYAAAAAAAAAAAAUwL0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T19:59:43.687Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 65,
+              "Title": "HoaDonController.cs",
+              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\HoaDonController.cs",
+              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\HoaDonController.cs",
+              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\HoaDonController.cs",
+              "RelativeToolTip": "HappyHouse\\Controllers\\HoaDonController.cs",
+              "ViewState": "AgIAAI8AAAAAAAAAAAAUwKYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-27T09:01:51.982Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 66,
               "Title": "_HeaderLayoutHome.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\Shared\\_HeaderLayoutHome.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\Shared\\_HeaderLayoutHome.cshtml",
@@ -1196,19 +1244,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
-              "Title": "_LayoutHome.cshtml",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\Shared\\_LayoutHome.cshtml",
-              "RelativeDocumentMoniker": "HappyHouse\\Views\\Shared\\_LayoutHome.cshtml",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\Shared\\_LayoutHome.cshtml",
-              "RelativeToolTip": "HappyHouse\\Views\\Shared\\_LayoutHome.cshtml",
-              "ViewState": "AgIAADgAAAAAAAAAAAAAAEUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-26T15:09:55.428Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 67,
               "Title": "_FooterLayoutHome.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\Shared\\_FooterLayoutHome.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\Shared\\_FooterLayoutHome.cshtml",
@@ -1220,19 +1256,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
-              "Title": "TrangChuController.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\TrangChuController.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\TrangChuController.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\TrangChuController.cs",
-              "RelativeToolTip": "HappyHouse\\Controllers\\TrangChuController.cs",
-              "ViewState": "AgIAABwBAAAAAAAAAAAAAJAAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-27T03:45:43.174Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 68,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroDashboard\\Index.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroDashboard\\Index.cshtml",
@@ -1244,7 +1268,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 69,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminDashboard\\Index.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminDashboard\\Index.cshtml",
@@ -1256,7 +1280,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 71,
               "Title": "ChuTroDashboardController.cs",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroDashboardController.cs",
               "RelativeDocumentMoniker": "HappyHouse\\Controllers\\ChuTroDashboardController.cs",
@@ -1268,7 +1292,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 72,
               "Title": "AdminDashboardController.cs",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminDashboardController.cs",
               "RelativeDocumentMoniker": "HappyHouse\\Controllers\\AdminDashboardController.cs",
@@ -1280,7 +1304,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 73,
               "Title": "ChiTietTinTuc.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\TrangChu\\ChiTietTinTuc.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\TrangChu\\ChiTietTinTuc.cshtml",
@@ -1292,7 +1316,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 70,
               "Title": "_LayoutAdmin.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\Shared\\_LayoutAdmin.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\Shared\\_LayoutAdmin.cshtml",
@@ -1304,19 +1328,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
-              "Title": "ThanhToanController.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ThanhToanController.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Controllers\\ThanhToanController.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ThanhToanController.cs",
-              "RelativeToolTip": "HappyHouse\\Controllers\\ThanhToanController.cs",
-              "ViewState": "AgIAAHgAAAAAAAAAAAAUwI8AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-03T13:45:52.984Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 74,
               "Title": "DanhSach.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\DanhGia\\DanhSach.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\DanhGia\\DanhSach.cshtml",
@@ -1328,7 +1340,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 74,
+              "DocumentIndex": 75,
               "Title": "TaoDanhGia.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\DanhGia\\TaoDanhGia.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\DanhGia\\TaoDanhGia.cshtml",
@@ -1340,7 +1352,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 75,
+              "DocumentIndex": 76,
               "Title": "style.css",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Content\\Home\\css\\style.css",
               "RelativeDocumentMoniker": "HappyHouse\\Content\\Home\\css\\style.css",
@@ -1352,7 +1364,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 76,
+              "DocumentIndex": 77,
               "Title": "DangKy.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\TaiKhoan\\DangKy.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\TaiKhoan\\DangKy.cshtml",
@@ -1364,7 +1376,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 77,
+              "DocumentIndex": 78,
               "Title": "DangNhap.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\TaiKhoan\\DangNhap.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\TaiKhoan\\DangNhap.cshtml",
@@ -1376,7 +1388,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 78,
+              "DocumentIndex": 79,
               "Title": "QuenMatKhau.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\TaiKhoan\\QuenMatKhau.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\TaiKhoan\\QuenMatKhau.cshtml",
@@ -1388,7 +1400,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 79,
+              "DocumentIndex": 80,
               "Title": "TuChoi.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminToaNha\\TuChoi.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminToaNha\\TuChoi.cshtml",
@@ -1400,7 +1412,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 80,
+              "DocumentIndex": 81,
               "Title": "TamNgung.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminToaNha\\TamNgung.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminToaNha\\TamNgung.cshtml",
@@ -1412,7 +1424,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 81,
+              "DocumentIndex": 82,
               "Title": "ChiTiet.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminToaNha\\ChiTiet.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminToaNha\\ChiTiet.cshtml",
@@ -1424,7 +1436,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 82,
+              "DocumentIndex": 83,
               "Title": "DanhSach.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\AdminToaNha\\DanhSach.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\AdminToaNha\\DanhSach.cshtml",
@@ -1436,7 +1448,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 83,
+              "DocumentIndex": 84,
               "Title": "AdminToaNhaController.cs",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\AdminToaNhaController.cs",
               "RelativeDocumentMoniker": "HappyHouse\\Controllers\\AdminToaNhaController.cs",
@@ -1448,7 +1460,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 84,
+              "DocumentIndex": 85,
               "Title": "ToaNhaBusiness.cs",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\ToaNhaBusiness.cs",
               "RelativeDocumentMoniker": "HappyHouse\\Models\\ToaNhaBusiness.cs",
@@ -1460,7 +1472,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 85,
+              "DocumentIndex": 86,
               "Title": "_ViewStart.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\_ViewStart.cshtml",
@@ -1472,7 +1484,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 86,
+              "DocumentIndex": 87,
               "Title": "DanhSach.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroPhongTro\\DanhSach.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroPhongTro\\DanhSach.cshtml",
@@ -1484,7 +1496,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 87,
+              "DocumentIndex": 88,
               "Title": "DanhSach.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroToaNha\\DanhSach.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroToaNha\\DanhSach.cshtml",
@@ -1496,7 +1508,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 88,
+              "DocumentIndex": 89,
               "Title": "CaiDatQR.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroThanhToan\\CaiDatQR.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroThanhToan\\CaiDatQR.cshtml",
@@ -1508,7 +1520,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 89,
+              "DocumentIndex": 90,
               "Title": "DanhSach.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroGiaDichVu\\DanhSach.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroGiaDichVu\\DanhSach.cshtml",
@@ -1520,7 +1532,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 90,
+              "DocumentIndex": 91,
               "Title": "ChuTroGiaDichVuController.cs",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroGiaDichVuController.cs",
               "RelativeDocumentMoniker": "HappyHouse\\Controllers\\ChuTroGiaDichVuController.cs",
@@ -1532,7 +1544,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 91,
+              "DocumentIndex": 92,
               "Title": "GiaDichVuBusiness.cs",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\GiaDichVuBusiness.cs",
               "RelativeDocumentMoniker": "HappyHouse\\Models\\GiaDichVuBusiness.cs",
@@ -1544,7 +1556,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 92,
+              "DocumentIndex": 93,
               "Title": "ChuTroToaNhaController.cs",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroToaNhaController.cs",
               "RelativeDocumentMoniker": "HappyHouse\\Controllers\\ChuTroToaNhaController.cs",
@@ -1556,7 +1568,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 93,
+              "DocumentIndex": 94,
               "Title": "ThemMoi.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroToaNha\\ThemMoi.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroToaNha\\ThemMoi.cshtml",
@@ -1568,7 +1580,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 94,
+              "DocumentIndex": 95,
               "Title": "SuaThongTin.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroToaNha\\SuaThongTin.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroToaNha\\SuaThongTin.cshtml",
@@ -1580,7 +1592,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 95,
+              "DocumentIndex": 96,
               "Title": "RouteConfig.cs",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\App_Start\\RouteConfig.cs",
               "RelativeDocumentMoniker": "HappyHouse\\App_Start\\RouteConfig.cs",
@@ -1592,7 +1604,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 96,
+              "DocumentIndex": 97,
               "Title": "SuaThongTin.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroPhongTro\\SuaThongTin.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroPhongTro\\SuaThongTin.cshtml",
@@ -1604,7 +1616,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 97,
+              "DocumentIndex": 98,
               "Title": "ThemMoi.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroPhongTro\\ThemMoi.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroPhongTro\\ThemMoi.cshtml",
@@ -1616,7 +1628,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 98,
+              "DocumentIndex": 99,
               "Title": "ChiTiet.cshtml",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Views\\ChuTroPhongTro\\ChiTiet.cshtml",
               "RelativeDocumentMoniker": "HappyHouse\\Views\\ChuTroPhongTro\\ChiTiet.cshtml",
@@ -1628,7 +1640,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 99,
+              "DocumentIndex": 100,
               "Title": "ChuTroPhongTroController.cs",
               "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Controllers\\ChuTroPhongTroController.cs",
               "RelativeDocumentMoniker": "HappyHouse\\Controllers\\ChuTroPhongTroController.cs",
@@ -1637,18 +1649,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAOYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-26T19:19:43.165Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 100,
-              "Title": "PhongTroBusiness.cs",
-              "DocumentMoniker": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\PhongTroBusiness.cs",
-              "RelativeDocumentMoniker": "HappyHouse\\Models\\PhongTroBusiness.cs",
-              "ToolTip": "D:\\DATN\\DoAnTotNghiep\\HappyHouse\\HappyHouse\\Models\\PhongTroBusiness.cs",
-              "RelativeToolTip": "HappyHouse\\Models\\PhongTroBusiness.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAAAPsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T19:15:44.184Z"
             },
             {
               "$type": "Document",

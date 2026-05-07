@@ -12,7 +12,6 @@
         padding: 40px 0;
     }
 
-    /* Card chung */
     .tk-card {
         background: #fff;
         border-radius: 10px;
@@ -35,7 +34,6 @@
             margin-right: 8px;
         }
 
-    /* Avatar card */
     .tk-avatar-wrap {
         background: #fff;
         border-radius: 10px;
@@ -82,7 +80,6 @@
         border: 2px solid #fff;
     }
 
-    /* Sidebar menu */
     .tk-menu {
         background: #fff;
         border-radius: 10px;
@@ -120,7 +117,6 @@
                     background: #fff5f5;
                 }
 
-    /* Nút lưu */
     .tk-btn-save {
         padding: 12px 35px;
         background: #2cbdb8;
@@ -152,7 +148,23 @@
         .tk-btn-cancel:hover {
             background: #f5f5f5;
             color: #555;
+            text-decoration: none;
         }
+
+    /* Zalo input group */
+    .zalo-prefix {
+        background: #e8f4ff;
+        border: 1px solid #b3d8ff;
+        border-right: none;
+        padding: 0 12px;
+        display: flex;
+        align-items: center;
+        border-radius: 6px 0 0 6px;
+        color: #0068ff;
+        font-weight: 700;
+        font-size: 12px;
+        white-space: nowrap;
+    }
 </style>
 
 <section class="tk-section">
@@ -161,7 +173,7 @@
         @if (TempData["Success"] != null)
         {
             <div class="alert alert-success alert-dismissible fade show">
-                @TempData["Success"]
+                <i class="fa fa-check-circle mr-2"></i>@TempData["Success"]
                 <button type="button" class="close" data-dismiss="alert">
                     <span>&times;</span>
                 </button>
@@ -170,7 +182,7 @@
         @if (TempData["Error"] != null)
         {
             <div class="alert alert-danger alert-dismissible fade show">
-                @TempData["Error"]
+                <i class="fa fa-exclamation-circle mr-2"></i>@TempData["Error"]
                 <button type="button" class="close" data-dismiss="alert">
                     <span>&times;</span>
                 </button>
@@ -192,36 +204,40 @@
                                     margin-bottom:14px;">
                             @if (!string.IsNullOrEmpty(Model.AnhDaiDien))
                             {
-                                <img id="previewAvatar"
-                                     class="tk-avatar-img"
+                                <img id="previewAvatar" class="tk-avatar-img"
                                      src="~/Content/images/avatars/@Model.AnhDaiDien"
                                      alt="@Model.HoTen" />
                             }
                             else
                             {
-                                <div id="previewAvatar"
-                                     class="tk-avatar-initials">
+                                <div id="previewAvatar" class="tk-avatar-initials">
                                     @Model.HoTen.Substring(0, 1).ToUpper()
                                 </div>
                             }
-                            <label for="inputAvatar" class="tk-avatar-btn">
+                            <label for="inputAvatar" class="tk-avatar-btn"
+                                   title="Đổi ảnh đại diện">
                                 <i class="fa fa-camera"></i>
                             </label>
-                            <input type="file" id="inputAvatar"
-                                   name="anhDaiDien" accept="image/*"
-                                   style="display:none;" />
+                            <input type="file" id="inputAvatar" name="anhDaiDien"
+                                   accept="image/*" style="display:none;" />
                         </div>
-                        <h5 style="font-weight:700;margin:0 0 4px;">
-                            @Model.HoTen
-                        </h5>
-                        <p style="color:#aaa;font-size:13px;margin:0;">
-                            @Model.Email
-                        </p>
+                        <h5 style="font-weight:700;margin:0 0 4px;">@Model.HoTen</h5>
+                        <p style="color:#aaa;font-size:13px;margin:0 0 6px;">@Model.Email</p>
+                        @if (!string.IsNullOrEmpty(Model.ZaloPhone))
+                        {
+                            <a href="https://zalo.me/@Model.ZaloPhone" target="_blank"
+                               style="display:inline-flex;align-items:center;gap:5px;
+                                      padding:4px 12px;background:#e8f4ff;
+                                      border:1px solid #b3d8ff;border-radius:20px;
+                                      color:#0068ff;font-size:12px;font-weight:600;
+                                      text-decoration:none;">
+                                <i class="fa fa-commenting"></i>Zalo: @Model.ZaloPhone
+                            </a>
+                        }
                     </div>
 
                     <div class="tk-menu">
-                        <a href="@Url.Action("ThongTin","TaiKhoan")"
-                           class="active">
+                        <a href="@Url.Action("ThongTin","TaiKhoan")" class="active">
                             <i class="fa fa-user mr-2"></i>Thông Tin Cá Nhân
                         </a>
                         <a href="@Url.Action("DanhSach","HopDong")">
@@ -233,8 +249,7 @@
                         <a href="@Url.Action("DanhSach","DanhGia")">
                             <i class="fa fa-star mr-2"></i>Đánh Giá
                         </a>
-                        <a href="@Url.Action("DangXuat","TaiKhoan")"
-                           class="logout">
+                        <a href="@Url.Action("DangXuat","TaiKhoan")" class="logout">
                             <i class="fa fa-sign-out mr-2"></i>Đăng Xuất
                         </a>
                     </div>
@@ -244,69 +259,84 @@
                 @* ── Cột phải ── *@
                 <div class="col-lg-9">
 
+                    @* Card thông tin cá nhân *@
                     <div class="tk-card">
                         <div class="tk-card-title">
                             <i class="fa fa-user"></i>Thông Tin Cá Nhân
                         </div>
                         <div class="row">
+
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="font-weight-bold"
-                                           style="font-size:13px;">
-                                        Họ Tên
-                                        <span class="text-danger">*</span>
+                                    <label class="font-weight-bold" style="font-size:13px;">
+                                        Họ Tên <span class="text-danger">*</span>
                                     </label>
                                     @Html.TextBoxFor(m => m.HoTen, new
                                     {
                                         @class = "form-control",
                                         placeholder = "Nhập họ tên..."
                                     })
-                                    @Html.ValidationMessageFor(m => m.HoTen,
-                                        "", new
-                                             {
-                                                 @class = "text-danger",
-                                                  style = "font-size:12px;"
-                                             })
+                                    @Html.ValidationMessageFor(m => m.HoTen, "",
+                                             new { @class = "text-danger", style = "font-size:12px;" })
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="font-weight-bold"
-                                           style="font-size:13px;">Email</label>
+                                    <label class="font-weight-bold" style="font-size:13px;">
+                                        Email
+                                    </label>
                                     <input type="text" class="form-control"
-                                           value="@Model.Email"
-                                           readonly
+                                           value="@Model.Email" readonly
                                            style="background:#f8f9fa;" />
-                                    <small class="text-muted">
-                                        Email không thể thay đổi
-                                    </small>
+                                    <small class="text-muted">Email không thể thay đổi</small>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="font-weight-bold"
-                                           style="font-size:13px;">
-                                        Số Điện Thoại
-                                        <span class="text-danger">*</span>
+                                    <label class="font-weight-bold" style="font-size:13px;">
+                                        Số Điện Thoại <span class="text-danger">*</span>
                                     </label>
                                     @Html.TextBoxFor(m => m.SoDienThoai, new
                                     {
                                         @class = "form-control",
                                         placeholder = "Nhập số điện thoại..."
                                     })
-                                    @Html.ValidationMessageFor(
-                                        m => m.SoDienThoai, "",
-                                        new
-                                             {
-                                                 @class = "text-danger",
-                                              style = "font-size:12px;"
-                                             })
+                                    @Html.ValidationMessageFor(m => m.SoDienThoai, "",
+                                             new { @class = "text-danger", style = "font-size:12px;" })
                                 </div>
                             </div>
+
+                            @* ── THÊM MỚI: ZaloPhone ── *@
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="font-weight-bold"
-                                           style="font-size:13px;">
+                                    <label class="font-weight-bold" style="font-size:13px;">
+                                        Số Zalo
+                                        <small class="text-muted font-weight-normal">
+                                            (để trống nếu không dùng)
+                                        </small>
+                                    </label>
+                                    <div style="display:flex;">
+                                        <span class="zalo-prefix">
+                                            <i class="fa fa-commenting mr-1"></i>Zalo
+                                        </span>
+                                        @Html.TextBoxFor(m => m.ZaloPhone, new
+                                        {
+                                            @class = "form-control",
+                                            placeholder = "VD: 0912345678",
+                                            style = "border-radius:0 6px 6px 0;"
+                                        })
+                                    </div>
+                                    <small class="text-muted">
+                                        Số Zalo giúp khách hàng / chủ trọ liên hệ nhanh hơn
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" style="font-size:13px;">
                                         Ngày Sinh
                                     </label>
                                     @Html.TextBoxFor(m => m.NgaySinh, new
@@ -316,21 +346,19 @@
                                     })
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="font-weight-bold" style="font-size:13px;">
                                         Giới Tính
                                     </label>
-
-                                    <div>
-                                        <!-- Dòng 1 -->
+                                    <div style="padding-top:6px;">
                                         <div class="form-check form-check-inline">
                                             <input type="radio" name="GioiTinh" value="1"
                                                    class="form-check-input"
                                                    @(Model.GioiTinh == 1 ? "checked" : "") />
                                             <label class="form-check-label">Nam</label>
                                         </div>
-
                                         <div class="form-check form-check-inline">
                                             <input type="radio" name="GioiTinh" value="0"
                                                    class="form-check-input"
@@ -346,22 +374,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="font-weight-bold"
-                                           style="font-size:13px;">
+                                    <label class="font-weight-bold" style="font-size:13px;">
                                         Địa Chỉ
                                     </label>
                                     @Html.TextBoxFor(m => m.DiaChi, new
                                     {
                                         @class = "form-control",
-                                        placeholder = "Nhập địa chỉ..."
+                                        placeholder = "Nhập địa chỉ thường trú..."
                                     })
                                 </div>
                             </div>
+
                         </div>
                     </div>
 
+                    @* Card đổi mật khẩu *@
                     <div class="tk-card">
                         <div class="tk-card-title">
                             <i class="fa fa-lock"></i>Đổi Mật Khẩu
@@ -373,46 +403,34 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="font-weight-bold"
-                                           style="font-size:13px;">
+                                    <label class="font-weight-bold" style="font-size:13px;">
                                         Mật Khẩu Hiện Tại
                                     </label>
                                     <input type="password" name="matKhauCu"
                                            class="form-control"
                                            placeholder="Nhập mật khẩu hiện tại..." />
                                     @Html.ValidationMessage("MatKhauCu", "",
-                                        new
-                                             {
-                                                 @class = "text-danger",
-                                              style = "font-size:12px;"
-                                             })
+                                             new { @class = "text-danger", style = "font-size:12px;" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="font-weight-bold"
-                                           style="font-size:13px;">
+                                    <label class="font-weight-bold" style="font-size:13px;">
                                         Mật Khẩu Mới
                                     </label>
                                     <input type="password" name="matKhauMoi"
                                            class="form-control"
-                                           placeholder="Nhập mật khẩu mới..." />
+                                           placeholder="Ít nhất 6 ký tự..." />
                                     @Html.ValidationMessage("MatKhauMoi", "",
-                                        new
-                                             {
-                                                 @class = "text-danger",
-                                              style = "font-size:12px;"
-                                             })
+                                             new { @class = "text-danger", style = "font-size:12px;" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="font-weight-bold"
-                                           style="font-size:13px;">
+                                    <label class="font-weight-bold" style="font-size:13px;">
                                         Xác Nhận Mật Khẩu
                                     </label>
-                                    <input type="password"
-                                           name="xacNhanMatKhau"
+                                    <input type="password" name="xacNhanMatKhau"
                                            class="form-control"
                                            placeholder="Nhập lại mật khẩu mới..." />
                                 </div>
@@ -421,8 +439,7 @@
                     </div>
 
                     <div style="text-align:right;">
-                        <a href="@Url.Action("Index","TrangChu")"
-                           class="tk-btn-cancel">
+                        <a href="@Url.Action("Index","TrangChu")" class="tk-btn-cancel">
                             Huỷ
                         </a>
                         <button type="submit" class="tk-btn-save">
@@ -438,27 +455,27 @@
 </section>
 
 <script>
-    document.getElementById('inputAvatar')
-        .addEventListener('change', function () {
-            var file = this.files[0];
-            if (!file || !file.type.startsWith('image/')) return;
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                var preview = document.getElementById('previewAvatar');
-                if (preview.tagName === 'IMG') {
-                    preview.src = e.target.result;
-                } else {
-                    var img = document.createElement('img');
-                    img.id = 'previewAvatar';
-                    img.className = 'tk-avatar-img';
-                    img.src = e.target.result;
-                    preview.parentNode.replaceChild(img, preview);
-                }
-            };
-            reader.readAsDataURL(file);
-        });
+    // Preview avatar trước khi upload
+    document.getElementById('inputAvatar').addEventListener('change', function () {
+        var file = this.files[0];
+        if (!file || !file.type.startsWith('image/')) return;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var preview = document.getElementById('previewAvatar');
+            if (preview.tagName === 'IMG') {
+                preview.src = e.target.result;
+            } else {
+                var img = document.createElement('img');
+                img.id = 'previewAvatar';
+                img.className = 'tk-avatar-img';
+                img.src = e.target.result;
+                preview.parentNode.replaceChild(img, preview);
+            }
+        };
+        reader.readAsDataURL(file);
+    });
 
     setTimeout(function () {
         $('.alert').fadeOut('slow', function () { $(this).remove(); });
-    }, 2000);
+    }, 2500);
 </script>

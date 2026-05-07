@@ -586,74 +586,59 @@
 
 @section Scripts {
     <script>
-// ── Cấu hình ────────────────────────────────────────────────
-var _urlPX     = '@Url.Action("LayPhuongXa","PhongTro")';
-var _tinh      = '@Html.Raw((ViewBag.TinhThanh ?? "").ToString().Replace("'","\\\'"))';
-var _phuong    = '@Html.Raw((ViewBag.PhuongXa  ?? "").ToString().Replace("'","\\\'"))';
+$(function () {
+    var urlPX      = '@Url.Action("LayPhuongXa","PhongTro")';
+    var tinhChon   = '@Html.Raw((ViewBag.TinhThanh ?? "").ToString())';
+    var phuongChon = '@Html.Raw((ViewBag.PhuongXa  ?? "").ToString())';
 
-var selTinh   = document.getElementById('selTinhThanh');
-var selPhuong = document.getElementById('selPhuongXa');
+    // ── Xóa Nice Select khỏi 2 dropdown để dùng native select ──
+    try {
+        $('#selTinhThanh').niceSelect('destroy');
+        $('#selPhuongXa').niceSelect('destroy');
+    } catch (e) { /* Bỏ qua nếu Nice Select chưa apply */ }
 
-// ── Hàm tải phường/xã ────────────────────────────────────────
-function loadPhuongXa(tinh, phuongChon) {
-    if (!tinh) {
-        selPhuong.disabled          = true;
-        selPhuong.style.cursor      = 'not-allowed';
-        selPhuong.style.background  = '#e0e0e0';
-        selPhuong.innerHTML         = '<option value="">-- Chọn tỉnh trước --</option>';
-        return;
-    }
+    // ── Load phường/xã ──────────────────────────────────────────
+    function loadPhuongXa(tinh, phuongDefault) {
+        var $sel = $('#selPhuongXa');
 
-    selPhuong.disabled         = true;
-    selPhuong.style.cursor     = 'wait';
-    selPhuong.style.background = '#f0f0f0';
-    selPhuong.innerHTML        = '<option value="">Đang tải...</option>';
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', _urlPX + '?tinhThanh=' + encodeURIComponent(tinh), true);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            try {
-                var ds   = JSON.parse(xhr.responseText);
-                var html = '<option value="">-- Tất cả --</option>';
-                for (var i = 0; i < ds.length; i++) {
-                    var sel = ds[i] === phuongChon ? ' selected' : '';
-                    html += '<option value="' + ds[i] + '"' + sel + '>' + ds[i] + '</option>';
-                }
-                selPhuong.innerHTML        = html;
-                selPhuong.disabled         = false;
-                selPhuong.style.cursor     = 'pointer';
-                selPhuong.style.background = '#fff';
-            } catch (e) {
-                fallback();
-            }
-        } else {
-            fallback();
+        if (!tinh) {
+            $sel.prop('disabled', true)
+                .css({ background: '#e0e0e0', cursor: 'not-allowed' })
+                .html('<option value="">-- Chọn tỉnh trước --</option>');
+            return;
         }
-    };
 
-    xhr.onerror = fallback;
-    xhr.send();
+        $sel.prop('disabled', true)
+            .css({ background: '#f0f0f0', cursor: 'wait' })
+            .html('<option value="">Đang tải...</option>');
 
-    function fallback() {
-        selPhuong.innerHTML        = '<option value="">-- Tất cả --</option>';
-        selPhuong.disabled         = false;
-        selPhuong.style.cursor     = 'pointer';
-        selPhuong.style.background = '#fff';
+        $.getJSON(urlPX, { tinhThanh: tinh }, function (ds) {
+            var html = '<option value="">-- Tất cả --</option>';
+            $.each(ds, function (i, px) {
+                var sel = (px === phuongDefault) ? ' selected' : '';
+                html += '<option value="' + px + '"' + sel + '>'
+                      + px + '</option>';
+            });
+            $sel.html(html)
+                .prop('disabled', false)
+                .css({ background: '#fff', cursor: 'pointer' });
+        }).fail(function () {
+            $sel.html('<option value="">-- Tất cả --</option>')
+                .prop('disabled', false)
+                .css({ background: '#fff', cursor: 'pointer' });
+        });
     }
-}
 
-// ── Khởi tạo khi trang load ─────────────────────────────────
-if (_tinh) {
-    selTinh.value = _tinh;
-    loadPhuongXa(_tinh, _phuong);
-}
+    // ── Sự kiện đổi tỉnh ────────────────────────────────────────
+    $('#selTinhThanh').on('change', function () {
+        loadPhuongXa($(this).val(), '');
+    });
 
-// ── Lắng nghe sự kiện đổi tỉnh ──────────────────────────────
-selTinh.addEventListener('change', function () {
-    loadPhuongXa(this.value, '');
+    // ── Nếu trang load lại với tỉnh đã chọn ────────────────────
+    if (tinhChon) {
+        $('#selTinhThanh').val(tinhChon);
+        loadPhuongXa(tinhChon, phuongChon);
+    }
 });
     </script>
 }
