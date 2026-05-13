@@ -100,7 +100,7 @@ else
             <div class="col-md-6 mb-4">
                 <div class="card shadow-sm h-100
                      @(item.TrangThaiXacNhan == "ChoXacNhan"
-                         ? "border-warning" : "")">
+                ? "border-warning" : "")">
 
                     <div class="card-header d-flex
                                 justify-content-between
@@ -109,10 +109,10 @@ else
                             <i class="fa fa-door-open mr-1
                                text-muted"></i>
                             @(phong != null
-                                ? phong.SoPhong
-                                  + " — "
-                                  + phong.ToaNha?.TenToaNha
-                                : "—")
+                ? phong.SoPhong
+                  + " — "
+                  + phong.ToaNha?.TenToaNha
+                : "—")
                         </span>
                         <span class="badge badge-pill
                                      badge-@bc px-2 py-1">
@@ -157,13 +157,13 @@ else
                                         </td>
                                         <td>
                                             @(item.HoaDon != null
-                                                ? "Tháng "
-                                                  + item.HoaDon
-                                                        .ThangHoaDon.Month
-                                                  + "/"
-                                                  + item.HoaDon
-                                                        .ThangHoaDon.Year
-                                                : "—")
+                ? "Tháng "
+                  + item.HoaDon
+                        .ThangHoaDon.Month
+                  + "/"
+                  + item.HoaDon
+                        .ThangHoaDon.Year
+                : "—")
                                         </td>
                                     </tr>
                                     <tr>
@@ -174,7 +174,7 @@ else
                                                    text-success"
                                             style="font-size:15px">
                                             @String.Format("{0:N0}",
-                                                item.SoTien)đ
+                 item.SoTien)đ
                                         </td>
                                     </tr>
                                     <tr>
@@ -184,7 +184,7 @@ else
                                         <td>@(item.HinhThuc ?? "—")</td>
                                     </tr>
                                     @if (!string.IsNullOrEmpty(
-                                        item.MaGiaoDich))
+            item.MaGiaoDich))
                                     {
                                         <tr>
                                             <td class="font-weight-bold">
@@ -208,7 +208,7 @@ else
                                         </td>
                                     </tr>
                                     @if (!string.IsNullOrEmpty(
-                                        item.GhiChu))
+            item.GhiChu))
                                     {
                                         <tr>
                                             <td class="font-weight-bold">
@@ -222,9 +222,9 @@ else
                                         </tr>
                                     }
                                     @if (item.TrangThaiXacNhan
-                                         == "TuChoi"
-                                      && !string.IsNullOrEmpty(
-                                             item.LyDoTuChoi))
+             == "TuChoi"
+          && !string.IsNullOrEmpty(
+                 item.LyDoTuChoi))
                                     {
                                         <tr>
                                             <td class="font-weight-bold
@@ -241,7 +241,7 @@ else
 
                             <div class="col-md-5 text-center">
                                 @if (!string.IsNullOrEmpty(
-                                    item.AnhBienLai))
+            item.AnhBienLai))
                                 {
                                     bool isPdf = item.AnhBienLai
                                         .ToLower().EndsWith(".pdf");
@@ -297,9 +297,9 @@ else
                             <div class="d-flex justify-content-between">
 
                                 @using (Html.BeginForm("XacNhan",
-                                    "ChuTroThanhToan",
-                                    FormMethod.Post,
-                                    new { style = "display:inline" }))
+                "ChuTroThanhToan",
+                FormMethod.Post,
+                new { style = "display:inline" }))
                                 {
                                     @Html.AntiForgeryToken()
                                     <input type="hidden"
@@ -345,8 +345,8 @@ else
                                     </div>
 
                                     @using (Html.BeginForm("TuChoi",
-                                        "ChuTroThanhToan",
-                                        FormMethod.Post))
+                "ChuTroThanhToan",
+                FormMethod.Post))
                                     {
                                         @Html.AntiForgeryToken()
                                         <input type="hidden"
@@ -402,30 +402,119 @@ else
 
     if (Model.PageCount > 1)
     {
-        <div class="d-flex justify-content-center mt-3">
-            @Html.PagedListPager(Model,
-                page => Url.Action("DanhSach", new
+        <div class="pager-wrap">
+
+            @if (Model.HasPreviousPage)
+            {
+                <a class="pager-btn"
+                   href="@Url.Action("DanhSach", new {
+                       page      = Model.PageNumber - 1,
+                       trangThai = ViewBag.TrangThai })">&laquo;</a>
+            }
+            else
+            {
+                <span class="pager-btn disabled">&laquo;</span>
+            }
+
+            @{
+                int cur = Model.PageNumber;
+                int total = Model.PageCount;
+            }
+            @for (int i = 1; i <= total; i++)
+            {
+                bool hienThi = i == 1 || i == total
+                            || (i >= cur - 2 && i <= cur + 2);
+                bool daCham = (i == cur - 3 && i > 1)
+                            || (i == cur + 3 && i < total);
+
+                if (daCham)
                 {
-                    page,
-                    trangThai = ViewBag.TrangThai
-                }),
-                new PagedListRenderOptions
+                    <span class="pager-btn"
+                          style="border:none;color:#aaa;pointer-events:none;">…</span>
+                }
+                else if (hienThi)
                 {
-                    UlElementClasses = new[]
+                    if (i == cur)
                     {
-                        "pagination",
-                        "justify-content-center"
-                    },
-                    LiElementClasses = new[] { "page-item" }
-                })
+                        <span class="pager-btn active">@i</span>
+                    }
+                    else
+                    {
+                        <a class="pager-btn"
+                           href="@Url.Action("DanhSach", new
+                            {
+                                page = i,
+                                trangThai = ViewBag.TrangThai
+                            })">@i</a>
+                        }
+                    }
+                }
+            }
+
+            @if (Model.HasNextPage)
+            {
+                <a class="pager-btn"
+                   href="@Url.Action("DanhSach", new {
+                       page      = Model.PageNumber + 1,
+                       trangThai = ViewBag.TrangThai })">&raquo;</a>
+            }
+            else
+            {
+                <span class="pager-btn disabled">&raquo;</span>
+            }
+
         </div>
     }
 }
 
+<style>
+    .pager-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    .pager-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        border: 1px solid #4e73df;
+        color: #4e73df;
+        background: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all .2s;
+    }
+
+        .pager-btn:hover {
+            background: #4e73df;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .pager-btn.active {
+            background: #4e73df;
+            color: #fff;
+            font-weight: 700;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(78,115,223,.35);
+        }
+
+        .pager-btn.disabled {
+            opacity: .4;
+            pointer-events: none;
+        }
+</style>
+
 <script>
     setTimeout(function () {
-        $('.alert').fadeOut('slow', function () {
-            $(this).remove();
-        });
+        $('.alert').fadeOut('slow', function () { $(this).remove(); });
     }, 3000);
 </script>

@@ -622,10 +622,15 @@
                 <!-- Page Content -->
                 <div class="container-fluid">
 
+                    <div style="text-align:center;margin:30px">
+                        <h1 class="h3 mb-2 text-gray-800">
+                            @RenderSection("breadTitle", required: false)
+                        </h1>
+                    </div>
+
                     @if (TempData["Success"] != null)
                     {
-                        <div class="alert alert-success alert-dismissible
-                                fade show mt-3">
+                        <div class="alert alert-success alert-dismissible fade show mt-3">
                             <i class="fas fa-check-circle mr-2"></i>
                             @TempData["Success"]
                             <button type="button" class="close"
@@ -636,8 +641,7 @@
                     }
                     @if (TempData["Error"] != null)
                     {
-                        <div class="alert alert-danger alert-dismissible
-                                fade show mt-3">
+                        <div class="alert alert-danger alert-dismissible fade show mt-3">
                             <i class="fas fa-exclamation-circle mr-2"></i>
                             @TempData["Error"]
                             <button type="button" class="close"
@@ -646,12 +650,6 @@
                             </button>
                         </div>
                     }
-
-                    <div style="text-align:center;margin:30px">
-                        <h1 class="h3 mb-2 text-gray-800">
-                            @RenderSection("breadTitle", required: false)
-                        </h1>
-                    </div>
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">

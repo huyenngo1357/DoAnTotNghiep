@@ -19,7 +19,7 @@ namespace HappyHouse.Controllers
             var dsHopDong =
                 _bus.LayHopDongDangThue(maChuTro);
 
-            // ✅ NguoiDung1 = KhachHang
+            // NguoiDung1 = KhachHang
             var dsHienThi = dsHopDong.Select(h => new
             {
                 MaHopDong = h.MaHopDong,
@@ -49,7 +49,7 @@ namespace HappyHouse.Controllers
                 dsLoai, "Value", "Text", loaiDichVu);
         }
 
-        // ── DANH SÁCH ─────────────────────────────────────────────────
+        // DANH SÁCH
 
         [HttpGet]
         public ActionResult DanhSach(int page = 1,
@@ -86,7 +86,7 @@ namespace HappyHouse.Controllers
             return View(lst.ToPagedList(page, 10));
         }
 
-        // ── GHI CHỈ SỐ ───────────────────────────────────────────────
+        // GHI CHỈ SỐ
 
         [HttpGet]
         public ActionResult GhiChiSo()
@@ -98,7 +98,7 @@ namespace HappyHouse.Controllers
             if (dsHopDong.Count == 0)
             {
                 TempData["Error"] =
-                    "Khong co hop dong dang thue nao!";
+                    "Không có hợp đồng đang thuê nào!";
                 return RedirectToAction("DanhSach");
             }
 
@@ -129,7 +129,7 @@ namespace HappyHouse.Controllers
                     thangGhi + "-01", out thang))
             {
                 TempData["Error"] =
-                    "Thang ghi khong hop le!";
+                    "Tháng ghi không hợp lệ!";
                 LoadDropdown(user.MaNguoiDung, maHopDong);
                 ViewBag.ThangGhi = thangGhi;
                 return View();
@@ -138,7 +138,7 @@ namespace HappyHouse.Controllers
             if (string.IsNullOrEmpty(maHopDong))
             {
                 TempData["Error"] =
-                    "Vui long chon hop dong!";
+                    "Vui lòng chọn hợp đồng!";
                 LoadDropdown(user.MaNguoiDung);
                 ViewBag.ThangGhi = thangGhi;
                 return View();
@@ -147,7 +147,7 @@ namespace HappyHouse.Controllers
             if (chiSoCuoiDien < chiSoDauDien)
             {
                 TempData["Error"] =
-                    "Chi so cuoi dien phai >= chi so dau!";
+                    "Chỉ số cuối điện phải >= chỉ số đầu!";
                 LoadDropdown(user.MaNguoiDung, maHopDong);
                 ViewBag.ThangGhi = thangGhi;
                 return View();
@@ -156,7 +156,7 @@ namespace HappyHouse.Controllers
             if (chiSoCuoiNuoc < chiSoDauNuoc)
             {
                 TempData["Error"] =
-                    "Chi so cuoi nuoc phai >= chi so dau!";
+                    "Chỉ số cuối nước phải >= chỉ số đầu!";
                 LoadDropdown(user.MaNguoiDung, maHopDong);
                 ViewBag.ThangGhi = thangGhi;
                 return View();
@@ -188,21 +188,21 @@ namespace HappyHouse.Controllers
             if (kq)
             {
                 TempData["Success"] =
-                    "Ghi chi so thanh cong! "
-                  + "Dien: " + (chiSoCuoiDien - chiSoDauDien)
-                  + " kWh - Nuoc: "
+                    "Ghi chỉ số thành công! "
+                  + "Điện: " + (chiSoCuoiDien - chiSoDauDien)
+                  + " kWh - Nước: "
                   + (chiSoCuoiNuoc - chiSoDauNuoc) + " m3";
                 return RedirectToAction("DanhSach");
             }
 
             TempData["Error"] =
-                "Thang nay da ghi chi so roi!";
+                "Tháng này đã ghi chỉ số rồi!";
             LoadDropdown(user.MaNguoiDung, maHopDong);
             ViewBag.ThangGhi = thangGhi;
             return View();
         }
 
-        // ── SỬA CHỈ SỐ ───────────────────────────────────────────────
+        // SỬA CHỈ SỐ
 
         [HttpGet]
         public ActionResult SuaThongTin(string maChiSo)
@@ -233,19 +233,19 @@ namespace HappyHouse.Controllers
             if (obj.ChiSoCuoi < obj.ChiSoDau)
             {
                 TempData["Error"] =
-                    "Chi so cuoi phai >= chi so dau!";
+                    "Chỉ số cuối phải >= chỉ số đầu!";
                 return View(_bus.LayChiTiet(obj.MaChiSo));
             }
 
             bool kq = _bus.CapNhat(obj, anhMoi);
             TempData[kq ? "Success" : "Error"] = kq
-                ? "Cap nhat chi so thanh cong!"
-                : "Cap nhat that bai!";
+                ? "Cập nhật chỉ số thành công!"
+                : "Cập nhật thất bại!";
 
             return RedirectToAction("DanhSach");
         }
 
-        // ── XÓA ──────────────────────────────────────────────────────
+        //  XÓA 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -253,13 +253,13 @@ namespace HappyHouse.Controllers
         {
             bool kq = _bus.Xoa(maChiSo);
             TempData[kq ? "Success" : "Error"] = kq
-                ? "Da xoa chi so."
-                : "Xoa that bai!";
+                ? "Đã xóa chỉ số."
+                : "Xóa thất bại!";
 
             return RedirectToAction("DanhSach");
         }
 
-        // ── AJAX ─────────────────────────────────────────────────────
+        // AJAX
 
         public ActionResult LayThongTinGhiChiSo(
             string maHopDong)

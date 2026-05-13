@@ -49,6 +49,8 @@ namespace HappyHouse.Controllers
         {
             int pageSize = 8;
 
+            tuKhoa = string.IsNullOrWhiteSpace(tuKhoa) ? null : tuKhoa.Trim();
+
             // ✅ Không filter TrangThaiDuyet để tránh lỗi nếu
             //    DB chưa có data DaDuyet
             var lst = DataProvider.Entities.PhongTroes

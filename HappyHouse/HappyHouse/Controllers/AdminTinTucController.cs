@@ -1,7 +1,10 @@
 ﻿using HappyHouse.Models;
 using PagedList;
+using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Text.RegularExpressions;
 
 namespace HappyHouse.Controllers
 {
@@ -35,7 +38,35 @@ namespace HappyHouse.Controllers
                 trangThaiDang);
         }
 
-        // ── DANH SÁCH ─────────────────────────────────────────────
+        // Helper: convert plain-text input into safe HTML OR accept already-HTML input as-is.
+        // - If input contains HTML tags => assume author used rich editor → return trimmed HTML (no re-encoding).
+        // - Otherwise HTML-encode and convert newlines to paragraphs/<br />.
+        private string ConvertPlainTextToHtml(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return null;
+
+            // If input already contains HTML tags, treat it as HTML (do NOT HtmlEncode).
+            if (Regex.IsMatch(input, "<[^>]+>"))
+            {
+                return input.Trim();
+            }
+
+            // Encode HTML special chars for plain text, then convert newlines
+            var encoded = HttpUtility.HtmlEncode(input);
+
+            // Normalize new lines to '\n'
+            encoded = encoded.Replace("\r\n", "\n").Replace("\r", "\n");
+
+            // Split paragraphs on empty line(s) (double newline)
+            var paragraphs = encoded
+                .Split(new[] { "\n\n" }, StringSplitOptions.None)
+                .Select(p => "<p>" + p.Replace("\n", "<br />") + "</p>");
+
+            return string.Join("", paragraphs);
+        }
+
+        // DANH SÁCH
 
         [HttpGet]
         public ActionResult DanhSach(int page = 1,
@@ -74,7 +105,7 @@ namespace HappyHouse.Controllers
             return View(lst.ToPagedList(page, 10));
         }
 
-        // ── THÊM MỚI ─────────────────────────────────────────────
+        // THÊM MỚI
 
         [HttpGet]
         public ActionResult ThemMoi()
@@ -85,7 +116,7 @@ namespace HappyHouse.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateInput(false)]  // ✅ Cho phép HTML trong NoiDung
+        [ValidateInput(false)]  // Cho phép HTML trong NoiDung (we will encode/transform)
         public ActionResult ThemMoi(
             TinTuc obj,
             HttpPostedFileBase anhDaiDien)
@@ -111,6 +142,9 @@ namespace HappyHouse.Controllers
             var admin = GetUserOnline();
             obj.MaNguoiDang = admin.MaNguoiDung;
 
+            // Convert plain text to safe HTML preserving user formatting
+            obj.NoiDung = ConvertPlainTextToHtml(obj.NoiDung);
+
             bool kq = _bus.ThemMoi(obj, anhDaiDien);
             if (kq)
             {
@@ -125,7 +159,7 @@ namespace HappyHouse.Controllers
             return View(obj);
         }
 
-        // ── SỬA ──────────────────────────────────────────────────
+        // SỬA
 
         [HttpGet]
         public ActionResult SuaThongTin(string maTinTuc)
@@ -139,7 +173,7 @@ namespace HappyHouse.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateInput(false)]  // ✅ Cho phép HTML trong NoiDung
+        [ValidateInput(false)]
         public ActionResult SuaThongTin(
             TinTuc obj,
             HttpPostedFileBase anhDaiDien)
@@ -162,6 +196,9 @@ namespace HappyHouse.Controllers
                 return View(_bus.LayChiTiet(obj.MaTinTuc));
             }
 
+            // Convert plain text to safe HTML preserving user formatting
+            obj.NoiDung = ConvertPlainTextToHtml(obj.NoiDung);
+
             bool kq = _bus.CapNhat(obj, anhDaiDien);
             if (kq)
             {
@@ -175,10 +212,10 @@ namespace HappyHouse.Controllers
             return View(_bus.LayChiTiet(obj.MaTinTuc));
         }
 
-        // ── ĐĂNG BÀI ─────────────────────────────────────────────
+        // ĐĂNG BÀI 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]  // ✅ Thêm
+        [ValidateAntiForgeryToken]
         public ActionResult DangBai(string maTinTuc)
         {
             bool kq = _bus.DangBai(maTinTuc);
@@ -189,10 +226,10 @@ namespace HappyHouse.Controllers
             return RedirectToAction("DanhSach");
         }
 
-        // ── TẠM ẨN ───────────────────────────────────────────────
+        // TẠM ẨN 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]  // ✅ Thêm
+        [ValidateAntiForgeryToken]
         public ActionResult TamAn(string maTinTuc)
         {
             bool kq = _bus.TamAn(maTinTuc);
@@ -203,10 +240,10 @@ namespace HappyHouse.Controllers
             return RedirectToAction("DanhSach");
         }
 
-        // ── XÓA ──────────────────────────────────────────────────
+        // XÓA
 
         [HttpPost]
-        [ValidateAntiForgeryToken]  // ✅ Thêm
+        [ValidateAntiForgeryToken]
         public ActionResult Xoa(string maTinTuc)
         {
             bool kq = _bus.Xoa(maTinTuc);

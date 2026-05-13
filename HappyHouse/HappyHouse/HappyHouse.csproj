@@ -157,6 +157,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\TrimModelBinder.cs" />
+    <Compile Include="App_Start\TrimModelStringsFilter.cs" />
     <Compile Include="Controllers\AdminBaseController.cs" />
     <Compile Include="Controllers\AdminChuDeTinTucController.cs" />
     <Compile Include="Controllers\AdminDashboardController.cs" />

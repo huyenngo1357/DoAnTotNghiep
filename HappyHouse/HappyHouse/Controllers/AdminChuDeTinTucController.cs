@@ -4,11 +4,9 @@ using System.Web.Mvc;
 
 namespace HappyHouse.Controllers
 {
-    public class AdminChuDeTinTucController
-        : AdminBaseController
+    public class AdminChuDeTinTucController : AdminBaseController
     {
-        private readonly ChuDeTinTucBusiness _bus =
-            new ChuDeTinTucBusiness();
+        private readonly ChuDeTinTucBusiness _bus = new ChuDeTinTucBusiness();
 
         private void LoadDropdown(string selected = null)
         {
@@ -21,28 +19,22 @@ namespace HappyHouse.Controllers
                 new { Value = "false",
                       Text  = "Đã ẩn"          },
             };
-            ViewBag.DsTrangThai = new SelectList(
-                lst, "Value", "Text", selected);
+            ViewBag.DsTrangThai = new SelectList(lst, "Value", "Text", selected);
         }
 
         [HttpGet]
-        public ActionResult DanhSach(int page = 1,
-                                      string tuKhoa = null,
-                                      string trangThai = null)
+        public ActionResult DanhSach(int page = 1, string tuKhoa = null, string trangThai = null)
         {
             return HienThiDanhSach(page, tuKhoa, trangThai);
         }
 
         [HttpPost]
-        public ActionResult DanhSach(string tuKhoa,
-                                      string trangThai,
-                                      int page = 1)
+        public ActionResult DanhSach(string tuKhoa, string trangThai, int page = 1)
         {
             return HienThiDanhSach(page, tuKhoa, trangThai);
         }
 
-        private ActionResult HienThiDanhSach(
-            int page, string tuKhoa, string trangThai)
+        private ActionResult HienThiDanhSach(int page, string tuKhoa, string trangThai)
         {
             bool? filter = null;
             if (trangThai == "true") filter = true;
@@ -68,8 +60,7 @@ namespace HappyHouse.Controllers
         public ActionResult ThemMoi(ChuDeTinTuc obj)
         {
             if (string.IsNullOrWhiteSpace(obj.TenChuDe))
-                ModelState.AddModelError("TenChuDe",
-                    "Tên chủ đề không được để trống!");
+                ModelState.AddModelError("TenChuDe", "Tên chủ đề không được để trống!");
 
             if (!ModelState.IsValid)
                 return View(obj);
@@ -77,13 +68,11 @@ namespace HappyHouse.Controllers
             bool kq = _bus.ThemMoi(obj);
             if (kq)
             {
-                TempData["Success"] =
-                    "Thêm chủ đề thành công!";
+                TempData["Success"] = "Thêm chủ đề thành công!";
                 return RedirectToAction("DanhSach");
             }
 
-            ModelState.AddModelError("TenChuDe",
-                "Tên chủ đề này đã tồn tại!");
+            ModelState.AddModelError("TenChuDe", "Tên chủ đề này đã tồn tại!");
             return View(obj);
         }
 
@@ -100,8 +89,7 @@ namespace HappyHouse.Controllers
         public ActionResult SuaThongTin(ChuDeTinTuc obj)
         {
             if (string.IsNullOrWhiteSpace(obj.TenChuDe))
-                ModelState.AddModelError("TenChuDe",
-                    "Tên chủ đề không được để trống!");
+                ModelState.AddModelError("TenChuDe", "Tên chủ đề không được để trống!");
 
             if (!ModelState.IsValid)
                 return View(obj);
@@ -109,13 +97,11 @@ namespace HappyHouse.Controllers
             bool kq = _bus.CapNhat(obj);
             if (kq)
             {
-                TempData["Success"] =
-                    "Cập nhật chủ đề thành công!";
+                TempData["Success"] = "Cập nhật chủ đề thành công!";
                 return RedirectToAction("DanhSach");
             }
 
-            ModelState.AddModelError("TenChuDe",
-                "Tên chủ đề này đã tồn tại!");
+            ModelState.AddModelError("TenChuDe", "Tên chủ đề này đã tồn tại!");
             return View(obj);
         }
 

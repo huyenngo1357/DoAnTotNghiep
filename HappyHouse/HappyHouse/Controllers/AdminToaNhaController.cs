@@ -24,7 +24,7 @@ namespace HappyHouse.Controllers
             ViewBag.DsTrangThai = new SelectList(lst, "Value", "Text", trangThaiDuyet);
         }
 
-        // ── DANH SÁCH ────────────────────────────────────────────────
+        // DANH SÁCH
 
         [HttpGet]
         public ActionResult DanhSach(int page = 1,
@@ -56,7 +56,7 @@ namespace HappyHouse.Controllers
             return View(lst.ToPagedList(page, 10));
         }
 
-        // ── CHI TIẾT ─────────────────────────────────────────────────
+        // CHI TIẾT
 
         public ActionResult ChiTiet(string maToaNha)
         {
@@ -65,7 +65,7 @@ namespace HappyHouse.Controllers
             return View(obj);
         }
 
-        // ── DUYỆT ────────────────────────────────────────────────────
+        // DUYỆT 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -81,7 +81,7 @@ namespace HappyHouse.Controllers
             return RedirectToAction("DanhSach");
         }
 
-        // ── TỪ CHỐI ──────────────────────────────────────────────────
+        // TỪ CHỐI
 
         [HttpGet]
         public ActionResult TuChoi(string maToaNha)
@@ -111,7 +111,7 @@ namespace HappyHouse.Controllers
             return RedirectToAction("DanhSach");
         }
 
-        // ── TẠM NGƯNG ────────────────────────────────────────────────
+        // TẠM NGƯNG
 
         [HttpGet]
         public ActionResult TamNgung(string maToaNha)
@@ -141,7 +141,7 @@ namespace HappyHouse.Controllers
             return RedirectToAction("DanhSach");
         }
 
-        // ── MỞ LẠI ───────────────────────────────────────────────────
+        // MỞ LẠI
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -157,7 +157,7 @@ namespace HappyHouse.Controllers
             return RedirectToAction("DanhSach");
         }
 
-        // ── XÓA ──────────────────────────────────────────────────────
+        // XÓA
 
         [HttpPost]
         [ValidateAntiForgeryToken]

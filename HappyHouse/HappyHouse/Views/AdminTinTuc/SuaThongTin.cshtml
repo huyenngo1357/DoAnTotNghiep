@@ -6,75 +6,366 @@
 }
 
 @section breadTitle {
-    <h2 style="font-weight:bold; color:black">Quản lý tin tức</h2>
+    <h2 style="font-weight:bold;color:black">Quản lý tin tức</h2>
 }
 @section breadLink {
     <a href="@Url.Action("DanhSach","AdminTinTuc")">Danh sách tin tức</a>
 }
 
+@* ── Form chính: Cập nhật nội dung ── *@
 @using (Html.BeginForm("SuaThongTin", "AdminTinTuc", FormMethod.Post,
-    new { enctype = "multipart/form-data" }))
+    new { enctype = "multipart/form-data", id = "frmSuaTin" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.MaTinTuc)
 
-    <div class="d-flex justify-content-between">
+    @* ── Nút hành động ── *@
+    <div class="d-flex justify-content-between mb-4">
         @Html.ActionLink("Trở lại", "DanhSach", null,
             new { @class = "btn btn-secondary px-4" })
-
         <div>
-            @if (Model.TrangThaiDang == "ChuaDang" ||
-                 Model.TrangThaiDang == "TamAn")
+            @if (Model.TrangThaiDang == "ChuaDang"
+              || Model.TrangThaiDang == "TamAn")
             {
                 <button type="button"
-                        onclick="submitForm('DangBai')"
+                        onclick="submitAction('DangBai')"
                         class="btn btn-primary px-4 mr-2">
-                    <i class="fa fa-paper-plane mr-2"></i>Đăng bài
+                    <i class="fa fa-paper-plane mr-1"></i>Đăng bài
                 </button>
             }
-
             @if (Model.TrangThaiDang == "DaDang")
             {
                 <button type="button"
-                        onclick="submitForm('TamAn')"
+                        onclick="submitAction('TamAn')"
                         class="btn btn-warning px-4 mr-2">
-                    <i class="fa fa-eye-slash mr-2"></i>Tạm ẩn
+                    <i class="fa fa-eye-slash mr-1"></i>Tạm ẩn
                 </button>
             }
-
             <button type="submit" class="btn btn-success px-4">
-                <i class="fa fa-save mr-1"></i> Cập nhật
+                <i class="fa fa-save mr-1"></i>Cập nhật
             </button>
         </div>
     </div>
+
+    if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["Success"]
+            <button type="button" class="close" data-dismiss="alert">
+                <span>&times;</span>
+            </button>
+        </div>
+    }
+    if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+            @TempData["Error"]
+            <button type="button" class="close" data-dismiss="alert">
+                <span>&times;</span>
+            </button>
+        </div>
+    }
+
+    @* ── Card nội dung bài viết ── *@
+    <div class="card shadow-sm mb-4">
+        <div class="card-header font-weight-bold text-primary">
+            <i class="fa fa-newspaper mr-2"></i>Thông tin bài viết
+        </div>
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label class="font-weight-bold">
+                            Tiêu đề <span class="text-danger">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.TieuDe, new
+                        {
+                            @class = "form-control",
+                            placeholder = "Nhập tiêu đề bài viết...",
+                            maxlength = "200"
+                        })
+                        @Html.ValidationMessageFor(m => m.TieuDe, "",
+                            new { @class = "err-msg" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold">
+                            Chủ đề <span class="text-danger">*</span>
+                        </label>
+                        @Html.DropDownList("MaChuDe",
+                            (SelectList)ViewBag.DsChuDe,
+                            "--- Chọn chủ đề ---",
+                            new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.MaChuDe, "",
+                            new { @class = "err-msg" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Tóm tắt
+                    <span class="text-muted font-weight-normal">
+                        (hiển thị ở trang danh sách)
+                    </span>
+                </label>
+                @Html.TextAreaFor(m => m.TomTat, new
+                {
+                    @class = "form-control",
+                    rows = 3,
+                    placeholder = "Tóm tắt nội dung bài viết...",
+                    maxlength = "500",
+                    id = "txtTomTat"
+                })
+                <small class="text-muted">
+                    (<span id="demKyTu">@(Model.TomTat?.Length ?? 0)</span>/500 ký tự)
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    Nội dung <span class="text-danger">*</span>
+                </label>
+
+                <!-- Toolbar -->
+                <div class="mb-2">
+                    <div class="btn-group mr-2" role="group" aria-label="Text style">
+                        <button type="button" class="btn btn-light btn-sm" title="In đậm"
+                                onclick="execCmd('bold')">
+                            <i class="fa fa-bold"></i>
+                        </button>
+                        <button type="button" class="btn btn-light btn-sm" title="In nghiêng"
+                                onclick="execCmd('italic')">
+                            <i class="fa fa-italic"></i>
+                        </button>
+                        <button type="button" class="btn btn-light btn-sm" title="Gạch chân"
+                                onclick="execCmd('underline')">
+                            <i class="fa fa-underline"></i>
+                        </button>
+                    </div>
+
+                    <div class="btn-group mr-2" role="group" aria-label="Font size">
+                        <select id="fontSizeSel" class="form-control form-control-sm"
+                                style="width:auto;display:inline-block"
+                                onchange="applyFontSize(this.value)">
+                            <option value="">Kích thước</option>
+                            <option value="12">12px</option>
+                            <option value="14">14px</option>
+                            <option value="16">16px</option>
+                            <option value="18">18px</option>
+                            <option value="20">20px</option>
+                            <option value="24">24px</option>
+                            <option value="30">30px</option>
+                            <option value="36">36px</option>
+                        </select>
+                    </div>
+
+                    <div class="btn-group" role="group" aria-label="Clear">
+                        <button type="button" class="btn btn-light btn-sm" title="Xóa định dạng"
+                                onclick="execCmd('removeFormat')">
+                            <i class="fa fa-eraser"></i> Xóa định dạng
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rich editor (contenteditable) -->
+                <div id="editor"
+                     class="form-control"
+                     contenteditable="true"
+                     style="min-height:300px; overflow:auto;"
+                     placeholder="Nhập nội dung bài viết...">
+                    @Html.Raw(Model?.NoiDung ?? "")
+                </div>
+
+                <!-- Hidden textarea will receive HTML on submit -->
+                @Html.TextAreaFor(m => m.NoiDung, new { @class = "d-none", id = "txtNoiDung" })
+
+                @Html.ValidationMessageFor(m => m.NoiDung, "",
+                    new { @class = "err-msg" })
+            </div>
+
+        </div>
+    </div>
+
+    @* ── Card ảnh đại diện ── *@
+    <div class="card shadow-sm mb-4">
+        <div class="card-header font-weight-bold text-primary">
+            <i class="fa fa-image mr-2"></i>Ảnh đại diện
+        </div>
+        <div class="card-body">
+            <div class="d-flex align-items-center flex-wrap gap-3">
+
+                @* Ảnh hiện tại *@
+                @if (!string.IsNullOrEmpty(Model.AnhDaiDien))
+                {
+                    <div style="margin-right:20px;">
+                        <p class="text-muted small mb-1">Ảnh hiện tại:</p>
+                        <img id="previewAnh"
+                             src="~/Content/images/tintuc/@Model.AnhDaiDien"
+                             style="width:160px;height:120px;object-fit:cover;
+                                    border-radius:6px;border:2px solid #4e73df;" />
+                    </div>
+                }
+                else
+                {
+                    <div id="previewWrapper" style="margin-right:20px;display:none;">
+                        <img id="previewAnh"
+                             style="width:160px;height:120px;object-fit:cover;
+                                    border-radius:6px;border:2px solid #4e73df;" />
+                    </div>
+                }
+
+                <div>
+                    <label class="font-weight-bold d-block mb-1">
+                        @(string.IsNullOrEmpty(Model.AnhDaiDien)
+                            ? "Chọn ảnh" : "Thay ảnh mới")
+                    </label>
+                    <input type="file" name="anhDaiDien" id="inputAnh"
+                           class="form-control-file" accept="image/*" />
+                    <small class="text-muted d-block mt-1">
+                        Để trống nếu không muốn thay ảnh.
+                        Định dạng JPG, PNG. Khuyến nghị 800×450px.
+                    </small>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @* ── Nút dưới ── *@
+    <div class="d-flex justify-content-between">
+        @Html.ActionLink("Trở lại", "DanhSach", null,
+            new { @class = "btn btn-secondary px-4" })
+        <button type="submit" class="btn btn-success px-4">
+            <i class="fa fa-save mr-1"></i>Lưu Thay Đổi
+        </button>
+    </div>
 }
 
-<!-- ================= FORM ẨN ================= -->
-@using (Html.BeginForm("DangBai", "AdminTinTuc", FormMethod.Post, new { id = "formDangBai" }))
+@* ── Form ẩn: Đăng bài / Tạm ẩn (ngoài form chính) ── *@
+@using (Html.BeginForm("DangBai", "AdminTinTuc", FormMethod.Post,
+    new { id = "formDangBai" }))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" name="maTinTuc" value="@Model.MaTinTuc" />
 }
 
-@using (Html.BeginForm("TamAn", "AdminTinTuc", FormMethod.Post, new { id = "formTamAn" }))
+@using (Html.BeginForm("TamAn", "AdminTinTuc", FormMethod.Post,
+    new { id = "formTamAn" }))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" name="maTinTuc" value="@Model.MaTinTuc" />
 }
+
+<style>
+    .err-msg {
+        display: none;
+        font-size: 12px;
+        font-weight: 500;
+        margin-top: 5px;
+        padding: 4px 10px;
+        background: #fff0f0;
+        border-left: 3px solid #e74a3b;
+        border-radius: 3px;
+        color: #e74a3b;
+    }
+
+    .field-validation-error.err-msg {
+        display: block;
+    }
+
+    .field-validation-valid.err-msg {
+        display: none !important;
+    }
+
+    .input-validation-error {
+        border-color: #e74a3b !important;
+        background-color: #fff5f5 !important;
+    }
+
+    /* Ensure the editor looks like a textarea */
+    #editor:empty:before {
+        content: attr(placeholder);
+        color: #6c757d;
+    }
+</style>
 
 @section Scripts {
     <script>
-        function submitForm(type) {
-            if (type === 'DangBai') {
-                if (confirm('Đăng bài này?')) {
-                    document.getElementById('formDangBai').submit();
-                }
-            }
-            if (type === 'TamAn') {
-                if (confirm('Tạm ẩn bài này?')) {
-                    document.getElementById('formTamAn').submit();
-                }
+        // Đếm ký tự tóm tắt
+        $('#txtTomTat').on('input', function () {
+            $('#demKyTu').text($(this).val().length);
+        });
+
+        // Preview ảnh khi chọn file mới
+        document.getElementById('inputAnh').addEventListener('change', function () {
+            var file = this.files[0];
+            if (!file || !file.type.startsWith('image/')) return;
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var img = document.getElementById('previewAnh');
+                // Nếu chưa có ảnh cũ → hiện wrapper trước
+                var wrapper = document.getElementById('previewWrapper');
+                if (wrapper) wrapper.style.display = 'block';
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // Submit form ẩn cho Đăng bài / Tạm ẩn
+        function submitAction(type) {
+            var msg = type === 'DangBai' ? 'Đăng bài này?' : 'Tạm ẩn bài này?';
+            if (confirm(msg)) {
+                var formId = type === 'DangBai' ? 'formDangBai' : 'formTamAn';
+                document.getElementById(formId).submit();
             }
         }
+
+        // Simple rich text helpers
+        function execCmd(command) {
+            document.getElementById('editor').focus();
+            if (command === 'removeFormat') {
+                document.execCommand('removeFormat', false, null);
+                return;
+            }
+            document.execCommand(command, false, null);
+        }
+
+        function applyFontSize(size) {
+            if (!size) return;
+            var editor = document.getElementById('editor');
+            editor.focus();
+            var sel = window.getSelection();
+            if (!sel || sel.rangeCount === 0) return;
+
+            var range = sel.getRangeAt(0);
+            var selectedHtml = range.toString();
+            if (!selectedHtml) return;
+
+            var span = '<span style="font-size:' + size + 'px;">' + escapeHtml(selectedHtml) + '</span>';
+            document.execCommand('insertHTML', false, span);
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        // Ensure editor HTML is copied into hidden textarea before submit
+        $('#frmSuaTin').on('submit', function () {
+            var html = document.getElementById('editor').innerHTML;
+            html = html.trim();
+            $('#txtNoiDung').val(html);
+        });
+
+        setTimeout(function () {
+            $('.alert-dismissible').fadeOut('slow');
+        }, 3000);
     </script>
 }

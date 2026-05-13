@@ -20,7 +20,7 @@ namespace HappyHouse.Controllers
             var dsHienThi = dsHopDong.Select(h => new
             {
                 MaHopDong = h.MaHopDong,
-                // ✅ NguoiDung1 = KhachHang
+                // NguoiDung1 = KhachHang
                 TenHienThi =
                     (h.PhongTro != null
                         ? "Phong " + h.PhongTro.SoPhong
@@ -54,7 +54,7 @@ namespace HappyHouse.Controllers
                 dsTrangThai, "Value", "Text", trangThai);
         }
 
-        // ── DANH SÁCH ────────────────────────────────────────────
+        // DANH SÁCH
 
         [HttpGet]
         public ActionResult DanhSach(int page = 1,
@@ -99,7 +99,7 @@ namespace HappyHouse.Controllers
             return View(lst.ToPagedList(page, 10));
         }
 
-        // ── CHI TIẾT ─────────────────────────────────────────────
+        // CHI TIẾT
 
         public ActionResult ChiTiet(string maHoaDon)
         {
@@ -114,7 +114,7 @@ namespace HappyHouse.Controllers
             return View(obj);
         }
 
-        // ── THÊM MỚI ─────────────────────────────────────────────
+        // THÊM MỚI
 
         [HttpGet]
         public ActionResult ThemMoi()
@@ -127,7 +127,7 @@ namespace HappyHouse.Controllers
             if (dsHopDong.Count == 0)
             {
                 TempData["Error"] =
-                    "Khong co hop dong dang thue nao!";
+                    "Không có hợp đồng đang thuê nào!";
                 return RedirectToAction("DanhSach");
             }
 
@@ -152,18 +152,17 @@ namespace HappyHouse.Controllers
             if (!DateTime.TryParse(
                     thangHoaDon + "-01", out thang))
                 ModelState.AddModelError("",
-                    "Thang hoa don khong hop le!");
+                    "Tháng hóa đơn không hợp lệ!");
             else
                 obj.ThangHoaDon = thang;
 
             if (string.IsNullOrEmpty(obj.MaHopDong))
                 ModelState.AddModelError("MaHopDong",
-                    "Vui long chon hop dong!");
+                    "Vui lòng chọn hợp đồng!");
 
             if (obj.TienPhong < 0)
                 ModelState.AddModelError("TienPhong",
-                    "Tien phong khong hop le!");
-
+                    "Tiền phòng không hợp lệ!");
             if (!ModelState.IsValid)
             {
                 LoadDropdown(
@@ -176,19 +175,19 @@ namespace HappyHouse.Controllers
             if (kq)
             {
                 TempData["Success"] =
-                    "Tao hoa don thanh cong!";
+                    "Tạo hóa đơn thành công!";
                 return RedirectToAction("DanhSach");
             }
 
             ModelState.AddModelError("",
-                "Hoa don thang nay da ton tai!");
+                "Hóa đơn tháng này đã tồn tại!");
             LoadDropdown(
                 user.MaNguoiDung, obj.MaHopDong);
             ViewBag.ThangHoaDon = thangHoaDon;
             return View(obj);
         }
 
-        // ── SỬA ──────────────────────────────────────────────────
+        // SỬA
 
         [HttpGet]
         public ActionResult SuaThongTin(string maHoaDon)
@@ -203,7 +202,7 @@ namespace HappyHouse.Controllers
             if (obj.TrangThaiHoaDon == "DaThanhToan")
             {
                 TempData["Error"] =
-                    "Khong the sua hoa don da thanh toan!";
+                    "Không thể sửa hóa đơn đã thanh toán!";
                 return RedirectToAction("DanhSach");
             }
 
@@ -224,20 +223,20 @@ namespace HappyHouse.Controllers
 
             if (obj.TienPhong < 0)
                 ModelState.AddModelError("TienPhong",
-                    "Tien phong khong hop le!");
+                    "Tiền phòng không hợp lệ!");
 
             if (!ModelState.IsValid)
                 return View(obj);
 
             bool kq = _bus.CapNhat(obj);
             TempData[kq ? "Success" : "Error"] = kq
-                ? "Cap nhat hoa don thanh cong!"
-                : "Cap nhat that bai!";
+                ? "Cập nhật hóa đơn thành công!"
+                : "Cập nhật thất bại!";
 
             return RedirectToAction("DanhSach");
         }
 
-        // ── XÁC NHẬN THANH TOÁN ──────────────────────────────────
+        // XÁC NHẬN THANH TOÁN
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -253,13 +252,13 @@ namespace HappyHouse.Controllers
 
             bool kq = _bus.XacNhanThanhToan(maHoaDon);
             TempData[kq ? "Success" : "Error"] = kq
-                ? "Xac nhan thanh toan thanh cong."
-                : "Thao tac that bai.";
+                ? "Xác nhận thanh toán thành công."
+                : "Thao tác thất bại.";
 
             return RedirectToAction("DanhSach");
         }
 
-        // ── ĐÁNH DẤU QUÁ HẠN ────────────────────────────────────
+        // ĐÁNH DẤU QUÁ HẠN
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -275,8 +274,8 @@ namespace HappyHouse.Controllers
 
             bool kq = _bus.DanhDauQuaHan(maHoaDon);
             TempData[kq ? "Success" : "Error"] = kq
-                ? "Da danh dau qua han."
-                : "Thao tac that bai.";
+                ? "Đã đánh dấu quá hạn."
+                : "Thao tác thất bại.";
 
             return RedirectToAction("DanhSach");
         }
@@ -323,11 +322,11 @@ namespace HappyHouse.Controllers
             {
                 DataProvider.Entities.SaveChanges();
                 TempData["Success"] =
-                    "Da tu choi bien lai. Hoa don tra ve chua thanh toan.";
+                    "Đã từ chối biên lai. Hóa đơn trả về chưa thanh toán.";
             }
             catch
             {
-                TempData["Error"] = "Co loi xay ra!";
+                TempData["Error"] = "Có lỗi xảy ra!";
             }
             finally
             {
@@ -335,22 +334,17 @@ namespace HappyHouse.Controllers
                     .ValidateOnSaveEnabled = true;
             }
 
-            return RedirectToAction("ChiTiet",
-                new { maHoaDon = tt.MaHoaDon });
+            return RedirectToAction("ChiTiet", new { maHoaDon = tt.MaHoaDon });
         }
 
-        // ── AJAX ─────────────────────────────────────────────────
+        // AJAX 
 
-        public ActionResult LayThongTinHopDong(
-            string maHopDong,
-            string thangHoaDon)
+        public ActionResult LayThongTinHopDong(string maHopDong, string thangHoaDon)
         {
-            var dto = _bus.LayThongTinTaoHoaDon(
-                maHopDong, thangHoaDon);
+            var dto = _bus.LayThongTinTaoHoaDon(maHopDong, thangHoaDon);
 
             if (dto == null)
-                return Json(new { success = false },
-                    JsonRequestBehavior.AllowGet);
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
 
             return Json(new
             {

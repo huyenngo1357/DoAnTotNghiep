@@ -45,7 +45,7 @@
                        placeholder="Mã HĐ, tên khách, số phòng..." />
             </div>
 
-            <label class="col-md-1 col-form-label"
+            <label class="col-md-1.5 col-form-label"
                    style="font-weight:bold;color:black">
                 Hợp đồng:
             </label>
@@ -56,7 +56,7 @@
                     new { @class = "form-control" })
             </div>
 
-            <label class="col-md-1 col-form-label"
+            <label class="col-md-1.5 col-form-label"
                    style="font-weight:bold;color:black">
                 Trạng thái:
             </label>
@@ -291,30 +291,121 @@
 
 @if (Model.PageCount > 1)
 {
-    <div class="d-flex justify-content-center mt-3">
-        @Html.PagedListPager(Model,
-            page => Url.Action("DanhSach", new
+    <div class="pager-wrap">
+
+        @if (Model.HasPreviousPage)
+        {
+            <a class="pager-btn"
+               href="@Url.Action("DanhSach", new {
+                   page      = Model.PageNumber - 1,
+                   tuKhoa    = ViewBag.TuKhoa,
+                   maHopDong = ViewBag.MaHopDong,
+                   trangThai = ViewBag.TrangThai })">&laquo;</a>
+        }
+        else
+        {
+            <span class="pager-btn disabled">&laquo;</span>
+        }
+
+        @{
+            int cur = Model.PageNumber;
+            int total = Model.PageCount;
+        }
+        @for (int i = 1; i <= total; i++)
+        {
+            bool hienThi = i == 1 || i == total
+                        || (i >= cur - 2 && i <= cur + 2);
+            bool daCham = (i == cur - 3 && i > 1)
+                        || (i == cur + 3 && i < total);
+
+            if (daCham)
             {
-                page,
-                tuKhoa = ViewBag.TuKhoa,
-                maHopDong = ViewBag.MaHopDong,
-                trangThai = ViewBag.TrangThai
-            }),
-            new PagedListRenderOptions
+                <span class="pager-btn"
+                      style="border:none;color:#aaa;pointer-events:none;">…</span>
+            }
+            else if (hienThi)
             {
-                UlElementClasses = new[]
+                if (i == cur)
                 {
-                    "pagination", "justify-content-center"
-                },
-                LiElementClasses = new[] { "page-item" }
-            })
+                    <span class="pager-btn active">@i</span>
+                }
+                else
+                {
+                    <a class="pager-btn"
+                       href="@Url.Action("DanhSach", new {
+                           page      = i,
+                           tuKhoa    = ViewBag.TuKhoa,
+                           maHopDong = ViewBag.MaHopDong,
+                           trangThai = ViewBag.TrangThai })">@i</a>
+                    }
+                }
+            }
+
+        @if (Model.HasNextPage)
+        {
+            <a class="pager-btn"
+               href="@Url.Action("DanhSach", new {
+                   page      = Model.PageNumber + 1,
+                   tuKhoa    = ViewBag.TuKhoa,
+                   maHopDong = ViewBag.MaHopDong,
+                   trangThai = ViewBag.TrangThai })">&raquo;</a>
+        }
+        else
+        {
+            <span class="pager-btn disabled">&raquo;</span>
+        }
+
     </div>
 }
 
+<style>
+    .pager-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    .pager-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        border: 1px solid #4e73df;
+        color: #4e73df;
+        background: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all .2s;
+    }
+
+        .pager-btn:hover {
+            background: #4e73df;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .pager-btn.active {
+            background: #4e73df;
+            color: #fff;
+            font-weight: 700;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(78,115,223,.35);
+        }
+
+        .pager-btn.disabled {
+            opacity: .4;
+            pointer-events: none;
+        }
+</style>
+
 <script>
     setTimeout(function () {
-        $('.alert').fadeOut('slow', function () {
-            $(this).remove();
-        });
+        $('.alert.auto-dismiss').fadeOut('slow', function () { $(this).remove(); });
     }, 1500);
 </script>

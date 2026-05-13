@@ -28,7 +28,6 @@
                     "--- Tất cả ---",
                     new { @class = "form-control" })
             </div>
-
             <label class="col-md-2 col-form-label"
                    style="font-weight:bold;color:black">Loại dịch vụ:</label>
             <div class="col-md-3">
@@ -37,18 +36,19 @@
                     "--- Tất cả ---",
                     new { @class = "form-control" })
             </div>
-
             <div class="col-md-3 d-flex align-items-center">
                 <input type="submit" class="btn btn-primary"
                        value="Tìm kiếm" style="margin-right:8px" />
                 <a href="@Url.Action("DanhSach","ChuTroGiaDichVu")"
-                   class="btn btn-secondary">Làm mới</a>
+                   class="btn btn-secondary">
+                    <i class="fa fa-sync"></i>
+                </a>
             </div>
         </div>
     </fieldset>
 }
 
-<p style="text-align:right; margin:10px">
+<p style="text-align:right;margin:10px">
     @Html.ActionLink("+ Thêm giá dịch vụ", "ThemMoi", null,
         new { @class = "btn btn-primary" })
 </p>
@@ -93,15 +93,12 @@
                                    || item.NgayKetThuc >= System.DateTime.Today);
 
                 <tr style="vertical-align:middle">
-                    <td>
-                        @(item.ToaNha != null ? item.ToaNha.TenToaNha : "—")
-                    </td>
+                    <td>@(item.ToaNha != null ? item.ToaNha.TenToaNha : "—")</td>
                     <td class="text-center">
                         @if (item.TienIch != null)
                         {
                             <span class="badge badge-light border px-2 py-1">
-                                <i class="fas @item.TienIch.BieuTuong
-                                           mr-1 text-warning"></i>
+                                <i class="fas @item.TienIch.BieuTuong mr-1 text-warning"></i>
                                 @item.TienIch.TenTienIch
                             </span>
                         }
@@ -110,18 +107,13 @@
                             <span class="text-muted">—</span>
                         }
                     </td>
-                    <td>
-                        @(string.IsNullOrEmpty(item.TenDichVu)
-                            ? "—" : item.TenDichVu)
-                    </td>
+                    <td>@(string.IsNullOrEmpty(item.TenDichVu) ? "—" : item.TenDichVu)</td>
                     <td class="text-center">@item.DonVi</td>
                     <td class="text-right">
                         <strong>@String.Format("{0:N0}", item.DonGia)</strong>
                         <small class="text-muted">đ/@item.DonVi</small>
                     </td>
-                    <td class="text-center">
-                        @item.NgayApDung.ToString("dd/MM/yyyy")
-                    </td>
+                    <td class="text-center">@item.NgayApDung.ToString("dd/MM/yyyy")</td>
                     <td class="text-center">
                         @if (item.NgayKetThuc.HasValue)
                         {
@@ -135,21 +127,15 @@
                     <td class="text-center">
                         @if (dangApDung)
                         {
-                            <span class="badge badge-success px-2 py-1">
-                                Đang áp dụng
-                            </span>
+                            <span class="badge badge-success px-2 py-1">Đang áp dụng</span>
                         }
                         else if (!item.TrangThai)
                         {
-                            <span class="badge badge-secondary px-2 py-1">
-                                Đã tắt
-                            </span>
+                            <span class="badge badge-secondary px-2 py-1">Đã tắt</span>
                         }
                         else
                         {
-                            <span class="badge badge-warning px-2 py-1">
-                                Chưa áp dụng
-                            </span>
+                            <span class="badge badge-warning px-2 py-1">Chưa áp dụng</span>
                         }
                     </td>
                     <td class="text-center">
@@ -157,13 +143,11 @@
                             new { maGiaDichVu = item.MaGiaDichVu },
                             new { @class = "btn btn-success btn-sm mb-1" })
 
-                        @using (Html.BeginForm("DoiTrangThai",
-                            "ChuTroGiaDichVu", FormMethod.Post,
-                            new { style = "display:inline" }))
+                        @using (Html.BeginForm("DoiTrangThai", "ChuTroGiaDichVu",
+                            FormMethod.Post, new { style = "display:inline" }))
                         {
                             @Html.AntiForgeryToken()
-                            <input type="hidden" name="maGiaDichVu"
-                                   value="@item.MaGiaDichVu" />
+                            <input type="hidden" name="maGiaDichVu" value="@item.MaGiaDichVu" />
                             <button type="submit"
                                     class="btn btn-@(item.TrangThai ? "warning" : "success") btn-sm mb-1"
                                     onclick="return confirm('@(item.TrangThai ? "Tắt" : "Bật") dịch vụ này?')">
@@ -173,15 +157,12 @@
 
                         @if (!dangApDung)
                         {
-                            using (Html.BeginForm("Xoa",
-                                "ChuTroGiaDichVu", FormMethod.Post,
-                                new { style = "display:inline" }))
+                            using (Html.BeginForm("Xoa", "ChuTroGiaDichVu",
+                                FormMethod.Post, new { style = "display:inline" }))
                             {
                                 @Html.AntiForgeryToken()
-                                <input type="hidden" name="maGiaDichVu"
-                                       value="@item.MaGiaDichVu" />
-                                <button type="submit"
-                                        class="btn btn-danger btn-sm mb-1"
+                                <input type="hidden" name="maGiaDichVu" value="@item.MaGiaDichVu" />
+                                <button type="submit" class="btn btn-danger btn-sm mb-1"
                                         onclick="return confirm('Xóa dịch vụ này?')">
                                     Xóa
                                 </button>
@@ -194,20 +175,121 @@
     </tbody>
 </table>
 
+@* ── Phân trang ── *@
 @if (Model.PageCount > 1)
 {
-    <div class="d-flex justify-content-center mt-3">
-        @Html.PagedListPager(Model,
-            page => Url.Action("DanhSach", new
+    <div class="pager-wrap">
+
+        @if (Model.HasPreviousPage)
+        {
+            <a class="pager-btn"
+               href="@Url.Action("DanhSach", new {
+                   page      = Model.PageNumber - 1,
+                   maToaNha  = ViewBag.MaToaNha,
+                   maTienIch = ViewBag.MaTienIch })">&laquo;</a>
+        }
+        else
+        {
+            <span class="pager-btn disabled">&laquo;</span>
+        }
+
+        @{
+            int cur = Model.PageNumber;
+            int total = Model.PageCount;
+        }
+        @for (int i = 1; i <= total; i++)
+        {
+            bool hienThi = i == 1 || i == total
+                        || (i >= cur - 2 && i <= cur + 2);
+            bool daCham = (i == cur - 3 && i > 1)
+                        || (i == cur + 3 && i < total);
+
+            if (daCham)
             {
-                page,
-                maToaNha = ViewBag.MaToaNha,
-                maTienIch = ViewBag.MaTienIch
-            }),
-            new PagedListRenderOptions
+                <span class="pager-btn"
+                      style="border:none;color:#aaa;pointer-events:none;">…</span>
+            }
+            else if (hienThi)
             {
-                UlElementClasses = new[] { "pagination", "justify-content-center" },
-                LiElementClasses = new[] { "page-item" }
-            })
+                if (i == cur)
+                {
+                    <span class="pager-btn active">@i</span>
+                }
+                else
+                {
+                    <a class="pager-btn"
+                       href="@Url.Action("DanhSach", new {
+                           page      = i,
+                           maToaNha  = ViewBag.MaToaNha,
+                           maTienIch = ViewBag.MaTienIch })">@i</a>
+                    }
+                }
+            }
+
+        @if (Model.HasNextPage)
+        {
+            <a class="pager-btn"
+               href="@Url.Action("DanhSach", new {
+                   page      = Model.PageNumber + 1,
+                   maToaNha  = ViewBag.MaToaNha,
+                   maTienIch = ViewBag.MaTienIch })">&raquo;</a>
+        }
+        else
+        {
+            <span class="pager-btn disabled">&raquo;</span>
+        }
+
     </div>
 }
+
+<style>
+    .pager-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    .pager-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        border: 1px solid #4e73df;
+        color: #4e73df;
+        background: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all .2s;
+    }
+
+        .pager-btn:hover {
+            background: #4e73df;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .pager-btn.active {
+            background: #4e73df;
+            color: #fff;
+            font-weight: 700;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(78,115,223,.35);
+        }
+
+        .pager-btn.disabled {
+            opacity: .4;
+            pointer-events: none;
+        }
+</style>
+
+<script>
+    setTimeout(function () {
+        $('.alert').fadeOut('slow', function () { $(this).remove(); });
+    }, 1500);
+</script>

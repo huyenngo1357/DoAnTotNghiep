@@ -69,7 +69,7 @@ namespace HappyHouse.Controllers
             return View(lst.ToPagedList(page, 10));
         }
 
-        // ── CHI TIẾT ─────────────────────────────────────────────────
+        // CHI TIẾT 
 
         public ActionResult ChiTiet(string maPhong)
         {
@@ -82,7 +82,7 @@ namespace HappyHouse.Controllers
             return View(obj);
         }
 
-        // ── THÊM MỚI ─────────────────────────────────────────────────
+        // THÊM MỚI
 
         [HttpGet]
         public ActionResult ThemMoi()
@@ -141,7 +141,7 @@ namespace HappyHouse.Controllers
             return View(obj);
         }
 
-        // ── SỬA THÔNG TIN ─────────────────────────────────────────────
+        // SỬA THÔNG TIN
 
         [HttpGet]
         public ActionResult SuaThongTin(string maPhong)

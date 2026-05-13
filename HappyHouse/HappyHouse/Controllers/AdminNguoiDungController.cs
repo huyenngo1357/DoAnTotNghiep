@@ -126,7 +126,7 @@ namespace HappyHouse.Controllers
             return View(obj);
         }
 
-        // ── SỬA THÔNG TIN ─────────────────────────────────────────────
+        // ── SỬA THÔNG TIN 
 
         [HttpGet]
         public ActionResult SuaThongTin(string maNguoiDung)
@@ -199,7 +199,7 @@ namespace HappyHouse.Controllers
             return View(obj);
         }
 
-        // ── KHÓA / MỞ KHÓA ───────────────────────────────────────────
+        // ── KHÓA / MỞ KHÓA 
 
         [HttpPost]
         [ValidateAntiForgeryToken]

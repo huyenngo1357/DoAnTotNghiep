@@ -300,7 +300,7 @@
                                         <span class="reg-val"
                                               style="color:#2cbdb8;">
                                             @String.Format("{0:N0}",
-                                                     phong.GiaThue)đ/tháng
+                                                               phong.GiaThue)đ/tháng
                                         </span>
                                     </div>
                                 </div>
@@ -369,10 +369,10 @@
                                 <input class="form-ctrl" type="date"
                                        id="ngayBatDau"
                                        name="NgayBatDau"
-                                       value="@Model.NgayBatDau
-                                                    .ToString(" yyyy-MM-dd")"
-                                       min="@DateTime.Today
-                                                 .ToString(" yyyy-MM-dd")" />
+                                       value="@(Model.NgayBatDau != DateTime.MinValue
+                ? Model.NgayBatDau.ToString("yyyy-MM-dd")
+                : "")"
+                                       min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                             </div>
                             <div class="col-md-4" style="margin-bottom:16px;">
                                 <label class="hh-label">
@@ -382,10 +382,10 @@
                                 <input class="form-ctrl" type="date"
                                        id="ngayKetThuc"
                                        name="NgayKetThuc"
-                                       value="@Model.NgayKetThuc
-                                                    .ToString(" yyyy-MM-dd")"
-                                       min="@DateTime.Today.AddDays(1)
-                                                 .ToString(" yyyy-MM-dd")" />
+                                       value="@(Model.NgayKetThuc != DateTime.MinValue
+                ? Model.NgayKetThuc.ToString("yyyy-MM-dd")
+                : "")"
+                                       min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
                                 <small id="lblSoThang"
                                        style="color:#2cbdb8;font-weight:600;">
                                 </small>
@@ -446,7 +446,7 @@
                                                     <br />
                                                     <small style="color:#888;">
                                                         @String.Format("{0:N0}",
-                                                                 dv.DonGia)đ
+                                                                           dv.DonGia)đ
                                                         /@(dv.DonVi ?? "tháng")
                                                     </small>
                                                 </div>
@@ -513,7 +513,7 @@
                                                                  font-weight:700;
                                                                  font-size:13px;">
                                                         @String.Format("{0:N0}",
-                                                                 dv.DonGia)đ
+                                                                           dv.DonGia)đ
                                                     </span>
                                                 </div>
                                             </div>
@@ -565,7 +565,7 @@
                                     </span>
                                     <strong style="color:#2cbdb8;">
                                         @String.Format("{0:N0}",
-                                                 phong?.GiaThue ?? 0)đ
+                                                           phong?.GiaThue ?? 0)đ
                                     </strong>
                                 </div>
                                 <div class="summary-row">
@@ -592,7 +592,7 @@
                                     <span id="sumTong"
                                           style="color:#e74a3b;">
                                         @String.Format("{0:N0}",
-                                                 phong?.GiaThue ?? 0)đ
+                                                           phong?.GiaThue ?? 0)đ
                                     </span>
                                 </div>
                             </div>
@@ -655,115 +655,242 @@
 
 @section Scripts {
     <script>
-var giaPhong = @(phong?.GiaThue ?? 0);
-var dsDichVuChon = {}; // { maGiaDichVu: { gia, soLuong } }
 
-// ── Toggle chọn dịch vụ ──────────────────────────────────────
+var giaPhong = @(phong?.GiaThue ?? 0);
+var dsDichVuChon = {};
+
+// ─────────────────────────────────────────────
+// Toggle dịch vụ
+// ─────────────────────────────────────────────
 function toggleDichVu(ma, gia, ten) {
+
     if (dsDichVuChon[ma]) {
-        // Bỏ chọn
+
         delete dsDichVuChon[ma];
+
         $('#dvCard_' + ma).removeClass('checked');
+
         $('#chkIcon_' + ma)
-            .css({ background: '', borderColor: '#ddd' })
+            .css({
+                background: '',
+                borderColor: '#ddd'
+            })
             .html('');
+
         $('#slWrap_' + ma).hide();
+
         $('[name="dsMaGiaDichVu"][value="' + ma + '"]').remove();
-        $('[id="hidden_sl_' + ma + '"]').remove();
+        $('#hidden_sl_' + ma).remove();
+
     } else {
-        // Chọn
-        dsDichVuChon[ma] = { gia: gia, soLuong: 1 };
+
+        dsDichVuChon[ma] = {
+            gia: gia,
+            soLuong: 1
+        };
+
         $('#dvCard_' + ma).addClass('checked');
+
         $('#chkIcon_' + ma)
-            .css({ background: '#2cbdb8', borderColor: '#2cbdb8' })
+            .css({
+                background: '#2cbdb8',
+                borderColor: '#2cbdb8'
+            })
             .html('<i class="fa fa-check" style="color:#fff;font-size:11px;"></i>');
+
         $('#slWrap_' + ma).show();
 
-        // Thêm hidden inputs
         $('<input>').attr({
-            type: 'hidden', name: 'dsMaGiaDichVu', value: ma
+            type: 'hidden',
+            name: 'dsMaGiaDichVu',
+            value: ma
         }).appendTo('#frmDangKy');
+
         $('<input>').attr({
-            type: 'hidden', name: 'dsSoLuong',
-            id: 'hidden_sl_' + ma, value: 1
+            type: 'hidden',
+            name: 'dsSoLuong',
+            id: 'hidden_sl_' + ma,
+            value: 1
         }).appendTo('#frmDangKy');
     }
+
     capNhatTong();
 }
 
-// ── Đổi số lượng ─────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// Đổi số lượng
+// ─────────────────────────────────────────────
 function doiSoLuong(ma, gia, delta) {
+
     if (!dsDichVuChon[ma]) return;
+
     var sl = dsDichVuChon[ma].soLuong + delta;
+
     if (sl < 1) sl = 1;
     if (sl > 99) sl = 99;
 
     dsDichVuChon[ma].soLuong = sl;
+
     $('#slText_' + ma).text(sl);
+
     $('#hidden_sl_' + ma).val(sl);
+
     $('#ttDV_' + ma).text(formatSo(gia * sl) + 'đ');
+
     capNhatTong();
 }
 
-// ── Tính tổng ────────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// Cập nhật tổng tiền
+// ─────────────────────────────────────────────
 function capNhatTong() {
+
     var tongDV = 0;
+
     $.each(dsDichVuChon, function (ma, v) {
         tongDV += v.gia * v.soLuong;
     });
+
     $('#sumDV').text(formatSo(tongDV) + 'đ');
+
     $('#sumTong').text(formatSo(giaPhong + tongDV) + 'đ');
 }
 
-// ── Tính số tháng ────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// Tính số tháng
+// ─────────────────────────────────────────────
 function tinhSoThang() {
-    var bd = new Date($('#ngayBatDau').val());
-    var kt = new Date($('#ngayKetThuc').val());
-    if (!bd || !kt || kt <= bd) {
+
+    var bdStr = $('#ngayBatDau').val();
+    var ktStr = $('#ngayKetThuc').val();
+
+    if (!bdStr || !ktStr) {
         $('#lblSoThang').text('');
         return;
     }
-    var months = (kt.getFullYear() - bd.getFullYear()) * 12
-               + (kt.getMonth()   - bd.getMonth());
+
+    var bd = new Date(bdStr);
+    var kt = new Date(ktStr);
+
+    if (kt <= bd) {
+        $('#lblSoThang').text('');
+        return;
+    }
+
+    var months =
+        (kt.getFullYear() - bd.getFullYear()) * 12 +
+        (kt.getMonth() - bd.getMonth());
+
     if (months < 1) months = 1;
+
     $('#lblSoThang').text('≈ ' + months + ' tháng');
 }
 
+// ─────────────────────────────────────────────
+// Change ngày
+// ─────────────────────────────────────────────
 $('#ngayBatDau, #ngayKetThuc').on('change', function () {
-    // Ngày kết thúc min = ngày bắt đầu + 1
+
     var bd = $('#ngayBatDau').val();
+
     if (bd) {
+
         var minKT = new Date(bd);
+
         minKT.setDate(minKT.getDate() + 1);
-        $('#ngayKetThuc').attr('min',
-            minKT.toISOString().split('T')[0]);
+
+        var yyyy = minKT.getFullYear();
+        var mm = String(minKT.getMonth() + 1).padStart(2, '0');
+        var dd = String(minKT.getDate()).padStart(2, '0');
+
+        var minKTStr = yyyy + '-' + mm + '-' + dd;
+
+        $('#ngayKetThuc').attr('min', minKTStr);
     }
+
     tinhSoThang();
 });
 
-// ── Xác nhận trước khi gửi ───────────────────────────────────
+// ─────────────────────────────────────────────
+// Validate submit
+// ─────────────────────────────────────────────
 function xacNhanGui() {
+
     var bd = $('#ngayBatDau').val();
     var kt = $('#ngayKetThuc').val();
 
     if (!bd || !kt) {
+
         alert('Vui lòng chọn ngày bắt đầu và ngày kết thúc!');
+
         return false;
     }
-    if (new Date(kt) <= new Date(bd)) {
+
+    var today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+    var ngayBD = new Date(bd);
+    var ngayKT = new Date(kt);
+
+    if (ngayBD < today) {
+
+        alert('Không được chọn ngày trong quá khứ!');
+
+        return false;
+    }
+
+    if (ngayKT <= ngayBD) {
+
         alert('Ngày kết thúc phải sau ngày bắt đầu!');
+
         return false;
     }
+
     return confirm(
-        'Xác nhận gửi yêu cầu đăng ký thuê phòng?\n'
-      + 'Yêu cầu sẽ được chuyển đến chủ trọ xem xét và ký hợp đồng.');
+        'Xác nhận gửi yêu cầu đăng ký thuê phòng?\n' +
+        'Yêu cầu sẽ được chuyển đến chủ trọ xem xét và ký hợp đồng.'
+    );
 }
 
+// ─────────────────────────────────────────────
+// Format số
+// ─────────────────────────────────────────────
 function formatSo(n) {
     return parseFloat(n).toLocaleString('vi-VN');
 }
 
-// Tính số tháng khi load
-$(function () { tinhSoThang(); });
+// ─────────────────────────────────────────────
+// Load trang
+// ─────────────────────────────────────────────
+$(function () {
+
+    var today = new Date();
+
+    // yyyy-MM-dd
+    var yyyy = today.getFullYear();
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var dd = String(today.getDate()).padStart(2, '0');
+
+    var todayStr = yyyy + '-' + mm + '-' + dd;
+
+    $('#ngayBatDau').attr('min', todayStr);
+
+    // Ngày mai
+    var tomorrow = new Date(today);
+
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    var yyyy2 = tomorrow.getFullYear();
+    var mm2 = String(tomorrow.getMonth() + 1).padStart(2, '0');
+    var dd2 = String(tomorrow.getDate()).padStart(2, '0');
+
+    var tomorrowStr = yyyy2 + '-' + mm2 + '-' + dd2;
+
+    $('#ngayKetThuc').attr('min', tomorrowStr);
+
+    tinhSoThang();
+});
+
     </script>
 }

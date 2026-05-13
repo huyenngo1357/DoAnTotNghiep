@@ -88,6 +88,7 @@
             text-decoration: none;
         }
 
+    /* Room card */
     .room-card {
         background: #fff;
         border-radius: 10px;
@@ -207,6 +208,7 @@
             text-decoration: none;
         }
 
+    /* Sidebar */
     .hh-sidebar-card {
         background: #fff;
         border-radius: 10px;
@@ -224,25 +226,30 @@
         border-bottom: 2px solid #2cbdb8;
     }
 
+    /* Phân trang — màu teal cho layout khách */
     .hh-pager {
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: 6px;
         margin-top: 24px;
+        flex-wrap: wrap;
     }
 
         .hh-pager a {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 36px;
-            height: 36px;
-            border-radius: 6px;
-            border: 1px solid #ddd;
-            color: #555;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: 1px solid #2cbdb8;
+            color: #2cbdb8;
             font-size: 14px;
+            font-weight: 600;
             text-decoration: none;
-            transition: .15s;
+            transition: all .2s;
+            background: #fff;
         }
 
             .hh-pager a:hover, .hh-pager a.active {
@@ -255,6 +262,19 @@
             .hh-pager a.active {
                 pointer-events: none;
                 font-weight: 700;
+                box-shadow: 0 2px 8px rgba(44,189,184,.35);
+            }
+
+            .hh-pager a.disabled {
+                opacity: .4;
+                pointer-events: none;
+            }
+
+            .hh-pager a.ellipsis {
+                border: none;
+                color: #aaa;
+                pointer-events: none;
+                cursor: default;
             }
 </style>
 
@@ -282,9 +302,7 @@
                         <option value="">-- Tất cả --</option>
                         @foreach (var t in dsTinhThanh)
                         {
-                            <option value="@t" @(tinhDangChon == t ? "selected" : "")>
-                                @t
-                            </option>
+                            <option value="@t" @(tinhDangChon == t ? "selected" : "")>@t</option>
                         }
                     </select>
                 </div>
@@ -293,7 +311,6 @@
                     <label class="hh-search-label">
                         <i class="fa fa-map-o mr-1"></i>Phường / Xã
                     </label>
-                    @* FIX: Bỏ server-render disabled/options, JS quản lý toàn bộ *@
                     <select class="hh-search-input" name="phuongXa"
                             id="selPhuongXa"
                             style="cursor:not-allowed;background:#e0e0e0;">
@@ -317,7 +334,7 @@
                         <i class="fa fa-arrow-down mr-1"></i>Giá min (đ)
                     </label>
                     <input class="hh-search-input" type="number"
-                           name="giaMin" min="0" step="100000"
+                           name="giaMin" min="0" 
                            value="@ViewBag.GiaMin" placeholder="VD: 1.000.000" />
                 </div>
 
@@ -326,7 +343,7 @@
                         <i class="fa fa-arrow-up mr-1"></i>Giá max (đ)
                     </label>
                     <input class="hh-search-input" type="number"
-                           name="giaMax" min="0" step="100000"
+                           name="giaMax" min="0" 
                            value="@ViewBag.GiaMax" placeholder="VD: 5.000.000" />
                 </div>
 
@@ -365,6 +382,7 @@
 <section style="padding:36px 0 60px;background:#f7f8fa;">
     <div class="container-fluid" style="max-width:1400px;">
 
+        @* Breadcrumb *@
         <div style="font-size:13px;color:#888;margin-bottom:20px;">
             <a href="@Url.Action("Index","TrangChu")"
                style="color:#2cbdb8;text-decoration:none;">Trang chủ</a>
@@ -389,7 +407,7 @@
 
         <div class="row">
 
-            @* ── Danh sách ── *@
+            @* ── Danh sách phòng ── *@
             <div class="col-lg-9">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 style="font-weight:700;margin:0;color:#222;">
@@ -502,41 +520,91 @@
                         }
                     </div>
 
+                    @* ── Phân trang ── *@
                     if (Model.PageCount > 1)
                     {
+                        int cur = Model.PageNumber;
+                        int total = Model.PageCount;
+
                         <div class="hh-pager">
+
+                            @* Nút « *@
                             @if (Model.HasPreviousPage)
                             {
                                 <a href="@Url.Action("DanhSach", new {
-                                    page=Model.PageNumber-1, tuKhoa=ViewBag.TuKhoa,
-                                    tinhThanh=ViewBag.TinhThanh, phuongXa=ViewBag.PhuongXa,
-                                    giaMin=ViewBag.GiaMin, giaMax=ViewBag.GiaMax,
-                                    dienTichMin=ViewBag.DienTichMin, soNguoi=ViewBag.SoNguoi })">
+                                       page        = cur - 1,
+                                       tuKhoa      = ViewBag.TuKhoa,
+                                       tinhThanh   = ViewBag.TinhThanh,
+                                       phuongXa    = ViewBag.PhuongXa,
+                                       giaMin      = ViewBag.GiaMin,
+                                       giaMax      = ViewBag.GiaMax,
+                                       dienTichMin = ViewBag.DienTichMin,
+                                       soNguoi     = ViewBag.SoNguoi })">
                                     <i class="fa fa-angle-left"></i>
                                 </a>
                             }
-                            @for (int i = 1; i <= Model.PageCount; i++)
+                            else
                             {
-                                <a class="@(i == Model.PageNumber ? "active" : "")"
-                                   href="@(i == Model.PageNumber ? "#" :
-                                       Url.Action("DanhSach", new {
-                                           page=i, tuKhoa=ViewBag.TuKhoa,
-                                           tinhThanh=ViewBag.TinhThanh, phuongXa=ViewBag.PhuongXa,
-                                           giaMin=ViewBag.GiaMin, giaMax=ViewBag.GiaMax,
-                                           dienTichMin=ViewBag.DienTichMin, soNguoi=ViewBag.SoNguoi }))">
-                                    @i
+                                <a class="disabled">
+                                    <i class="fa fa-angle-left"></i>
                                 </a>
                             }
+
+                            @* Số trang với ellipsis *@
+                            @for (int i = 1; i <= total; i++)
+                            {
+                                bool hienThi = i == 1 || i == total
+                                            || (i >= cur - 2 && i <= cur + 2);
+                                bool daCham = (i == cur - 3 && i > 1)
+                                            || (i == cur + 3 && i < total);
+
+                                if (daCham)
+                                {
+                                    <a class="ellipsis">…</a>
+                                }
+                                else if (hienThi)
+                                {
+                                    if (i == cur)
+                                    {
+                                        <a class="active">@i</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("DanhSach", new {
+                                               page        = i,
+                                               tuKhoa      = ViewBag.TuKhoa,
+                                               tinhThanh   = ViewBag.TinhThanh,
+                                               phuongXa    = ViewBag.PhuongXa,
+                                               giaMin      = ViewBag.GiaMin,
+                                               giaMax      = ViewBag.GiaMax,
+                                               dienTichMin = ViewBag.DienTichMin,
+                                               soNguoi     = ViewBag.SoNguoi })">@i</a>
+                                        }
+                                    }
+                                }
+
+                            @* Nút » *@
                             @if (Model.HasNextPage)
                             {
                                 <a href="@Url.Action("DanhSach", new {
-                                    page=Model.PageNumber+1, tuKhoa=ViewBag.TuKhoa,
-                                    tinhThanh=ViewBag.TinhThanh, phuongXa=ViewBag.PhuongXa,
-                                    giaMin=ViewBag.GiaMin, giaMax=ViewBag.GiaMax,
-                                    dienTichMin=ViewBag.DienTichMin, soNguoi=ViewBag.SoNguoi })">
+                                       page        = cur + 1,
+                                       tuKhoa      = ViewBag.TuKhoa,
+                                       tinhThanh   = ViewBag.TinhThanh,
+                                       phuongXa    = ViewBag.PhuongXa,
+                                       giaMin      = ViewBag.GiaMin,
+                                       giaMax      = ViewBag.GiaMax,
+                                       dienTichMin = ViewBag.DienTichMin,
+                                       soNguoi     = ViewBag.SoNguoi })">
                                     <i class="fa fa-angle-right"></i>
                                 </a>
                             }
+                            else
+                            {
+                                <a class="disabled">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            }
+
                         </div>
                     }
                 }
@@ -557,7 +625,7 @@
                             ? Url.Content("~/Content/images/phongs/" + anhP.TenFile)
                             : "/Content/Home/img/properties/best-agent-1.jpg";
 
-                        <a href="@Url.Action("ChiTiet","PhongTro", new { maPhong=p.MaPhong })"
+                        <a href="@Url.Action("ChiTiet","PhongTro", new { maPhong = p.MaPhong })"
                            style="display:flex;gap:12px;margin-bottom:14px;
                                   padding-bottom:14px;border-bottom:1px solid #f0f0f0;
                                   text-decoration:none;">
@@ -591,23 +659,20 @@ $(function () {
     var tinhChon   = '@Html.Raw((ViewBag.TinhThanh ?? "").ToString())';
     var phuongChon = '@Html.Raw((ViewBag.PhuongXa  ?? "").ToString())';
 
-    // ── Xóa Nice Select khỏi 2 dropdown để dùng native select ──
+    // Xóa Nice Select để dùng native select
     try {
         $('#selTinhThanh').niceSelect('destroy');
         $('#selPhuongXa').niceSelect('destroy');
-    } catch (e) { /* Bỏ qua nếu Nice Select chưa apply */ }
+    } catch (e) { }
 
-    // ── Load phường/xã ──────────────────────────────────────────
     function loadPhuongXa(tinh, phuongDefault) {
         var $sel = $('#selPhuongXa');
-
         if (!tinh) {
             $sel.prop('disabled', true)
                 .css({ background: '#e0e0e0', cursor: 'not-allowed' })
                 .html('<option value="">-- Chọn tỉnh trước --</option>');
             return;
         }
-
         $sel.prop('disabled', true)
             .css({ background: '#f0f0f0', cursor: 'wait' })
             .html('<option value="">Đang tải...</option>');
@@ -616,11 +681,9 @@ $(function () {
             var html = '<option value="">-- Tất cả --</option>';
             $.each(ds, function (i, px) {
                 var sel = (px === phuongDefault) ? ' selected' : '';
-                html += '<option value="' + px + '"' + sel + '>'
-                      + px + '</option>';
+                html += '<option value="' + px + '"' + sel + '>' + px + '</option>';
             });
-            $sel.html(html)
-                .prop('disabled', false)
+            $sel.html(html).prop('disabled', false)
                 .css({ background: '#fff', cursor: 'pointer' });
         }).fail(function () {
             $sel.html('<option value="">-- Tất cả --</option>')
@@ -629,12 +692,10 @@ $(function () {
         });
     }
 
-    // ── Sự kiện đổi tỉnh ────────────────────────────────────────
     $('#selTinhThanh').on('change', function () {
         loadPhuongXa($(this).val(), '');
     });
 
-    // ── Nếu trang load lại với tỉnh đã chọn ────────────────────
     if (tinhChon) {
         $('#selTinhThanh').val(tinhChon);
         loadPhuongXa(tinhChon, phuongChon);

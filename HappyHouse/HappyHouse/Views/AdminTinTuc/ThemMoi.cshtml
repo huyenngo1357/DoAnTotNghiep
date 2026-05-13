@@ -13,7 +13,7 @@
 }
 
 @using (Html.BeginForm("ThemMoi", "AdminTinTuc", FormMethod.Post,
-    new { enctype = "multipart/form-data" }))
+    new { enctype = "multipart/form-data", @id = "frmThemTin" }))
 {
     @Html.AntiForgeryToken()
 
@@ -78,13 +78,60 @@
                 <label class="font-weight-bold">
                     Nội dung <span class="text-danger">(*)</span>
                 </label>
-                @Html.TextAreaFor(m => m.NoiDung, new
-                {
-                    @class = "form-control",
-                    rows = 15,
-                    placeholder = "Nhập nội dung bài viết...",
-                    id = "txtNoiDung"
-                })
+
+                <!-- Toolbar -->
+                <div class="mb-2">
+                    <div class="btn-group mr-2" role="group" aria-label="Text style">
+                        <button type="button" class="btn btn-light btn-sm" title="In đậm"
+                                onclick="execCmd('bold')">
+                            <i class="fa fa-bold"></i>
+                        </button>
+                        <button type="button" class="btn btn-light btn-sm" title="In nghiêng"
+                                onclick="execCmd('italic')">
+                            <i class="fa fa-italic"></i>
+                        </button>
+                        <button type="button" class="btn btn-light btn-sm" title="Gạch chân"
+                                onclick="execCmd('underline')">
+                            <i class="fa fa-underline"></i>
+                        </button>
+                    </div>
+
+                    <div class="btn-group mr-2" role="group" aria-label="Font size">
+                        <select id="fontSizeSel" class="form-control form-control-sm"
+                                style="width:auto;display:inline-block"
+                                onchange="applyFontSize(this.value)">
+                            <option value="">Kích thước</option>
+                            <option value="12">12px</option>
+                            <option value="14">14px</option>
+                            <option value="16">16px</option>
+                            <option value="18">18px</option>
+                            <option value="20">20px</option>
+                            <option value="24">24px</option>
+                            <option value="30">30px</option>
+                            <option value="36">36px</option>
+                        </select>
+                    </div>
+
+                    <div class="btn-group" role="group" aria-label="Clear">
+                        <button type="button" class="btn btn-light btn-sm" title="Xóa định dạng"
+                                onclick="execCmd('removeFormat')">
+                            <i class="fa fa-eraser"></i> Xóa định dạng
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rich editor (contenteditable) -->
+                <div id="editor"
+                     class="form-control"
+                     contenteditable="true"
+                     style="min-height:300px; overflow:auto;"
+                     placeholder="Nhập nội dung bài viết...">
+                    @Html.Raw(Model?.NoiDung ?? "")
+                </div>
+
+                <!-- Hidden textarea will receive HTML on submit -->
+                @Html.TextAreaFor(m => m.NoiDung, new { @class = "d-none", id = "txtNoiDung" })
+
                 @Html.ValidationMessageFor(m => m.NoiDung, "",
                     new { @class = "err-msg" })
             </div>
@@ -148,6 +195,12 @@
         border-color: #e74a3b !important;
         background-color: #fff5f5 !important;
     }
+
+    /* Ensure the editor looks like a textarea */
+    #editor:empty:before {
+        content: attr(placeholder);
+        color: #6c757d;
+    }
 </style>
 
 @section Scripts {
@@ -167,6 +220,50 @@
             document.getElementById('previewWrapper').style.display = 'block';
         };
         reader.readAsDataURL(file);
+    });
+
+    // Simple rich text helpers
+    function execCmd(command) {
+        document.getElementById('editor').focus();
+        // 'removeFormat' is not supported by execCommand in some browsers; handle gracefully.
+        if (command === 'removeFormat') {
+            document.execCommand('removeFormat', false, null);
+            return;
+        }
+        document.execCommand(command, false, null);
+    }
+
+    function applyFontSize(size) {
+        if (!size) return;
+        var editor = document.getElementById('editor');
+        editor.focus();
+        var sel = window.getSelection();
+        if (!sel || sel.rangeCount === 0) return;
+
+        var range = sel.getRangeAt(0);
+        var selectedHtml = range.toString();
+        if (!selectedHtml) return;
+
+        // Insert span with style using execCommand insertHTML for compatibility
+        var span = '<span style="font-size:' + size + 'px;">' + escapeHtml(selectedHtml) + '</span>';
+        document.execCommand('insertHTML', false, span);
+    }
+
+    function escapeHtml(text) {
+        return text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    // On submit, copy editor HTML into hidden textarea bound to model
+    $('#frmThemTin').on('submit', function () {
+        var html = document.getElementById('editor').innerHTML;
+        // Optional: trim leading/trailing whitespace nodes
+        html = html.trim();
+        $('#txtNoiDung').val(html);
     });
     </script>
 }

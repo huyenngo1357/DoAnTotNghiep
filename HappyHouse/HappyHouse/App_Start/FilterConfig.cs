@@ -1,5 +1,5 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using HappyHouse.App_Start;
 
 namespace HappyHouse
 {
@@ -8,6 +8,9 @@ namespace HappyHouse
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+
+            // Trim strings after model binding for all actions (skips [AllowHtml] properties)
+            filters.Add(new HappyHouse.App_Start.TrimModelStringsFilter());
         }
     }
 }

@@ -14,7 +14,7 @@ namespace HappyHouse.Controllers
             string maId = chuTro.MaNguoiDung;
             int nam = DateTime.Now.Year;
 
-            // ── Tòa nhà ──────────────────────────────────────────────
+            // Tòa nhà
             ViewBag.TongToaNha = db.ToaNhas
                 .Count(x => x.MaChuTro == maId
                           && x.TrangThai == true);
@@ -27,7 +27,7 @@ namespace HappyHouse.Controllers
                           && x.TrangThaiDuyet == "ChoDuyet"
                           && x.TrangThai == true);
 
-            // ── Phòng ────────────────────────────────────────────────
+            // Phòng
             ViewBag.TongPhong = db.PhongTroes
                 .Count(x => x.ToaNha.MaChuTro == maId
                           && x.TrangThai == true);
@@ -47,7 +47,7 @@ namespace HappyHouse.Controllers
                 ? Math.Round((double)daThue / tongPhong * 100, 1)
                 : 0;
 
-            // ── Hợp đồng ─────────────────────────────────────────────
+            // Hợp đồng
             ViewBag.HdDangThue = db.HopDongs
                 .Count(x => x.MaChuTro == maId
                           && x.TrangThaiHopDong == "DangThue"
@@ -65,7 +65,7 @@ namespace HappyHouse.Controllers
                           && x.NgayKetThuc <= ngayToi
                           && x.TrangThai == true);
 
-            // ── Hóa đơn ──────────────────────────────────────────────
+            // Hóa đơn
             ViewBag.HdChuaTT = db.HoaDons
                 .Count(x => x.HopDong.MaChuTro == maId
                           && (x.TrangThaiHoaDon == "ChuaThanhToan"
@@ -76,7 +76,7 @@ namespace HappyHouse.Controllers
                           && x.TrangThaiXacNhan == "ChoXacNhan"
                           && x.TrangThai == true);
 
-            // ── Doanh thu tháng này ───────────────────────────────────
+            // Doanh thu tháng này
             ViewBag.DoanhThuThangNay = db.HoaDons
                 .Where(x => x.HopDong.MaChuTro == maId
                           && x.TrangThaiHoaDon == "DaThanhToan"
@@ -85,7 +85,7 @@ namespace HappyHouse.Controllers
                           && x.ThangHoaDon.Month == DateTime.Now.Month)
                 .Sum(x => (decimal?)x.TongTien) ?? 0;
 
-            // ── Doanh thu theo tháng (năm hiện tại) ──────────────────
+            // Doanh thu theo tháng (năm hiện tại)
             var hdThang = db.HoaDons
                 .Where(x => x.HopDong.MaChuTro == maId
                           && x.TrangThaiHoaDon == "DaThanhToan"
@@ -104,7 +104,7 @@ namespace HappyHouse.Controllers
                     .Select(m => hdThang.ContainsKey(m)
                                  ? hdThang[m] : 0));
 
-            // ── Hợp đồng sắp hết hạn (danh sách) ─────────────────────
+            // Hợp đồng sắp hết hạn (danh sách) 
             ViewBag.DsHopDongSapHet = db.HopDongs
                 .Include("PhongTro")
                 .Include("PhongTro.ToaNha")
@@ -117,7 +117,7 @@ namespace HappyHouse.Controllers
                 .Take(5)
                 .ToList();
 
-            // ── Thanh toán chờ xác nhận (danh sách) ───────────────────
+            //  Thanh toán chờ xác nhận (danh sách)
             ViewBag.DsChoXacNhan = db.ThanhToans
                 .Include("HoaDon")
                 .Include("HoaDon.HopDong")

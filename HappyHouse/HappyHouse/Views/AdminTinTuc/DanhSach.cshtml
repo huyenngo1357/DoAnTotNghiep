@@ -7,62 +7,75 @@
 }
 
 @section breadTitle {
-    <h2 style="font-weight:bold; color:black">Quản lý tin tức</h2>
+    <h2 style="font-weight:bold;color:black">Quản lý tin tức</h2>
 }
 @section breadLink {
     <a href="#">Danh sách tin tức</a>
 }
 
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        <i class="fa fa-check-circle mr-2"></i>@TempData["Success"]
+        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">
+        <i class="fa fa-exclamation-circle mr-2"></i>@TempData["Error"]
+        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+    </div>
+}
 
 @using (Html.BeginForm("DanhSach", "AdminTinTuc", FormMethod.Post))
 {
     <fieldset class="border p-3 shadow-sm mb-3">
-        <legend class="w-auto px-2" style="font-weight:bold; color:black">
+        <legend class="w-auto px-2" style="font-weight:bold;color:black">
             Tìm kiếm
         </legend>
         <div class="row">
             <label class="col-md-1 col-form-label"
-                   style="font-weight:bold; color:black">Từ khóa:</label>
+                   style="font-weight:bold;color:black">Từ khóa:</label>
             <div class="col-md-2">
                 <input type="text" name="tuKhoa" value="@ViewBag.TuKhoa"
                        class="form-control" placeholder="Tiêu đề, tóm tắt..." />
             </div>
-
             <label class="col-md-1 col-form-label"
-                   style="font-weight:bold; color:black">Chủ đề:</label>
+                   style="font-weight:bold;color:black">Chủ đề:</label>
             <div class="col-md-2">
                 @Html.DropDownList("maChuDe",
                     (SelectList)ViewBag.DsChuDe,
                     "--- Tất cả ---",
                     new { @class = "form-control" })
             </div>
-
-            <label class="col-md-1 col-form-label"
-                   style="font-weight:bold; color:black">Trạng thái:</label>
+            <label class="col-md-1.5 col-form-label"
+                   style="font-weight:bold;color:black">Trạng thái:</label>
             <div class="col-md-2">
                 @Html.DropDownList("trangThaiDang",
                     (SelectList)ViewBag.DsTrangThai,
                     new { @class = "form-control" })
             </div>
-
             <div class="col-md-2 d-flex align-items-center">
                 <input type="submit" class="btn btn-primary"
                        value="Tìm kiếm" style="margin-right:8px" />
                 <a href="@Url.Action("DanhSach","AdminTinTuc")"
-                   class="btn btn-secondary">Làm mới</a>
+                   class="btn btn-secondary">
+                    <i class="fa fa-sync"></i>
+                </a>
             </div>
         </div>
     </fieldset>
 }
 
-<p style="text-align:right; margin:10px">
+<p style="text-align:right;margin:10px">
     @Html.ActionLink("+ Thêm tin tức", "ThemMoi", null,
         new { @class = "btn btn-primary" })
 </p>
 
 <table class="table table-bordered table-striped" width="100%">
     <thead>
-        <tr style="text-align:center; color:black">
+        <tr style="text-align:center;color:black">
             <th>Ảnh</th>
             <th>Tiêu đề</th>
             <th>Chủ đề</th>
@@ -77,11 +90,11 @@
         {
             <tr>
                 <td colspan="7">
-                    <div style="text-align:center; padding:40px 20px;">
+                    <div style="text-align:center;padding:40px 20px;">
                         <i class="fas fa-newspaper"
-                           style="font-size:48px; color:#b0b8c9;
-                                  display:block; margin-bottom:12px;"></i>
-                        <p style="color:#9aa0ac; font-size:15px; margin:0;">
+                           style="font-size:48px;color:#b0b8c9;
+                                  display:block;margin-bottom:12px;"></i>
+                        <p style="color:#9aa0ac;font-size:15px;margin:0;">
                             Không tìm thấy tin tức nào
                         </p>
                     </div>
@@ -102,12 +115,12 @@
                 }
 
                 <tr style="vertical-align:middle">
-                    <td style="text-align:center; width:80px">
+                    <td style="text-align:center;width:80px">
                         @if (!string.IsNullOrEmpty(item.AnhDaiDien))
                         {
                             <img src="~/Content/images/tintuc/@item.AnhDaiDien"
-                                 style="width:60px; height:50px;
-                                        object-fit:cover; border-radius:4px;" />
+                                 style="width:60px;height:50px;
+                                        object-fit:cover;border-radius:4px;" />
                         }
                         else
                         {
@@ -127,8 +140,7 @@
                         }
                     </td>
                     <td style="text-align:center">
-                        @(item.ChuDeTinTuc != null
-                            ? item.ChuDeTinTuc.TenChuDe : "—")
+                        @(item.ChuDeTinTuc != null ? item.ChuDeTinTuc.TenChuDe : "—")
                     </td>
                     <td style="text-align:center">
                         <i class="fa fa-eye mr-1"></i>@item.LuotXem
@@ -140,8 +152,7 @@
                     </td>
                     <td style="text-align:center">
                         @(item.NgayDang.HasValue
-                            ? item.NgayDang.Value.ToString("dd/MM/yyyy")
-                            : "—")
+                            ? item.NgayDang.Value.ToString("dd/MM/yyyy") : "—")
                     </td>
                     <td style="text-align:center">
                         @Html.ActionLink("Sửa", "SuaThongTin",
@@ -155,10 +166,8 @@
                                 FormMethod.Post, new { style = "display:inline" }))
                             {
                                 @Html.AntiForgeryToken()
-                                <input type="hidden" name="maTinTuc"
-                                       value="@item.MaTinTuc" />
-                                <button type="submit"
-                                        class="btn btn-primary btn-sm mb-1"
+                                <input type="hidden" name="maTinTuc" value="@item.MaTinTuc" />
+                                <button type="submit" class="btn btn-primary btn-sm mb-1"
                                         onclick="return confirm('Đăng bài này?')">
                                     Đăng
                                 </button>
@@ -171,10 +180,8 @@
                                 FormMethod.Post, new { style = "display:inline" }))
                             {
                                 @Html.AntiForgeryToken()
-                                <input type="hidden" name="maTinTuc"
-                                       value="@item.MaTinTuc" />
-                                <button type="submit"
-                                        class="btn btn-warning btn-sm mb-1"
+                                <input type="hidden" name="maTinTuc" value="@item.MaTinTuc" />
+                                <button type="submit" class="btn btn-warning btn-sm mb-1"
                                         onclick="return confirm('Tạm ẩn bài này?')">
                                     Tạm ẩn
                                 </button>
@@ -185,10 +192,8 @@
                             FormMethod.Post, new { style = "display:inline" }))
                         {
                             @Html.AntiForgeryToken()
-                            <input type="hidden" name="maTinTuc"
-                                   value="@item.MaTinTuc" />
-                            <button type="submit"
-                                    class="btn btn-danger btn-sm mb-1"
+                            <input type="hidden" name="maTinTuc" value="@item.MaTinTuc" />
+                            <button type="submit" class="btn btn-danger btn-sm mb-1"
                                     onclick="return confirm('Xóa tin tức này?')">
                                 Xóa
                             </button>
@@ -200,24 +205,121 @@
     </tbody>
 </table>
 
+@* ── Phân trang ── *@
 @if (Model.PageCount > 1)
 {
-    <div class="d-flex justify-content-center mt-3">
-        @Html.PagedListPager(Model,
-    page => Url.Action("DanhSach", new
-    {
-        page,
-        tuKhoa = ViewBag.TuKhoa,
-        maChuDe = ViewBag.MaChuDe,
-        trangThaiDang = ViewBag.TrangThaiDang
-    }),
-    new PagedListRenderOptions
-    {
-        UlElementClasses = new[] { "pagination", "justify-content-center" },
-        LiElementClasses = new[] { "page-item" }
-    })
+    <div class="pager-wrap">
+
+        @if (Model.HasPreviousPage)
+        {
+            <a class="pager-btn"
+               href="@Url.Action("DanhSach", new {
+                   page          = Model.PageNumber - 1,
+                   tuKhoa        = ViewBag.TuKhoa,
+                   maChuDe       = ViewBag.MaChuDe,
+                   trangThaiDang = ViewBag.TrangThaiDang })">&laquo;</a>
+        }
+        else
+        {
+            <span class="pager-btn disabled">&laquo;</span>
+        }
+
+        @{
+            int cur = Model.PageNumber;
+            int total = Model.PageCount;
+        }
+        @for (int i = 1; i <= total; i++)
+        {
+            bool hienThi = i == 1 || i == total
+                        || (i >= cur - 2 && i <= cur + 2);
+            bool daCham = (i == cur - 3 && i > 1)
+                        || (i == cur + 3 && i < total);
+
+            if (daCham)
+            {
+                <span class="pager-btn"
+                      style="border:none;color:#aaa;pointer-events:none;">…</span>
+            }
+            else if (hienThi)
+            {
+                if (i == cur)
+                {
+                    <span class="pager-btn active">@i</span>
+                }
+                else
+                {
+                    <a class="pager-btn"
+                       href="@Url.Action("DanhSach", new {
+                           page          = i,
+                           tuKhoa        = ViewBag.TuKhoa,
+                           maChuDe       = ViewBag.MaChuDe,
+                           trangThaiDang = ViewBag.TrangThaiDang })">@i</a>
+                    }
+                }
+            }
+
+        @if (Model.HasNextPage)
+        {
+            <a class="pager-btn"
+               href="@Url.Action("DanhSach", new {
+                   page          = Model.PageNumber + 1,
+                   tuKhoa        = ViewBag.TuKhoa,
+                   maChuDe       = ViewBag.MaChuDe,
+                   trangThaiDang = ViewBag.TrangThaiDang })">&raquo;</a>
+        }
+        else
+        {
+            <span class="pager-btn disabled">&raquo;</span>
+        }
+
     </div>
 }
+
+<style>
+    .pager-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    .pager-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        border: 1px solid #4e73df;
+        color: #4e73df;
+        background: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all .2s;
+    }
+
+        .pager-btn:hover {
+            background: #4e73df;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .pager-btn.active {
+            background: #4e73df;
+            color: #fff;
+            font-weight: 700;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(78,115,223,.35);
+        }
+
+        .pager-btn.disabled {
+            opacity: .4;
+            pointer-events: none;
+        }
+</style>
 
 <script>
     setTimeout(function () {

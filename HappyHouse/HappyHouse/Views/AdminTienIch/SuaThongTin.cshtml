@@ -9,7 +9,7 @@
     <h2 style="font-weight:bold;color:black">Quản lý tiện ích</h2>
 }
 @section breadLink {
-    <a href="@Url.Action("DanhSach","AdminTienIch")">Danh sách tiện ích</a>
+    <a href="@Url.Action("DanhSach","AdminTienIch")">Sửa thông tin tiện ích</a>
 }
 
 @using (Html.BeginForm("SuaThongTin", "AdminTienIch", FormMethod.Post))
@@ -19,8 +19,6 @@
 
     <div class="row">
         <div class="col-md-8">
-
-            {{-- Thông tin sử dụng --}}
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="card border-primary shadow-sm">

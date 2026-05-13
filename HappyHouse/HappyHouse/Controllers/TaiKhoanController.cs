@@ -297,5 +297,12 @@ namespace HappyHouse.Controllers
             TempData["Success"] = "Cập nhật thông tin thành công!";
             return RedirectToAction("ThongTin");
         }
+
+        //public ActionResult TaoMatKhau()
+        //{
+        //    string hash = BCrypt.Net.BCrypt.HashPassword("123456");
+
+        //    return Content(hash);
+        //}
     }
 }
